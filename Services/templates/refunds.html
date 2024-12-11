@@ -1,0 +1,436 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Refunds</h1>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start Earnings page -->
+    <div class="dashboard-inners">
+
+      <!-- start Product sales and Top Clients section -->
+      <div class="product-sales-section">
+        <div class="row">
+          <div class="col-12">
+            <div class="card-section">
+              <div class="prod-chart-heads horiztl-tab-gry flex-space mrginbtm-same">
+                <div class="tab-heading">
+                  <h3>Refund requests</h3>
+                </div>
+                <div class="prod-chart-tab">
+                  <ul class="nav nav-pills gap-3">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="openrequests-tb-tab" data-bs-toggle="pill"
+                        data-bs-target="#openrequests-tb" type="button" role="tab">Open requests</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="closedrequests-tb-tab" data-bs-toggle="pill"
+                        data-bs-target="#closedrequests-tb" type="button" role="tab">Closed requests</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- start Credits requests table section -->
+              <div class="prod-chart-bdy">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="openrequests-tb" role="tabpanel"
+                    aria-labelledby="openrequests-tb-tab">
+                    <div class="data-table-sec">
+                      <table id="creditsrequests-table" class="table dt-responsive nowrap" style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg transit-bg">In progress</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg transit-bg">In progress</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="closedrequests-tb" role="tabpanel"
+                    aria-labelledby="closedrequests-tb-tab">
+                    <div class="data-table-sec">
+                      <table id="closerequests-table" class="table dt-responsive nowrap" style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#refundsrequest-pop">
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+    <!-- End Earnings page -->
+  </div>
+  <!-- End inner body section -->
+</div>
+
+<!-- Modal pop Refunds request -->
+<div class="modal fade" id="refundsrequest-pop">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">Refunds request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="orderproduct-pops">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-6 col-xl-5">
+              <div class="ordertbs-section horiztl-tab">
+                <div class="order-details-form">
+                  <div class="order-prod-bx d-flex align-items-center gap-4 mb-5">
+                    <div class="orderprod-imgs"><img src="{% static 'img/square-product.png' %}" alt="product"></div>
+                    <div class="orderprod-txts">
+                      <h3 class="mb-4">Day & Night</h3>
+                      <b class="bg-odr">New request</b>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Request send</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">Jul 24, 2023</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Reason</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">Product is Damaged</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Product received</p>
+                    </div>
+                    <div class="rquest-date black-txts"><b class="bg-odr mb-0">Yes</b></div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Purchase date</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">July 01, 2023</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Purchase code</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">6373ads-hd73h-8373DS</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Request ID</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">8975ads-hd73h-8974DS</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Market fee <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                          data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">$7.28</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Price <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                          data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">$72.88</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 col-xl-7">
+              <div class="request-change-rgt">
+                <div class="suggestionst-head mb-4">
+                  <h4>Proof</h4>
+                </div>
+                <div class="upload-proof mb-4">
+                  <output id="Filelist"></output>
+                  <span class="fileinput-button">
+                    <span><i class="bi bi-camera"></i></span>
+                    <input type="file" name="files[]" id="files" accept="image/*"><br>
+                  </span>
+                </div>
+                <div class="suggestionst-head mb-4">
+                  <h4>Customer’s Message</h4>
+                </div>
+                <div class="delivery-time mb-3">
+                  <p>“ I received the product but it was damaged and it’s not usable. 😢” </p>
+                </div>
+                <div class="domenica-sec d-flex align-items-center gap-4 mb-4">
+                  <div class="domenica-img">
+                    <img src="{% static 'img/small-avtore.png' %}" alt="avtore">
+                  </div>
+                  <div class="domenica-text">
+                    <b>Domenica Lockman</b>
+                  </div>
+                </div>
+                <div class="suggestionst-head mb-4">
+                  <h4>Suggestions</h4>
+                </div>
+                <div class="suggest-lists">
+                  <ul>
+                    <li><img src="{% static 'img/check-tick.png' %}" alt="check" class="me-3"> Talk to customer to see if you
+                      can help.</li>
+                    <li><img src="{% static 'img/check-tick.png' %}" alt="check" class="me-3"> If not, approve or decline the
+                      request.</li>
+                  </ul>
+                </div>
+
+                <div class="col-12 cus-inputs mt-4">
+                  <label class="form-label">Send message
+                    <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                      data-bs-original-title="Lorem ipsum"></i>
+                  </label>
+                  <textarea name="content" class="editor12"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer gap-4">
+        <button type="button" class="white-btn" data-bs-dismiss="modal">Decline refund</button>
+        <button type="button" class="red-btn">Refund in Credit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

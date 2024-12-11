@@ -1,0 +1,492 @@
+{% load static %}
+{% load i18n %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <title>{% block title %}GustoMarket{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap css link -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- bootstrap select css link -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+  <!-- bootstrap data table css link -->
+  <link rel="stylesheet" href="{% static 'css/data-tables.bootstrap5.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive-data-table.min.css' %}">
+  <!-- style css link -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- mobile responsive css link -->
+  <link rel="stylesheet" href="{% static 'css/tab-responsive.css' %}">
+  <!-- mobile responsive css link -->
+  <link rel="stylesheet" href="{% static 'css/mobile-responsive.css' %}">
+  <!-- product background css link -->
+  <!-- mobile responsive css link -->
+  <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+  <!-- fontawesome css link -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <!-- bootstrap css link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" href="{% static 'path/to/data-tables.bootstrap5.min.css' %}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+</head>
+
+<body class="sidebar-reduced">
+  <div class="sidebar">
+    <div class="close-sidebar"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+    <div class="logo">
+      <a href="{% url 'products' %}"><img src="{% static 'img/logo.png' %}" alt="logo"></a>
+      <div class="gm-logo">
+        <h1>GM</h1>
+      </div>
+      <!-- <button class="header-action"> -->
+      <!-- <button class="close-sidebar"><i class="bi bi-x-lg"></i></button> -->
+    </div>
+    <div class="sidebar-menu">
+      <nav class="menu-nav js-menu">
+        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="{% url 'seller_dashboard' %}" class="menu-item-inner">
+              <img src="{% static 'img/gusto-icon.png' %}" alt="gusto">
+              <span class="menu-item-title"><span>Dashboard</span></span>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="{% url 'products' %}" class="menu-item-inner">
+              <img src="{% static 'img/products-list.svg' %}" alt="gusto">
+              <span class="menu-item-title"><span>Products for Sale</span></span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{% url 'inventory_list' %}" class="menu-item-inner">
+              <img src="{% static 'img/products-list.svg' %}" alt="gusto">
+              <span class="menu-item-title"><span>Inventory</span></span>
+            </a>
+          </li>
+
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-item-inner">
+              <img src="{% static 'img/listed-icon.png' %}" alt="listed">
+              <span class="menu-item-title">
+                <span>Manage My Products</span><i class="bi bi-chevron-down"></i>
+              </span>
+            </a>
+            <ul class="menu-submenu menu-list">
+              <li><a href="{% url 'listed_unlisted_product' %}"><span>Listed & Unlisted Products</span></a></li>
+              <li><a href="{% url 'add_product' pk=0 %}"><span>Upload Product</span></a></li>
+              <li><a href="{% url 'change_prices' %}"><span>Product Pricing</span></a></li>
+              <!-- <li><a href="{% url 'product_list' status='active' %}"><span>Active Products</span></a></li> -->
+            </ul>
+
+          </li>
+          
+          <!-- <li class="menu-item has-submenu">
+            <a href="#" class="menu-item-inner">
+              <img src="{% static 'img/purchases-icon.png' %}" alt="purchases">
+              <span class="menu-item-title"><span>Market Palace</span><i class="bi bi-chevron-down"></i></span>
+            </a>
+            <ul class="menu-submenu menu-list">
+              <li><a href="{% url 'products' %}"><span>Purchases</span></a></li>
+              <li><a href="{% url 'past_purchase' %}"><span>Past purchases</span></a></li>
+              <li><a href="{% url 'purchase_details' %}"><span>Purchase details</span></a></li>
+              <li><a href="{% url 'refunds' %}"><span>Refunds</span></a></li>
+            </ul>
+          </li> -->
+          <li class="menu-item has-submenu">
+            <a href="#" class="menu-item-inner">
+              <img src="{% static 'img/analyses-icon.png' %}" alt="analyses">
+              <span class="menu-item-title"><span>Previous Activity & Analytics</span><i class="bi bi-chevron-down"></i>
+              </span>
+            </a>
+            <ul class="menu-submenu menu-list">
+              <li><a href="{% url 'approved_supplier' %}"><span>Approved Suppliers</span></a></li>
+              <li><a href="{% url 'customer_list' %}"><span>Customer Management</span></a></li>
+              <!-- <li><a href="{% url 'contact_list' %}"><span>Contact list</span></a></li> -->
+              <!-- <li><a href="{% url 'earnings' %}"><span>Earnings</span></a></li> -->
+              <!-- <li><a href="{% url 'credit_notes' %}"><span>Notes of Credit</span></a></li> -->
+              <li><a href="{% url 'earnings' %}"><span>Analysis and All transactions
+              </span></a></li>
+              <!-- <li><a href="{% url 'payouts' %}"><span>Payouts</span></a></li> -->
+              <!-- <li><a href="{% url 'statements' %}"><span>Statements</span></a></li> -->
+            </ul>
+          </li>
+<!--          <li class="menu-item has-submenu">-->
+<!--            <a href="#" class="menu-item-inner">-->
+<!--              <img src="{% static 'img/increse-icon.png' %}" alt="increase">-->
+<!--              <span class="menu-item-title"> <span>Increase Your Sales</span></span>-->
+<!--            </a>-->
+<!--          </li>-->
+          
+          <li class="menu-item has-submenu" id="teamPreference">
+            <a href="#" class="menu-item-inner">
+              <img src="{% static 'img/manage-icon.png' %}" alt="manage">
+              <span class="menu-item-title"><span>Manage My Account</span><i
+                  class="bi bi-chevron-down"></i></span>
+            </a>
+            <ul class="menu-submenu menu-list">
+              <li><a href="{% url 'account_registration' editable=None %}" id="completeRegistration"><span>Complete
+                    Registration</span></a></li>
+              <li><a href="{% url 'manage_team' %}"><span>Team & Location</span></a></li>
+              <li><a href="{% url 'preference' %}"><span>Preferences</span></a></li>
+<!--              <li><a href="{% url 'services_account' %}"><span>Account</span></a></li>-->
+            </ul>
+          </li>
+          <li class="menu-item">
+            <a href="{% url 'help' %}" class="menu-item-inner">
+              <img src="{% static 'img/help-icon.png' %}" alt="gusto">
+              <span class="menu-item-title"><span>Help</span></span>
+            </a>
+          </li>
+          
+<!--          <li class="menu-item has-submenu">-->
+<!--            <a href="https://www.gustomarket.co/" target="_blank" class="menu-item-inner">-->
+<!--              <img src="{% static 'img/fun-menu1.png' %}" alt="increase">-->
+<!--              <span class="menu-item-title"> <span>What's new, fun and interesting in GustoMarket</span></span>-->
+<!--            </a>-->
+<!--          </li>-->
+        </ul>
+      </nav>
+
+      <!-- dark switch button section -->
+      <div class="darktheam-sec">
+        <div class="hr-line my-3 my-sm-4"></div>
+<!--        <div class="help-listbtm my-3 my-sm-4">-->
+<!--          <ul>-->
+<!--            <li class="menu-item has-submenu">-->
+<!--              <a href="#" class="menu-item-inner">-->
+<!--                <img src="{% static 'img/help-icon.png' %}" alt="help">-->
+<!--                <span class="menu-item-title"><span>Help & getting started</span><span-->
+<!--                    class="badge bg-bluedrk">8</span></span>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+        <div class="darktheam-inner">
+          <div class="theme-switcher">
+            <input type="radio" id="light-theme" name="themes" checked>
+            <label for="light-theme">
+              <span>
+                <i class="bi bi-brightness-high-fill"></i>
+                <span class="mob-txt">Light</span>
+              </span>
+            </label>
+            <input type="radio" id="dark-theme" name="themes">
+            <label for="dark-theme">
+              <span>
+                <i class="bi bi-moon"></i> <span class="mob-txt">Dark</span>
+              </span>
+            </label>
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="main-body">
+    <!-- start top header section -->
+    <header class="top-header">
+      <div class="header-inner clearfix">
+        <div class="header-icon js-hamburger">
+          <div class="hamburger-toggle">
+            <span class="bar-top"></span> <span class="bar-mid"></span>
+            <span class="bar-bot"></span>
+          </div>
+        </div>
+        <!-- start serach bar -->
+        <form action="{% url 'products' %}" method="get">
+          <div class="serach-bar position-relative" style="margin-right: 10px;">
+            <input class="form-control search" type="search" id="searchleft" placeholder="Search or type a command"
+              aria-label="Search" name="search">
+            <label class="searchbutton" for="searchleft">
+              <span class="mglass">
+                <span class="search-icn">
+                  <img src="{% static 'img/search-icon.png' %}" alt="search">
+                </span>
+              </span>
+            </label>
+          </div>
+        <!-- <button type="submit" class="red-btn">Search</button> -->
+        </form>
+
+        <!-- start right side user profile and notification -->
+        <div class="tophead-right pe-sm-5 pe-4" id="tophead-right">
+          <div id="google_translate_element" style="width: 170px;"></div>
+
+
+<!--          <a href="" class="tour-link">-->
+<!--            <button type="button" class="white-btn">Take a Tour</button>-->
+<!--          </a>-->
+
+          <a href="{% url 'cart' %}" class="cart-link">
+            <button class="header-actionbtn position-relative" type="button" id="cartCount">
+              <i class="bi bi-cart3"></i>
+            </button>
+          </a>
+          <!-- start message dropdown -->
+          <!-- Comment out "messages" - unsure as to what those are currently -->
+<!--          <div class="dropdown">-->
+<!--            <button class="header-actionbtn position-relative" type="button" data-bs-toggle="dropdown">-->
+<!--              <i class="bi bi-chat-left-text"></i>-->
+<!--              <span class="badge-icns">-->
+<!--                <span class="visually-hidden">New alerts</span>-->
+<!--              </span>-->
+<!--            </button>-->
+<!--            <ul class="dropdown-menu custom-dropdown message-drop">-->
+<!--              <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>-->
+<!--              <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>-->
+<!--              <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+
+          <!-- start notification dropdown -->
+          <div class="dropdown">
+            <button type="button" class="header-actionbtn position-relative" data-bs-toggle="dropdown">
+              <i class="bi bi-bell"></i>
+              <span class="badge-icns">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </button>
+            <div class="dropdown-menu custom-dropdown">
+              <div class="notification-heder-sec">
+                <div class="notification-heading">
+                  <h2>Notification</h2>
+                </div>
+                <div class="notification-inner d-flex align-items-center">
+                  <div class="notification-icon">
+                    <div class="notifi-bg"><img src="{% static 'img/user-img.png' %}" alt="user">
+                      <div class="notitxt-bg flex-center">
+                        <i class="bi bi-chat-left-text-fill"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="notification-text">
+                    <p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p>
+                  </div>
+                  <div class="notification-hours">
+                    <p>1h</p>
+                    <div class="notification-active"></div>
+                  </div>
+                </div>
+                <div class="notification-inner d-flex align-items-center">
+                  <div class="notification-icon">
+                    <div class="notifi-bg"><img src="{% static 'img/user-img.png' %}" alt="user">
+                      <div class="notitxt-bg flex-center">
+                        <i class="bi bi-chat-left-text-fill"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="notification-text">
+                    <p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p>
+                  </div>
+                  <div class="notification-hours">
+                    <p>1h</p>
+                    <div class="notification-active"></div>
+                  </div>
+                </div>
+                <div class="notification-inner d-flex align-items-center">
+                  <div class="notification-icon">
+                    <div class="notifi-bg"><img src="{% static 'img/user-img.png' %}" alt="user">
+                      <div class="notitxt-bg flex-center">
+                        <i class="bi bi-chat-left-text-fill"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="notification-text">
+                    <p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p>
+                  </div>
+                  <div class="notification-hours">
+                    <p>1h</p>
+                    <div class="notification-active"></div>
+                  </div>
+                </div>
+                <button type="button" class="red-btn w-100 mt-4">
+                  See all notifications
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- start user profile  dropdown -->
+          <div class="dropdown">
+            <button class="header-actionbtn useraction-btn" type="button" data-bs-toggle="dropdown">
+              <!-- <span class="user-imgs">{% if supplier.photo %}<img src="{{supplier.photo.url}}" alt="user">{% endif %}</span> -->
+              <span class="user-imgs">
+                {% if user_profile %}
+                <img src="{{ user_profile.url }}" alt="Profile Picture">
+                {% else %}
+                <img src="{% static 'img/user-img.png' %}" alt="Default Profile Image">
+                {% endif %}
+              </span>
+            </button>
+            <ul class="dropdown-menu custom-dropdown userdrop-down">
+              <li><a class="dropdown-item" href="{% url 'account_registration' editable='editable' %}"
+                  id="editProfileLink">Edit Profile</a>
+              </li>
+              <!-- <li><a class="dropdown-item" href="{% url 'change_password' %}">Edit Password</a></li> -->
+              <li> <a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
+              <li> <a class="dropdown-item" href="{% url 'sign_out' %}">Sign Out</a> </li>
+            </ul>
+          </div>
+          <!-- start Language dropdown -->
+
+
+        </div>
+      </div>
+    </header>
+    <!-- End top header section -->
+    {% if error_message %}
+    <div class="alert alert-danger">
+      <p style="font-size: 15px;">{{ error_message }}</p>
+    </div>
+    {% endif %}
+
+    {% block tab %}
+    <div class="content-wrapper content-wrapper-bg">
+      <h1 class="page-title">Complete Registration</h1>
+      <!-- start inner body section -->
+      <div class="page-content">
+        <!-- start registration wizard tab section -->
+        <div class="wizard d-flex align-items-start gap-5">
+          <ul class="nav nav-tabs justify-content-center flex-column">
+            <li class="nav-item">
+              <a class="nav-link account-link" href="{% url 'account_registration' editable=None %}"> Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link team-link" href="{% url 'team_registration' %}">Add Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link payment-link" href="{% url 'payment_registration' %}"> Payment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link document-link" href="{% url 'document_registration' %}"> Documents</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link terms-link" href="{% url 'terms_conditions' %}">Terms & Conditions</a>
+            </li>
+          </ul>
+          {% endblock %}
+          <div class="tab-content w-100">
+
+            {% block content %}
+
+            {% endblock %}
+
+            {% block change_password %}
+
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // Get the current URL
+      var currentUrl = window.location.pathname;
+      // Remove the "active" class from all nav-links
+      $('.nav-link').removeClass('active');
+
+      // Add the "active" class to the appropriate nav-link based on the URL 
+      if (currentUrl === "{% url 'account_registration' editable=None %}" || currentUrl === "{% url 'account_registration' editable='editable' %}") {
+        $('.account-link').addClass('active');
+        $('.menu-item').removeClass('is-active');
+        $('a').removeClass('tabactive');
+        $('#teamPreference').addClass('is-active');
+        $('#completeRegistration').addClass('tabactive');
+      } else if (currentUrl === "{% url 'team_registration' %}") {
+        $('.team-link').addClass('active');
+      } else if (currentUrl === "{% url 'payment_registration' %}") {
+        $('.payment-link').addClass('active');
+      } else if (currentUrl === "{% url 'document_registration' %}") {
+        $('.document-link').addClass('active');
+      } else if (currentUrl === "{% url 'terms_conditions' %}") {
+        $('.terms-link').addClass('active');
+      } else if (currentUrl === "{% url 'products' %}") {
+        $('.menu-item').removeClass('is-active');
+        $('a').removeClass('tabactive');
+      }
+    });
+  </script>
+  <script>
+    // yourapp/static/yourapp/updateProductCount.js
+    $(document).ready(function () {
+      // Make an AJAX request to fetch the product count
+      $.ajax({
+        url: '/get-cart-item-count/',
+        method: 'GET',
+        success: function (data) {
+          if (data.cart_item_count > 0) {
+            // Create a new span element with the cart item count
+            $('#cartCount').append('<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-crt" id="cart_item_count">' + data.cart_item_count + '</span>');
+          }
+        },
+        error: function (error) {
+          console.error('Error fetching product count:', error);
+        }
+      });
+    });
+  </script>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: true,
+        includedLanguages: 'en,es,zh-CN,ja,fr,de,hi,iw,ar',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      }, 'google_translate_element');
+    }
+  </script>
+
+  <!-- jquery js link -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <!-- bootstrap js link -->
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <!-- bootstrap data table link -->
+  <script src="{% static 'js/jquery.data-tables.min.js' %}"></script>
+  <script src="{% static 'js/data-tables.bootstrap5.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+  <script src="{% static 'js/data-tables.responsive.min.js' %}"></script>
+  <!-- ckeditor js link -->
+  <script src="{% static 'js/ckeditor.js' %}"></script>
+  <!-- bootstrap js link -->
+  <script src="{% static 'js/product.js' %}"></script>
+  <!-- apexcharts link -->
+  <script src="{% static 'js/chart.js' %}"></script>
+  <script src="{% static 'js/apexcharts.js' %}"></script>
+  <!-- range silder js link -->
+  <script src="{% static 'js/range-slider.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  <!-- checkboxes js link -->
+  <script src="{% static 'js/checkboxes.js' %}"></script>
+
+
+  <!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    type="text/javascript"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+</body>
+
+</html>

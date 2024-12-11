@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap css link -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- style css link -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- mobile responsive css link -->
+    <link rel="stylesheet" href="{% static 'css/tab-responsive.css' %}">
+    <!-- mobile responsive css link -->
+    <link rel="stylesheet" href="{% static 'css/mobile-responsive.css' %}">
+    <!-- fontawesome css link -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"> 
+</head>
+
+<body>
+    <div class="sigup-bg">
+        <div class="container-fluid p-0">
+            <div class="row m-0">
+              <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 d-md-block d-none p-0">
+                <!-- start sign up right -->   
+               <div class="sigup-left">
+                  <div class="sigup-logo pt-3">
+                    <img src="{% static 'img/logo.png' %}" alt="logo">
+                  </div>
+                  <div class="trade-future flex-center">
+                     <div class="trade-future-inner">
+                         <div class="trade-logo text-center">
+                           <img src="{% static 'img/trade-logo1.png' %}" alt="trade logo"> 
+                          </div>
+                     <div class="trade-heading text-center">
+                         <h2>Streamline Your Business with GustoMarket</h2>
+                     </div>
+                     <div id="trade-carousel" class="carousel slide" data-bs-ride="carousel">
+                       <div class="carousel-indicators">
+                           <button type="button" data-bs-target="#trade-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                           <button type="button" data-bs-target="#trade-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                       </div>
+                        <div class="carousel-inner">
+                           <div class="carousel-item active">
+                              <div class="trade-list text-center">
+                               <ul>
+                                   <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Procurement Optimization</li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Supplier Relationship Management (SRM)</li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Inventory Management</li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Track Financials</li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Order Fulfilment & Logistics</li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Analytics & Reporting</li>
+                               </ul>
+                             </div> 
+                           </div>
+                           <div class="carousel-item">
+                             <div class="trade-list text-center">
+                               <ul>
+                                   <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Collaborative Procurement
+                                    </li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Enhance Buyer Relationships
+                                    </li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Optimize Stock Control & Forecasting
+                                    </li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Simplify Payments & Invoicing
+                                    </li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Efficiently Manage Orders
+                                    </li>
+                                    <li><img src="{% static 'img/trade-checklist.png' %}"
+                                            alt="checklist"> Clear Data & Reporting Insights
+                                    </li>
+                               </ul>
+                               </div>
+                           </div>
+                       </div>
+                       </div>
+                     
+                     </div> 
+                  </div>
+               </div>
+               <!-- End sign up right -->  
+             </div>
+
+              {% block content %}
+              
+              {% endblock %}
+
+            </div>
+        </div>  
+      </div>
+
+<!-- jquery js link -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- bootstrap js link -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- bootstrap js link -->
+<script src="{% static 'js/custom.js' %}"></script>    
+</body>
+</html>

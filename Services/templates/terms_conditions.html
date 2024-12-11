@@ -1,0 +1,39 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="tab-inner-sec">
+  <div class="terms-sec">
+    <div class="tab-heading">
+      <h3>Terms & Conditions</h3>
+    </div>
+    <form action="{% url 'terms_conditions' %}" method="post">
+      {% csrf_token %}
+      <div class="terms-cond-inner cus-inputs mt-5">
+        <label class="form-label">Gusto’s Terms & Conditions and Service Policy <i class="bi bi-exclamation-circle-fill"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i> </label>
+        <div class="terms-con-box cmn-text">
+          <div class="scrool-add">
+            <!-- <input type="hidden" name="terms_id", value="{{terms.id}}"> -->
+            <p>{{terms.terms_conditions}}</p>
+          </div>
+        </div>
+        <div class="col-12 my-5">
+          <div class="custom-checkbox"> <label class="custom-check">I agree to Gusto’s Terms & Conditions<input
+                type="checkbox" name="checked" checked><span class="checkmark"></span></label> </div>
+        </div>
+      </div>
+      {% for message in messages %}
+      <ul class="messages">
+        <li style="color: red; font-size: 15px;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      </ul>
+      {% endfor %}
+      <div class="col-12">
+        <button type="submit" class="red-btn next" onclick='window.location.href="thank-you.html"'>Apply</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

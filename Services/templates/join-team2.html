@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>GustoMarket</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap css link -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- style css link -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- mobile responsive css link -->
+  <link rel="stylesheet" href="{% static 'css/tab-responsive.css' %}">
+  <!-- mobile responsive css link -->
+  <link rel="stylesheet" href="{% static 'css/mobile-responsive.css' %}">
+</head>
+
+<body>
+
+  <div class="sigup-bg">
+    <div class="container-fluid p-0">
+      <div class="row m-0">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 d-md-block d-none p-0">
+          <!-- start sign up right -->
+          <div class="sigup-left">
+            <div class="sigup-logo pt-3">
+               <img src="{% static 'img/logo.png' %}" alt="logo">
+            </div>
+            <div class="trade-future flex-center">
+              <div class="trade-future-inner">
+                <div class="trade-logo text-center">
+                  <img src="{% static 'img/trade-logo1.png' %}" alt="trade logo">
+                </div>
+                <div class="trade-heading text-center">
+                  <h2>Streamline Your Business with GustoMarket</h2>
+                </div>
+                <div id="trade-carousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#trade-carousel" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#trade-carousel" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#trade-carousel" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="trade-list text-center">
+                        <ul>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <div class="trade-list text-center">
+                        <ul>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 1
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <div class="trade-list text-center">
+                        <ul>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                          <li><img src="{% static 'img/trade-checklist.png' %}" alt="checklist"> Key selling point 2
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- End sign up right -->
+        </div>
+        <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 p-0">
+          <!-- start sign up right -->
+          <div class="sigup-right">
+            <div class="top-sign-sec text-end">
+              <p>Already a member? <b>Sign in</b></p>
+            </div>
+            <div class="get-started-sec flex-center">
+              <div class="get-started-inr">
+                <div class="sigup-logo p-0 text-center mb-4 d-md-none d-block">
+                  <h1>GUSTO</h1>
+                </div>
+                <div class="get-started-hed text-center">
+                  <h2>Join your Team</h2>
+                </div>
+                <div class="com-bold-txt text-center">
+                  <p>Enter your workspace’s Gusto URL</p>
+                </div>
+                <div class="form">
+                  <div class="forminpt-sec jointem-frm">
+                    <input type="email" class="form-control" placeholder="Company Name">
+                  </div>
+                  <div class="forminpt-sec jointem-frm">
+                    <input type="email" class="form-control" placeholder="Company Number">
+                  </div>
+                  <div class="forminpt-sec jointem-frm">
+                    <input type="email" class="form-control" placeholder="Internal Code">
+                  </div>
+                  <div class="disable-btn">
+                    <button type="button">Continue</button>
+                  </div>
+                  <div class="receive-code-sec text-center mb-5 mt-5">
+                    <p>Don’t know your workspace URL? <b>Find your workspace</b></p>
+                    <p>Looking to create a new workspace? <b>Create workspace</b></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom-sign-sec text-center mt-4 mt-sm-0 mb-3">
+              <ul>
+                <li><a href="#">Privacy & Terms</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Change region</a></li>
+              </ul>
+            </div>
+            <!-- start window chat pop -->
+            <div class="window-chat-pop" id="window-chat-pop">
+              <div id="chatbot" class="main-card collapsed">
+                <button id="chatbot_toggle" class="chatbot-tg-close">
+                  <img src="{% static 'img/chat-icon.svg' %}" alt="chat">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                  </svg>
+                </button>
+                <div class="main-title">
+                  <div>
+                    <svg viewBox="0 0 640 512">
+                      <path fill="currentColor"
+                        d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z" />
+                    </svg>
+                  </div>
+                  <span>Gusto Chat</span>
+
+                </div>
+                <div class="chat-area" id="message-box">
+                </div>
+                <div class="line"></div>
+                <div class="input-div">
+                  <input class="input-message" name="message" type="text" id="message"
+                    placeholder="Type your message ...">
+                  <button class="input-send" onclick="send()">
+                    <svg style="width:24px;height:24px">
+                      <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- End window chat pop -->
+          </div>
+          <!-- End  ign up right -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jquery js link -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <!-- bootstrap js link -->
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

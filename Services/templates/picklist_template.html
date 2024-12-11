@@ -1,0 +1,501 @@
+
+
+   
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Picklist</title>
+
+	<style>
+		@page {
+			margin: 10px;
+	
+		}
+		.page-break {
+        page-break-after: always;
+    }
+
+		body {
+			padding: 0;
+		}
+
+		.invoice-box {
+			max-width: 1000px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+			position: relative;
+		}
+
+		.invoice-box table.body {
+			width: 100%;
+			text-align: left;
+			table-layout: fixed;
+		}
+
+		.invoice-box table td {
+			padding: 4px;
+			vertical-align: top;
+		}
+
+		/* .invoice-box table tr.top table td {
+			padding-bottom: 20px;
+		} */
+
+		/* .invoice-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		} */
+
+		/* .invoice-box table tr.information table td {
+			padding-bottom: 40px;
+		} */
+
+		.invoice-box table tr.heading td {
+			background: #fff;
+			border-bottom: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		/* .invoice-box table tr.details td {
+			padding-bottom: 20px;
+		} */
+
+		.invoice-box table tr.item td {
+			border-bottom: 1px solid #eee;
+		}
+
+		.invoice-box table tr.item.last td {
+			border-bottom: none;
+		}
+
+		.invoice-box table tr.total td:nth-child(7) {
+			border-top: 2px solid #eee;
+			font-weight: bold;
+		}
+
+		@media only screen and (max-width: 600px) {
+			.invoice-box table tr.top table td {
+				width: 100%;
+				display: block;
+				text-align: center;
+			}
+
+			.invoice-box table tr.information table td {
+				width: 100%;
+				display: block;
+				text-align: center;
+			}
+		}
+
+		/** RTL **/
+		.invoice-box.rtl {
+			direction: rtl;
+			font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+		}
+
+		.invoice-box.rtl table {
+			text-align: right;
+		}
+
+		.invoice-box.rtl table tr td:nth-child(7) {
+			text-align: left;
+		}
+
+		.square {
+			width: 20px;
+			/* Adjust the size as needed */
+			height: 20px;
+			/* Adjust the size as needed */
+			border: 1px solid black;
+		}
+
+		img {
+			
+			position: absolute;
+			top: 10px;
+			right: 150px;
+			overflow: hidden;
+			/* bottom: 20px;
+            width: 300px;
+            height: auto; */
+
+		}
+
+		body {
+			padding-left: 5px;
+		}
+
+		* Basic table styling */ table {
+			width: 80%;
+			margin: 20px auto;
+			border-collapse: collapse;
+			text-align: center;
+		}
+
+		th,
+		td {
+			padding: 10px;
+			font-size: 16px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		/* Styling the checkbox label */
+		.checkbox-label {
+			position: relative;
+			padding-left: 35px;
+			cursor: pointer;
+			display: inline-block;
+			user-select: none;
+		}
+
+		/* Hide the default checkbox */
+		.custom-checkbox {
+			/* position: absolute; */
+			opacity: 0;
+			cursor: pointer;
+			height: 0;
+			width: 0;
+			
+			
+		}
+
+		/* Custom checkbox design */
+		.checkmark {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 20px;
+			width: 20px;
+			background-color: #eee;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		/* Hover effect to change background color */
+		.checkbox-label:hover .checkmark {
+			background-color: #ccc;
+		}
+
+		/* Checkbox tick style when checked */
+		.checkbox-label input:checked~.checkmark {
+			background-color: #2196F3;
+		}
+
+		/* Adding a tick symbol inside the checkbox */
+		.checkmark:after {
+			content: "";
+			position: absolute;
+			display: none;
+		}
+
+		.checkbox-label input:checked~.checkmark:after {
+			display: block;
+		}
+
+		/* Styling the tick symbol */
+		.checkmark:after {
+			left: 7px;
+			top: 4px;
+			width: 5px;
+			height: 10px;
+			border: solid white;
+			border-width: 0 2px 2px 0;
+			transform: rotate(45deg);
+		}
+		.new-logo-container{
+			display: flex;
+			flex-direction: column;
+		}
+		.logo-container {
+			display: flex;
+            flex-direction: column;
+			gap: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+		margin: 0;
+		align-items: center;
+    	justify-content: space-between;
+		
+        /* box-sizing: border-box; */
+    }
+
+    
+    .logo-img {
+        max-width: 170px; /* Default max width for larger screens */
+        /* height: auto; */
+		/* top: 0; */
+		right: 0;
+		margin-top: 15px;
+		height: 50px;
+		
+    }
+
+    /* Media query for tablet and smaller devices */
+    @media only screen and (max-width: 768px) {
+        .logo-container {
+            top: 0;
+            right: 0;
+            padding: 5px; /* Adjust padding for smaller screens */
+        }
+
+        .logo-img {
+            max-width: 140px; /* Shrink logo size for smaller screens */
+			
+        }
+    }
+
+    /* Media query for mobile and smaller screens */
+    @media only screen and (max-width: 480px) {
+        .logo-container {
+            top: 0;
+            right: 0;
+            padding: 5px;
+        }
+
+        .logo-img {
+            max-width: 100px; 
+        }
+    }
+	.invs{
+		margin-bottom: 10px;
+		font-size: 12px;
+    	margin-right: 10px;
+	}
+	/* Picklist Header */
+	title{
+		top: 0;
+
+	}
+	@page {
+            margin: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .invoice-box {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            color: #555;
+            position: relative;
+        }
+
+        /* The unique header that will repeat on every page */
+        .unique-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            height: auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+			padding: 10px;
+			margin: 0;
+
+        }
+
+        .invs {
+            font-size: 11px;
+            color: #333;
+			margin-right: 20px;
+			white-space: nowrap;
+        }
+
+        .logo-img {
+            max-width: 200px;
+            height: auto;
+        }
+		@media only screen and (max-width: 768px) {
+    .logo-container {
+        flex-direction: row; /* Stack text and logo vertically on smaller screens */
+        align-items: center; /* Align text and logo to the left */
+    }
+
+    .invs {
+        margin-bottom: 10px; /* Add space below the text when stacked */
+        margin-right: 8px; /* Reset margin */
+    }
+
+    .logo-img {
+        max-width: 140px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .invs {
+        font-size: 10px;
+		margin-right: 5px; /* Further reduce text size on smaller screens */
+    }
+
+    .logo-img {
+        max-width: 100px;
+    }
+}
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .buyer-info {
+            text-align: left;
+            width: 50%;
+			margin-top: 60px;
+			margin-right: 30px;
+        }
+
+        .order-info {
+            text-align: left;
+            width: 50%;
+			margin-top: 60px;
+			margin-right: 100px;
+        }
+
+        /* Body margin to prevent content from overlapping with the fixed header */
+        body {
+            padding-top: 150px; /* Adjust based on the actual height of the header */
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        .body-table {
+            width: 100%;
+        }
+
+        .body-table td {
+            padding: 5px;
+        }
+
+        .heading {
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+
+        @media print {
+            /* Repeat the header on every page during print */
+			.logo-container{
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				text-align: right;
+			padding: 10px;
+			margin: 0;
+			}
+
+            .unique-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                height: auto;
+            }
+			.logo-img{
+				max-width: 180px;
+			}
+			
+
+            body {
+                padding-top: 150px; /* Ensure content doesn't overlap with the fixed header */
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+			.invs{
+				margin-left: 12%;
+			}
+        }
+
+	</style>
+
+</head>
+
+<body>
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+			<div class="invoice-box">
+				
+				<div class="unique-header">
+					<div class="logo-container">
+						<p class="invs" style="margin-left: 4px;">Procurement and invoicing services provided by</p>					
+						<img style="margin-top: 20px;" src="https://platform.gustomarket.co/static/img/logo.png" alt="logo" class="logo-img">
+					</div>
+						<div class="header-info" >
+							<b style="font-size: 30px; padding: 20px; margin-top: 0;">Picklist</b>
+							<br><br>
+							<div class="buyer-info">
+								<b>Buyer Info:</b><br>
+								BUYER_NAME<br>
+								BUYER_EMAIL<br>
+								BUYER_ADDR_LINE1<br>
+								BUYER_CITY, BUYER_STATE BUYER_ZIP
+							</div>
+							<div class="order-info">
+								<b>Date Generated:</b> CURRENT_DATE<br>
+								<b>Order Number:</b> ORDER_ID<br>
+								<b>Seller Invoice Number:</b> ORDER_SEC
+
+							</div>
+						</div>
+				</div>
+			</div>
+		</thead>
+			
+		<tbody > 	
+		    <!-- <hr> -->
+				<br>
+				<table class="body" >
+				
+						<tr class="heading" style="background-color: white;">
+							<td>Item</td>
+							<td>Quantity</td>
+							<td>Unit</td>
+							<td style="padding-left: 45px;">Picker</td>
+							<td style="padding-left: 45px;">QA</td>
+							<td style="padding-left: 45px;">Owner/Manager</td>
+							
+						</tr>
+						
+					<tbody>
+					<!--DATA_GOES_HERE-->		
+					</tbody>	
+				</table>
+		</tbody> 
+	</table>
+</body>
+
+</html>

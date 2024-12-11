@@ -1,0 +1,660 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Contact list (customers, suppliers, etc)</h1>
+  <!-- start inner body section -->
+  <div class="page-content">
+    <!-- start Contact list (customers, suppliers, etc) page -->
+    <div class="contactlist-suppliers-inners">
+      <!-- start Customer top  section -->
+      <div class="customertops-sec flex-space mrginbtm-same">
+        <div class="customer-left-column d-flex align-items-center gap-5">
+          <div class="tab-heading">
+            <h3>Customer</h3>
+          </div>
+          <div class="customer-serch">
+            <div class="serach-boxs position-relative">
+              <input class="form-control" type="search" placeholder="Search by name or email">
+              <label class="search-label d-block">
+                <span class="search-icons">
+                  <img src="{% static 'img/search-icon.png' %}" alt="search">
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="customer-right-column horiztl-tab-gry position-relative">
+          <div class="d-flex gap-3 align-items-center">
+            <ul class="nav nav-pills gap-3" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="active-tb-tab" data-bs-toggle="pill" data-bs-target="#active-tb"
+                  type="button" role="tab">Active</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="new-tb-tab" data-bs-toggle="pill" data-bs-target="#new-tb" type="button"
+                  role="tab">New</button>
+              </li>
+            </ul>
+            <div class="filter-wrapper">
+              <button class="position-relative filter-btns filter-cliking" type="button">
+                <img src="{% static 'img/filter-icon.png' %}" alt="filter">
+              </button>
+              <div class="dash-filter-show" style="display: none;">
+                <div class="filter-section">
+                  <div class="tab-heading">
+                    <h3>Filters/order</h3>
+                  </div>
+                  <div class="hr-line-small my-4 my-sm-5"></div>
+                  <div class="gary-txts mb-4">
+                    <p>Showing</p>
+                  </div>
+                  <div class="widgets-check-list">
+                    <div class="widget-listing flex-space mb-4">
+                      <div class="black-txts">
+                        <p class="mb-0">By price</p>
+                      </div>
+                      <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span
+                            class="checkmark"></span></label> </div>
+                    </div>
+                    <div class="widget-listing flex-space mb-4">
+                      <div class="black-txts">
+                        <p class="mb-0">By product name</p>
+                      </div>
+                      <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"><span
+                            class="checkmark"></span></label> </div>
+                    </div>
+
+                  </div>
+                  <div class="hr-line-small my-4 my-sm-5"></div>
+
+                  <div class="d-flex justify-content-end gap-4">
+                    <button type="button" class="white-btn">Reset to Default</button>
+                    <button type="button" class="red-btn">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cus-suppliers-tabs">
+        <div class="cus-suppliers-inner d-flex gap-5">
+          <div class="nav flex-column cus-suppliers-nav nav-pills gap-3" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="cutomlist1-tab" data-bs-toggle="pill" data-bs-target="#cutomlist1"
+              type="button" role="tab">
+              <span class="customerlist-names d-flex align-items-center gap-4">
+                <span class="customers-img">
+                  <img src="{% static 'img/customer1.png' %}" alt="customer">
+                </span>
+                <span class="customers-txts">
+                  <b>Chelsie Haley</b>
+                  <span class="d-block">@username</span>
+                </span>
+              </span>
+            </button>
+            <button class="nav-link" id="cutomlist2-tab" data-bs-toggle="pill" data-bs-target="#cutomlist2"
+              type="button" role="tab">
+              <span class="customerlist-names d-flex align-items-center gap-4">
+                <span class="customers-img">
+                  <img src="{% static 'img/customer2.png' %}" alt="customer">
+                </span>
+                <span class="customers-txts">
+                  <b>Chelsie Haley</b>
+                  <span class="d-block">@username</span>
+                </span>
+              </span>
+            </button>
+            <button class="nav-link" id="cutomlist3-tab" data-bs-toggle="pill" data-bs-target="#cutomlist3"
+              type="button" role="tab">
+              <span class="customerlist-names d-flex align-items-center gap-4">
+                <span class="customers-img">
+                  <img src="{% static 'img/customer3.png' %}" alt="customer">
+                </span>
+                <span class="customers-txts">
+                  <b>Orion Luettgen</b>
+                  <span class="d-block">@username</span>
+                </span>
+              </span>
+            </button>
+            <button class="nav-link" id="cutomlist4-tab" data-bs-toggle="pill" data-bs-target="#cutomlist4"
+              type="button" role="tab">
+              <span class="customerlist-names d-flex align-items-center gap-4">
+                <span class="customers-img">
+                  <img src="{% static 'img/customer4.png' %}" alt="customer">
+                </span>
+                <span class="customers-txts">
+                  <b>Brown Beatty</b>
+                  <span class="d-block">@username</span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="tab-content w-100">
+            <div class="tab-pane fade show active" id="cutomlist1" role="tabpanel" aria-labelledby="cutomlist1-tab">
+              <div class="cust-profile-sec">
+                <div class="cust-profile-inner">
+                  <!-- start top profile section -->
+                  <div class="cust-profile-tops flex-space">
+                    <div class="cust-profile-left d-flex gap-4 align-items-center">
+                      <div class="cust-profile-img">
+                        <img src="{% static 'img/customer1.png' %}" alt="avtore">
+                      </div>
+                      <div class="cust-profile-txts">
+                        <b>Chelsie Haley</b>
+                        <p class="mb-0">@chelsiehaly</p>
+                      </div>
+                    </div>
+                    <div class="cust-profile-right">
+                      <button type="button" class="red-btn">Message <i
+                          class="bi bi-chat-left-text-fill mx-2"></i></button>
+                    </div>
+                  </div>
+                  <!-- start ck editor section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Private note <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <textarea name="content" class="editor8"></textarea>
+                  </div>
+                  <!-- start customer email section -->
+                  <div class="cus-socail-media">
+                    <div class="cus-socail-list">
+                      <p class="mb-0"><img src="{% static 'img/email-icons.png' %}" alt="mail" class="me-2"> customer@email.com
+                      </p>
+                    </div>
+                    <div class="cus-socail-list cus-socail-icon">
+                      <ul class="d-flex gap-5 mb-0">
+                        <li><a href="#"></a><img src="{% static 'img/twitter-icon.png' %}" alt="twitter"></li>
+                        <li><a href="#"></a><img src="{% static 'img/insta-icon.png' %}" alt="instagram"></li>
+                        <li><a href="#"><img src="{% static 'img/pint-icon.png' %}" alt="pinterest"></a></li>
+                        <li><a href="#"><img src="{% static 'img/fab-icon.png' %}" alt="facebook"></a></li>
+                      </ul>
+                    </div>
+                    <div class="cus-socail-list border-0">
+                      <p class="mb-0"><img src="{% static 'img/link-icon.png' %}" alt="link" class="me-2"> customer.com</p>
+                    </div>
+                  </div>
+                  <!-- start Purchase history section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Purchase history <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <div class="purchase-history-table">
+                      <div class="data-table-sec">
+                        <table id="purchasehis-table" class="table dt-responsive nowrap" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th>Products</th>
+                              <th>Price</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="cutomlist2" role="tabpanel" aria-labelledby="cutomlist2-tab">
+              <div class="cust-profile-sec">
+                <div class="cust-profile-inner">
+                  <!-- start top profile section -->
+                  <div class="cust-profile-tops flex-space">
+                    <div class="cust-profile-left d-flex gap-4 align-items-center">
+                      <div class="cust-profile-img">
+                        <img src="{% static 'img/customer2.png' %}" alt="avtore">
+                      </div>
+                      <div class="cust-profile-txts">
+                        <b>Chelsie Haley</b>
+                        <p class="mb-0">@chelsiehaly</p>
+                      </div>
+                    </div>
+                    <div class="cust-profile-right">
+                      <button type="button" class="red-btn">Message <i
+                          class="bi bi-chat-left-text-fill mx-2"></i></button>
+                    </div>
+                  </div>
+                  <!-- start ck editor section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Private note <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <textarea name="content" class="editor9"></textarea>
+                  </div>
+                  <!-- start customer email section -->
+                  <div class="cus-socail-media">
+                    <div class="cus-socail-list">
+                      <p class="mb-0"><img src="{% static 'img/email-icons.png' %}" alt="mail" class="me-2"> customer@email.com
+                      </p>
+                    </div>
+                    <div class="cus-socail-list cus-socail-icon">
+                      <ul class="d-flex gap-5 mb-0">
+                        <li><a href="#"></a><img src="{% static 'img/twitter-icon.png' %}" alt="twitter"></li>
+                        <li><a href="#"></a><img src="{% static 'img/insta-icon.png' %}" alt="instagram"></li>
+                        <li><a href="#"><img src="{% static 'img/pint-icon.png' %}" alt="pinterest"></a></li>
+                        <li><a href="#"><img src="{% static 'img/fab-icon.png' %}" alt="facebook"></a></li>
+                      </ul>
+                    </div>
+                    <div class="cus-socail-list border-0">
+                      <p class="mb-0"><img src="{% static 'img/link-icon.png' %}" alt="link" class="me-2"> customer.com</p>
+                    </div>
+                  </div>
+                  <!-- start Purchase history section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Purchase history <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <div class="purchase-history-table">
+                      <div class="data-table-sec">
+                        <table id="purchasehis-table1" class="table dt-responsive nowrap" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th>Products</th>
+                              <th>Price</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="cutomlist3" role="tabpanel" aria-labelledby="cutomlist3-tab">
+              <div class="cust-profile-sec">
+                <div class="cust-profile-inner">
+                  <!-- start top profile section -->
+                  <div class="cust-profile-tops flex-space">
+                    <div class="cust-profile-left d-flex gap-4 align-items-center">
+                      <div class="cust-profile-img">
+                        <img src="{% static 'img/customer3.png' %}" alt="avtore">
+                      </div>
+                      <div class="cust-profile-txts">
+                        <b>Chelsie Haley</b>
+                        <p class="mb-0">@chelsiehaly</p>
+                      </div>
+                    </div>
+                    <div class="cust-profile-right">
+                      <button type="button" class="red-btn">Message <i
+                          class="bi bi-chat-left-text-fill mx-2"></i></button>
+                    </div>
+                  </div>
+                  <!-- start ck editor section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Private note <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <textarea name="content" class="editor9"></textarea>
+                  </div>
+                  <!-- start customer email section -->
+                  <div class="cus-socail-media">
+                    <div class="cus-socail-list">
+                      <p class="mb-0"><img src="{% static 'img/email-icons.png' %}" alt="mail" class="me-2"> customer@email.com
+                      </p>
+                    </div>
+                    <div class="cus-socail-list cus-socail-icon">
+                      <ul class="d-flex gap-5 mb-0">
+                        <li><a href="#"></a><img src="{% static 'img/twitter-icon.png' %}" alt="twitter"></li>
+                        <li><a href="#"></a><img src="{% static 'img/insta-icon.png' %}" alt="instagram"></li>
+                        <li><a href="#"><img src="{% static 'img/pint-icon.png' %}" alt="pinterest"></a></li>
+                        <li><a href="#"><img src="{% static 'img/fab-icon.png' %}" alt="facebook"></a></li>
+                      </ul>
+                    </div>
+                    <div class="cus-socail-list border-0">
+                      <p class="mb-0"><img src="{% static 'img/link-icon.png' %}" alt="link" class="me-2"> customer.com</p>
+                    </div>
+                  </div>
+                  <!-- start Purchase history section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Purchase history <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <div class="purchase-history-table">
+                      <div class="data-table-sec">
+                        <table id="purchasehis-table1" class="table dt-responsive nowrap" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th>Products</th>
+                              <th>Price</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="cutomlist4" role="tabpanel" aria-labelledby="cutomlist4-tab">
+              <div class="cust-profile-sec">
+                <div class="cust-profile-inner">
+                  <!-- start top profile section -->
+                  <div class="cust-profile-tops flex-space">
+                    <div class="cust-profile-left d-flex gap-4 align-items-center">
+                      <div class="cust-profile-img">
+                        <img src="{% static 'img/customer4.png' %}" alt="avtore">
+                      </div>
+                      <div class="cust-profile-txts">
+                        <b>Chelsie Haley</b>
+                        <p class="mb-0">@chelsiehaly</p>
+                      </div>
+                    </div>
+                    <div class="cust-profile-right">
+                      <button type="button" class="red-btn">Message <i
+                          class="bi bi-chat-left-text-fill mx-2"></i></button>
+                    </div>
+                  </div>
+                  <!-- start ck editor section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Private note <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <textarea name="content" class="editor9"></textarea>
+                  </div>
+                  <!-- start customer email section -->
+                  <div class="cus-socail-media">
+                    <div class="cus-socail-list">
+                      <p class="mb-0"><img src="{% static 'img/email-icons.png' %}" alt="mail" class="me-2"> customer@email.com
+                      </p>
+                    </div>
+                    <div class="cus-socail-list cus-socail-icon">
+                      <ul class="d-flex gap-5 mb-0">
+                        <li><a href="#"></a><img src="{% static 'img/twitter-icon.png' %}" alt="twitter"></li>
+                        <li><a href="#"></a><img src="{% static 'img/insta-icon.png' %}" alt="instagram"></li>
+                        <li><a href="#"><img src="{% static 'img/pint-icon.png' %}" alt="pinterest"></a></li>
+                        <li><a href="#"><img src="{% static 'img/fab-icon.png' %}" alt="facebook"></a></li>
+                      </ul>
+                    </div>
+                    <div class="cus-socail-list border-0">
+                      <p class="mb-0"><img src="{% static 'img/link-icon.png' %}" alt="link" class="me-2"> customer.com</p>
+                    </div>
+                  </div>
+                  <!-- start Purchase history section -->
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Purchase history <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i>
+                    </label>
+                    <div class="purchase-history-table">
+                      <div class="data-table-sec">
+                        <table id="purchasehis-table1" class="table dt-responsive nowrap" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th>Products</th>
+                              <th>Price</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="product-name-price purch-histy d-flex align-items-center gap-4">
+                                  <div class="prd-img">
+                                    <img src="{% static 'img/smal-prd.png' %}" alt="product list">
+                                  </div>
+                                  <div class="prd-name">
+                                    <h4>Day &amp; Night</h4>
+                                    <p>$1200.00</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><span class="pad-bg pndg-bgcmn">$64.00</span></td>
+                              <td>Aug 3, 2023</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Contact list (customers, suppliers, etc) page -->
+  </div>
+  <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper content-wrapper-bg footer-padding">
+    <h1 class="page-title">Pricing</h1>
+    <!-- start inner body section -->
+    <form action="{% url 'change_prices' %}" method="post" id="form-upload">
+        {% csrf_token %}
+        <input type="hidden" id="publishAction" name="publish_action" value="">
+            <div class="page-content">
+                <!-- start Products header section -->
+                <div class="draft-prduct-top d-flex justify-content-between mb-sm-5 mb-4">
+                    <div class="draft-lft-sec d-flex gap-5">
+                        <div class="tab-heading">
+                            <h3>Products</h3>
+                        </div>
+                        <div class="serach-bar position-relative d-none d-sm-block">
+                            <input class="form-control search" type="search" placeholder="Search product" aria-label="Search">
+                            <label class="searchbutton" for="searchleft">
+                                <span class="mglass">
+                                    <span class="search-icn">
+                                        <img src="{% static 'img/search-icon.png' %}" alt="search">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- start mobile-serch-secsection -->
+                <div class="mobile-serch-sec d-sm-none">
+                    <div class="serach-bar position-relative">
+                        <input class="form-control search" type="search" placeholder="Search product" aria-label="Search">
+                        <label class="searchbutton" for="searchleft">
+                            <span class="mglass">
+                                <span class="search-icn">
+                                    <img src="{% static 'img/search-icon.png' %}" alt="search">
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <!-- End Products header section -->
+                <div class="product-drat-table">
+                    <div class="data-table-sec show-panel mb-4">
+                        <table id="product-tables" class="table dt-responsive nowrap custom-table table-hover"
+                            style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" id="selectAllListProducts"><span
+                                                    class="checkmark"></span></label></div>
+                                    </th>
+                                    <th>Product</th>
+                                    <th>Unit of Pricing</th>
+                                    <th>Frequency</th>
+                                    <th>Average Price</th>
+                                    <th>Last Price</th>
+                                    <th>New Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                <tr>
+                                    <td>
+                                        <div class="custom-checkbox"> <label class="custom-check">
+                                                <input type="checkbox" class="product-checkbox common-checkbox"
+                                                    value="{{ product.id }}" name="selected_products" id="selectedProducts">
+                                                <span class="checkmark"></span></label></div>
+                                    </td>
+                                    <td>
+                                        <div class="product-name-price d-flex align-items-center gap-4">
+                                            <div class="prd-img">
+                                                {% if product.productphoto_set.first %}
+                                                    {% with photo=product.productphoto_set.first %}
+                                                    <img src="{{ photo.product_photo.url }}" alt="product list">
+                                                    {% endwith %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="prd-name">
+                                                <h4>{{ product.product_title }}</h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ product.product_packaging.sku_sold }}</td>
+                                    <!-- <td> {{ product.notification_frequency }} </td> -->
+                                    <td> 
+                                        <select class="selectpicker form-control custom_select" name="notification-frequency"
+                                        id="notification-frequency">
+                                            <option value="notvalid" disabled selected="selected">---Select---</option>
+                                            {% for choice in frequency_choices %}
+                                            <option value="{{ choice.frequency }}" {% if choice.id == product.product_packaging.notification_preference.id %} selected {% endif %}>
+                                                {{ choice.frequency }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td> 
+                                        {% with product_id=product.id %}
+                                        {% if avg_prices|get_item:product_id %}
+                                            $ {{ avg_prices|get_item:product_id }}
+                                            {% else %}
+                                            $ {{ 0 }}
+                                        {% endif %}
+                                        {% endwith %}
+                                    </td>
+                                    <td><span class="price-bg">${{ product.price_transport.amount }}</span></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" placeholder="0" name="price" id="amount"
+                                                value="{{ product.price_transport.amount }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </input>
+        <!-- product footer section -->
+        <div class="footer-bottom flex-space">
+            <div class="last-saved">
+                <p id="selectedProductCount"><span><img src="{% static 'img/lastcheck-icon.png' %}" alt="check" class="me-2">0 product selected</span></p>
+            </div>
+            <div class="footer-rigt-sec d-flex gap-3">
+                <div class="publish-now-btn">
+                    <button type="button" class="red-btn" id="Change">Publish
+                        Now</button>
+                </div>
+            </div>
+        </div>
+        <!-- End product footer section -->
+    </form>
+</div>
+<!-- End inner body section -->
+
+{% block tab %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.common-checkbox').change(function () {
+            const isChecked = this.checked;
+            const productId = $(this).val();
+            // Update the corresponding checkbox in the other view
+            $(`.common-checkbox[value="${productId}"]`).prop('checked', isChecked);
+            updateSelectAllCheckboxes(); // Update "Select All" checkboxes
+            updateSelectedProductCount(); // Update the count
+        });
+
+        // Function to update "Select All" checkboxes
+        function updateSelectAllCheckboxes() {
+            const allCheckboxes = $('.common-checkbox');
+            const allChecked = allCheckboxes.length === allCheckboxes.filter(':checked').length;
+            $('#selectAllListProducts, #selectAllGridProducts').prop('checked', allChecked);
+        }
+
+        // Function to update the selected product count
+        function updateSelectedProductCount() {
+            const selectedCount = $('.common-checkbox:checked').length;
+            const countText = selectedCount === 1 ? '1 product selected' : selectedCount + ' products selected';
+            $('#selectedProductCount').text(countText);
+        }
+
+        // Add a change event to "Select All" checkboxes to synchronize selections
+        $('#selectAllListProducts, #selectAllGridProducts').change(function () {
+            const isChecked = this.checked;
+            $('.common-checkbox').prop('checked', isChecked);
+            $('#selectAllListProducts, #selectAllGridProducts').prop('checked', isChecked);
+            updateSelectedProductCount(); // Update the count
+        });
+
+        $('.search').on('keyup', function() {
+            let filter = $(this).val().toLowerCase();
+            $('#product-tables tbody tr').filter(function() {
+                const prodName = $(this).find('.prd-name h4').text().toLowerCase();
+                $(this).toggle(prodName.indexOf(filter)> -1)
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // The following event listeners will execute once the DOM is fully loaded
+        const priceInput = document.getElementById('amount');
+        const frequencyInput = document.getElementById('notification-frequency').value;
+        
+        if (frequencyInput != 'notvalid') {
+            document.getElementById('Change').addEventListener('click', function () {
+                document.getElementById('publishAction').value = 'price_changed';
+                document.getElementById('form-upload').submit(); // Submit the form
+            });
+        }
+    });
+</script>
+
+{% endblock %}
+
+

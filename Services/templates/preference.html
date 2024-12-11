@@ -1,0 +1,71 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Preference</h1>
+  <!-- start inner body section -->
+  <div class="page-content tbd-height">
+    <div class="preference-page">
+      <div class="tab-heading mb-5">
+        <h3>Your contact preferences </h3>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+          <div class="col-12 cus-inputs">
+            <div class="flex-space">
+              <label class="form-label mb-0">Create new contracts <i class="bi bi-exclamation-circle-fill"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i> </label>
+              <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                    class="slider round"></span> </label> </div>
+            </div>
+          </div>
+          <div class="hr-line my-3 my-sm-4"></div>
+          <div class="col-12 cus-inputs mb-4">
+            <div class="flex-space">
+              <label class="form-label mb-0">Agree to procurement contracts <i class="bi bi-exclamation-circle-fill"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i> </label>
+              <div class="cust-switch"> <label class="switch"><input type="checkbox"><span class="slider round"></span>
+                </label> </div>
+            </div>
+          </div>
+          <div class="hr-line my-3 my-sm-4"></div>
+          <div class="col-12 cus-inputs">
+            <div class="flex-space">
+              <label class="form-label mb-0">Negotiate on potential contracts <i class="bi bi-exclamation-circle-fill"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i> </label>
+              <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                    class="slider round"></span> </label> </div>
+            </div>
+          </div>
+          <select class="selectpicker form-control">
+            <option selected="selected">Set Limitations</option>
+            <option value="1">item 1</option>
+            <option value="2">item 2</option>
+            <option value="3">item 3</option>
+          </select>
+          <div class="hr-line my-3 my-sm-4"></div>
+          <div class="col-12 cus-inputs mb-5">
+            <div class="flex-space">
+              <label class="form-label mb-0">Buy products (all cagtegories) <i class="bi bi-exclamation-circle-fill"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i> </label>
+              <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                    class="slider round"></span> </label> </div>
+            </div>
+          </div>
+          <div class="perfn-btn">
+            <button type="button" class="red-btn">Continue</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End inner body section -->
+</div>
+{% endblock %}
+
+{% block tab %}
+{% endblock %}

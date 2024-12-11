@@ -1,0 +1,561 @@
+{% extends "registration_base.html" %}
+{% load static %}
+{% block title %} GustoMarket {% endblock %}
+{% block content %}
+
+
+<style>
+  .red-btn {
+    transform: scale(0.85);
+    float: left;
+  }
+  .pndg-bg {
+    background-color: #FFD88D;
+}
+/* Style the sort arrows with custom positioning and size */
+
+
+.sort-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em; /* Adjust size as needed */
+  margin: 0 5px; /* Add spacing between buttons */
+  color: white; /* Inherit text color */
+  background-color: #555;
+}
+.sort-button:hover {
+  text-decoration: underline; /* Add hover effect if desired */
+}
+
+/* Styling for the input filter boxes */
+.filter-box {
+  width: 95%;
+  padding: 10px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  /* border-radius: 4px; */
+  
+  font-family: 'Arial', sans-serif;
+  color: #6c757d;
+  background-color: var(--c-bg-body);
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: var(--b-radiuslg);
+}
+
+.filter-box:focus {
+  color: var(--c-heading-secondary);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.filter-box::placeholder {
+  color:var(--c-text-secondary);
+}
+
+/* Styling for the select filter boxes */
+.filter-select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 1px solid var(--c-boder-color);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+/* .filter-select:focus {
+  border-color: #ADD8E6;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  outline: 2px solid #007BFF; /* Brighter blue color */ 
+
+
+
+
+
+</style>
+
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Earnings</h1>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start Earnings page -->
+    <div class="dashboard-inners">
+      <!-- start Earnings top section -->
+      <div class="card-section mb-3">
+        <div class="earnings-crd-bg">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/earnings-icon.png' %}" alt="earnings">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Earnings <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$128k</h2>
+                  <p><b><span class="upgreen"><i class="bi bi-arrow-up"></i> 37.8%</span> this week</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/balance-icon.png' %}" alt="balance">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Balance <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$512.64</h2>
+                  <p><b><span class="downred"><i class="bi bi-arrow-down"></i> 37.8%</span> this week</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative border-0 lastcrd-boder">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/totalvalue-icon.png' %}" alt="total value">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Total value of sales <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$64k</h2>
+                  <p><b><span class="upgreen"><i class="bi bi-arrow-up"></i> 37.8%</span> this week</b></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- start Product sales and Top Clients section -->
+      <div class="product-sales-section mb-3">
+        <div class="row">
+          <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 mb-md-0 mb-3">
+            <div class="card-section">
+              <div class="prod-chart-heads horiztl-tab-gry flex-space mrginbtm-same">
+                <div class="tab-heading">
+                  <h3>Product sales</h3>
+                </div>
+                <div class="prod-chart-tab">
+                  <ul class="nav nav-pills gap-3">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="thismonth-tb-tab" data-bs-toggle="pill"
+                        data-bs-target="#thismonth-tb" type="button" role="tab">This month</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="alltime-tb-tab" data-bs-toggle="pill" data-bs-target="#alltime-tb"
+                        type="button" role="tab">All time</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="lastday-tb-tab" data-bs-toggle="pill" data-bs-target="#lastday-tb"
+                        type="button" role="tab">Last 7 days</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="prod-chart-bdy">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="thismonth-tb" role="tabpanel"
+                    aria-labelledby="thismonth-tb-tab">
+                    <div id="productsales-chart"></div>
+                  </div>
+                  <div class="tab-pane fade" id="alltime-tb" role="tabpanel" aria-labelledby="alltime-tb-tab">
+                    <div id="productsales-chart1"></div>
+                  </div>
+                  <div class="tab-pane fade" id="lastday-tb" role="tabpanel" aria-labelledby="lastday-tb-tab">
+                    <div id="productsales-chart2"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+            <div class="card-section">
+              <div class="topclients-sec">
+                <div class="tab-heading mrginbtm-same">
+                  <h3>Top Clients</h3>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/seller-avtor.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Chelsie Haley</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$876.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/customer1.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Estella Kshlerin</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$128.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/customer2.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Orion Luettgen</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$124.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/customer3.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Brown Beatty</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$82.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/seller-avtor.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Bessie Runolfsson</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$32.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/customer4.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Dora Littel</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$42.77</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="topclients-row flex-space">
+                  <div class="topclient-left d-flex gap-3 align-items-center">
+                    <div class="topclient-icon">
+                      <img src="{% static 'img/seller-avtor.png' %}" alt="avtor">
+                    </div>
+                    <div class="topclient-name">
+                      <b class="mb-0">Jessika Lowe</b>
+                    </div>
+                  </div>
+                  <div class="topclient-right">
+                    <div class="topclient-price">
+                      <b>$42.77</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- start Product sales table section -->
+      <div class="prod-salestble-section">
+        <div class="card-section">
+          <!-- start Order ID header section -->
+          <div class="draft-prduct-top d-flex justify-content-between mb-sm-5 mb-4">
+            <div class="draft-lft-sec d-flex gap-5">
+                <div class="tab-heading">
+                    <h3>Orders</h3>
+                </div>
+                <div class="serach-bar position-relative d-none d-sm-block">
+                    <input class="form-control search" type="search" placeholder="Search product" aria-label="Search">
+                    <label class="searchbutton" for="searchleft">
+                        <span class="mglass">
+                            <span class="search-icn">
+                                <img src="{% static 'img/search-icon.png' %}" alt="search">
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="draft-rgt-sec d-flex gap-3">
+                <button type="button" class="list-btn active"><img src="{% static 'img/list-icon.png' %}"
+                        alt="list"></button>
+                <button type="button" class="grid-btn"><img src="{% static 'img/grid-icon.png' %}" alt="grid"></button>
+            </div>
+          </div>
+          <!-- end  Order ID header section -->
+          <div class="data-table-sec">
+            <table id="prodsales-table" class="table dt-responsive nowrap">
+              <thead>
+                <tr>
+                  <!-- Filters Row -->
+                  <th>
+                    <input type="text" id="order-id-filter" class="filter-box" placeholder="Filter Order ID" oninput="filterTable()">
+                  </th>
+                  <th>
+                    <input type="text" id="invoice-filter" class="filter-box" placeholder="Filter Invoice #" oninput="filterTable()">
+                  </th>
+                  <th>
+                    <input type="datetime-local" id="date-filter" class="filter-box" placeholder="Filter Delivery Date" oninput="filterTable()">
+                    
+                  </th>
+                  <th>
+                    <input type="text" id="client-vendor-filter" class="filter-box" placeholder="Filter Client/Vendor" oninput="filterTable()">
+                  </th>
+                  <th>
+                    <select id="sold-purchased-filter" class="filter-box" onchange="filterTable()">
+                      <option value="">All</option>
+                      <option value="Sold">Sold</option>
+                      <option value="Purchased">Purchased</option>
+                    </select>
+                  </th>
+                  <th>
+                    <select id="status-filter" class="filter-box" onchange="filterTable()">
+                      <option value="">All</option>
+                      <option value="Ordered">Ordered</option>
+                      <option value="In Transit">In Transit</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Complete">Complete</option>
+                    </select>
+                  </th>
+                  <th>
+                    <input type="text" id="total-price-filter" class="filter-box" placeholder="Filter Total Price" oninput="filterTable()">
+                  </th>
+                  <th>
+                    <!-- No filter for buttons -->
+                  </th>
+                </tr>
+                <tr>
+                  
+                  <!-- Column Headers with Sorting Arrows -->
+                  <th onclick="sortTable(0)" class="pndg-bg">
+                    Order ID 
+                  
+                  </th>
+                  <th onclick="sortTable(1)">
+                    Invoice # 
+                    
+                  </th>
+                  <th onclick="sortTable(2)">
+                    Delivery Date 
+                    
+                  </th>
+                  <th onclick="sortTable(3)">
+                    Client/Vendor 
+                   
+                  </th>
+                  <th onclick="sortTable(4)">
+                    Sold/Purchased 
+                    
+                  </th>
+                  <th onclick="sortTable(5)">
+                    Status 
+                   
+                  </th>
+                  <th onclick="sortTable(6)">
+                    Total Price 
+                  
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for sold_item in sold_combined %}
+                <tr>
+                  <td><div class="ord_name pndg-bg pndg-bgcmn">{{ sold_item.0.order.orderID }}</div></td>
+                  <td></td>
+                  <td>{{ sold_item.0.order.order_date }}</td>
+                  <td>{{ customer_names|get_item:sold_item.0.order.orderID }}</td>
+                  <td>Sold</td>
+                  <td>
+                    {% if sold_item.0.order_status|lower == 'pending' %} Ordered
+                    {% elif sold_item.0.order_status|lower == 'in_transit' %} In Transit
+                    {% elif sold_item.0.order_status|lower == 'delivered' %} Delivered
+                    {% else %} Complete {% endif %}
+                    <span class="pad-bg pndg-bgcmn" style="margin-left: 10px;"><b>{% if sold_item.0.order.is_paid %} Paid {% else %} Unpaid {% endif %}</b></span>
+                  </td>
+                  <td> ${{ sold_item.3 }}</td>
+                  <td>
+                    <button type="button" onclick="window.open('/get-invoice-data/{{ sold_item.0.order.orderID }}/', '_blank')" class="red-btn">Invoice</button>
+                    <button type="button" onclick="window.open('/get-picklist-data/{{ sold_item.0.order.orderID }}/', '_blank')" class="red-btn">Picking List</button>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% for purchased_item in purchased_combined %}
+                <tr>
+                  <td><div class="pndg-bg pndg-bgcmn">{{ purchased_item.0.order.orderID }}</div></td>
+                  <td></td>
+                  <td>{{ purchased_item.0.order.order_date }}</td>
+                  <td>{{ purchased_item.0.product.supplier.company.company_name }}</td>
+                  <td>Purchased</td>
+                  <td>
+                    {% if purchased_item.0.order_status|lower == 'pending' %} Pending
+                    {% elif purchased_item.0.order_status|lower == 'in_transit' %} In Transit
+                    {% elif purchased_item.0.order_status|lower == 'delivered' %} Delivered
+                    {% else %} Complete {% endif %}
+                    <span class="pad-bg pndg-bgcmn" style="margin-left: 10px;"><b>{% if purchased_item.0.order.is_paid %} Paid {% else %} Unpaid {% endif %}</b></span>
+                  </td>
+                  <td> ${{ purchased_item.3 }}</td>
+                  <td>
+                    <button type="button" onclick="window.open('/get-invoice-data/{{ purchased_item.0.order.orderID }}/', '_blank')" class="red-btn">Invoice</button>
+                    <button type="button" onclick="window.open('/get-picklist-data/{{ purchased_item.0.order.orderID }}/', '_blank')" class="red-btn">Picking List</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+
+    </div>
+    <!-- End Earnings page -->
+
+    <!-- Modal Structure for pdf print-->
+<!--    <div id="pdfModal" class="modal" style="display:none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close" onclick="closeModal()">&times;</span>-->
+<!--            <iframe id="pdfIframe" src="" style="width:100%; height:500px;" frameborder="0"></iframe>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--  </div>-->
+  <!-- End inner body section -->
+</div>
+{% endblock %}
+{% block tab %}
+
+<script>
+  function filterTable() {
+  const orderIdFilter = document.getElementById("order-id-filter").value.toUpperCase();
+  const invoiceFilter = document.getElementById("invoice-filter").value.toUpperCase();
+  const dateFilter = document.getElementById("date-filter").value;
+  const clientVendorFilter = document.getElementById("client-vendor-filter").value.toUpperCase();
+  const soldPurchasedFilter = document.getElementById("sold-purchased-filter").value.toUpperCase();
+  const statusFilter = document.getElementById("status-filter").value.toUpperCase();
+  const priceFilter = document.getElementById("total-price-filter").value;
+
+  const table = document.getElementById("prodsales-table");
+  const rows = table.getElementsByTagName("tr");
+
+  for (let i = 2; i < rows.length; i++) {  // Skip headers and filter row
+    const cells = rows[i].getElementsByTagName("td");
+    const orderId = cells[0].textContent.toUpperCase();
+    const invoice = cells[1].textContent.toUpperCase();
+    const date = cells[2].textContent;
+    const clientVendor = cells[3].textContent.toUpperCase();
+    const soldPurchased = cells[4].textContent.toUpperCase();
+    const status = cells[5].textContent.toUpperCase();
+    const price = parseFloat(cells[6].textContent.replace('$', ''));
+
+    let showRow = true;
+    if (orderIdFilter && !orderId.includes(orderIdFilter)) showRow = false;
+    if (invoiceFilter && !invoice.includes(invoiceFilter)) showRow = false;
+    if (dateFilter && date !== dateFilter) showRow = false;
+    if (clientVendorFilter && !clientVendor.includes(clientVendorFilter)) showRow = false;
+    if (soldPurchasedFilter && soldPurchased !== soldPurchasedFilter) showRow = false;
+    if (statusFilter && !status.includes(statusFilter)) showRow = false;
+    if (priceFilter && price > parseFloat(priceFilter)) showRow = false;
+
+    rows[i].style.display = showRow ? "" : "none";
+  }
+}
+// function sortTable(columnIndex, direction) {
+//   const table = document.getElementById("prodsales-table");
+//   const rows = Array.from(table.rows).slice(1); // Start from 1 to skip the header row
+
+//   // Determine if the column is numeric or string
+//   const isNumericColumn = columnIndex === 6; // Adjust based on your numeric column
+
+//   const sortedRows = rows.sort((rowA, rowB) => {
+//     const cellA = rowA.cells[columnIndex].textContent.trim();
+//     const cellB = rowB.cells[columnIndex].textContent.trim();
+
+//     // If the column is numeric, convert to numbers for comparison
+//     if (isNumericColumn) {
+//       const numA = parseFloat(cellA.replace(/[^0-9.-]+/g, "")); // Remove currency symbols if any
+//       const numB = parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
+//       return numA - numB; // For ascending order
+//     } else {
+//       return cellA.localeCompare(cellB); // For string comparison
+//     }
+//   });
+
+//   // Reverse rows for descending order
+//   if (direction === 'desc') sortedRows.reverse();
+
+//   // Remove existing rows from the table and append sorted rows
+//   rows.forEach(row => table.deleteRow(1)); // Remove all rows except header
+//   sortedRows.forEach(row => table.appendChild(row)); // Reattach sorted rows
+// }
+
+
+  $(document).ready(function () {
+    $('.search').on('keyup', function() {
+      let filter = $(this).val().toLowerCase();
+      $('#prodsales-table tbody tr').filter(function() {
+          const prodName = $(this).find('.ord_name').text().toLowerCase();
+          $(this).toggle(prodName.indexOf(filter)> -1)
+      });
+  });
+});
+</script>
+<!--<script type="text/javascript">-->
+<!--    function openPicklist(orderId) {-->
+<!--        // Set the iframe source to the desired URL-->
+<!--        document.getElementById("pdfIframe").src = '/get-picklist-data/' + orderId + '/';-->
+<!--        // Open the modal-->
+<!--        document.getElementById("pdfModal").style.display = "flex";-->
+<!--    }-->
+
+<!--    function closeModal() {-->
+<!--        // Hide the modal and clear the iframe source-->
+<!--        document.getElementById("pdfModal").style.display = "none";-->
+<!--        document.getElementById("pdfIframe").src = "";-->
+<!--    }-->
+
+<!--    // Close modal when clicking outside of it-->
+<!--    document.getElementById("pdfModal").onclick = function(event) {-->
+<!--        if (event.target == this) {-->
+<!--            closeModal();-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+{% endblock %}

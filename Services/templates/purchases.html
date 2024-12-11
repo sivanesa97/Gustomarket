@@ -1,0 +1,265 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+
+  <!-- start inner body section -->
+  <div class="page-content">
+
+    <div class="purchase-inner">
+
+      <!-- start purchase header section -->
+      <div class="purchase-head-sec flex-space mb-5">
+        <div class="purchase-head-lft d-flex">
+          <div class="tab-heading">
+            <!-- <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="products-tb-tab" data-bs-toggle="pill" data-bs-target="#products-tb"
+                  type="button" role="tab">Products</button>
+              </li>
+              <li class="nav-item" role="presentation">
+              <button class="nav-link" id="requests-tb-tab" data-bs-toggle="pill" data-bs-target="#requests-tb" type="button" role="tab">Requests</button>
+            </li>
+            </ul> -->
+            <h3>Products</h3>
+          </div>
+        </div>
+
+        <div class="purchase-head-rgt d-flex gap-3">
+
+          <!-- <div class="serach-bar position-relative d-none d-sm-block">
+            <form action="{% url 'products' %}" method="get">
+              <input class="form-control search" type="search" placeholder="Search product" aria-label="Search"
+                name="search">
+              <label class="searchbutton" for="searchleft">
+                <span class="mglass">
+                  <span class="search-icn">
+                    <img src="{% static 'img/search-icon.png' %}" alt="search">
+                  </span>
+                </span>
+              </label>
+          </div>
+          <button type="submit" class="red-btn red-btn-sm">Search</button>
+          </form> -->
+
+          <!-- <form method="get">
+              {{ products.form.custom_search }}
+              <button type="submit">Search</button>
+          </form> -->
+          <select class="selectpicker">
+            <option selected="selected">Most recent</option>
+            <option value="1">Popularity</option>
+            <option value="2">Low to High</option>
+            <option value="3">High to Low</option>
+            <option value="4">Newest First</option>
+          </select>
+          <!-- filter serach dropdown -->
+          <div class="filter-wrapper">
+            <button class="position-relative filter-btns filter-click" type="button">
+              <img src="{% static 'img/filter-icon.png' %}" alt="filter">
+            </button>
+            <div class="filter-dropdown-show" style="display: none;">
+              <div class="filter-section">
+                <div class="tab-heading">
+                  <h3>Showing 9 of 32 products</h3>
+                </div>
+                <div class="hr-line-small my-4 my-sm-5"></div>
+                <div class="serachbar-sec position-relative">
+                  <input class="form-control" type="search" placeholder="Search or type a command" aria-label="Search">
+                  <div class="search-icon">
+                    <img src="{% static 'img/search-icon.png' %}" alt="search">
+                  </div>
+                </div>
+                <div class="hr-line-small my-4 my-sm-5"></div>
+                <div class="sort-select">
+                  <label class="form-label cust-label">Sort by</label>
+                  <select class="selectpicker form-control">
+                    <option selected="selected">Featured</option>
+                    <option value="1">Popularity</option>
+                    <option value="2">Low to High</option>
+                    <option value="3">High to Low</option>
+                    <option value="4">Newest First</option>
+                  </select>
+                </div>
+                <div class="hr-line-small my-4 my-sm-5"></div>
+                <div class="showing-prod">
+                  <label class="form-label cust-label">Showing</label>
+                  <div class="showing-item mb-4 d-flex justify-content-between align-items-center">
+                    <p>All products</p>
+                    <div class="custom-checkbox"><label class="custom-check"><input type="checkbox" checked=""><span
+                          class="checkmark"></span></label></div>
+                  </div>
+                  <div class="showing-item mb-4 d-flex justify-content-between align-items-center">
+                    <p>All products</p>
+                    <div class="custom-checkbox"><label class="custom-check"><input type="checkbox" checked=""><span
+                          class="checkmark"></span></label></div>
+                  </div>
+                  <div class="showing-item mb-4 d-flex justify-content-between align-items-center">
+                    <p>All products</p>
+                    <div class="custom-checkbox"><label class="custom-check"><input type="checkbox" checked=""><span
+                          class="checkmark"></span></label></div>
+                  </div>
+                  <div class="showing-item mb-4 d-flex justify-content-between align-items-center">
+                    <p>All products</p>
+                    <div class="custom-checkbox"><label class="custom-check"><input type="checkbox" checked=""><span
+                          class="checkmark"></span></label></div>
+                  </div>
+                </div>
+                <div class="hr-line-small my-4 my-sm-5"></div>
+                <div class="slider-range-sec mb-5 px-5">
+                  <label class="form-label cust-label">Price</label>
+                  <div class="range-slider" id="facet-price-range-slider">
+                    <input name="range-1" value="0" min="0" max="1250" step="1" type="range">
+                    <input name="range-2" value="1250" min="0" max="1250" step="1" type="range">
+                  </div>
+                </div>
+                <div class="rating-select mb-4">
+                  <label class="form-label cust-label">Rating</label>
+                  <select class="selectpicker form-control">
+                    <option value="1">&#11088; 4.0 and up</option>
+                    <option value="2">&#11088; 3.0 and up</option>
+                    <option value="3">&#11088; 2.0 and up</option>
+                    <option value="4">&#11088; 1.0 and up</option>
+                  </select>
+                </div>
+                <div class="d-flex justify-content-end gap-4">
+                  <button type="button" class="white-btn">Reset</button>
+                  <button type="button" class="red-btn">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- end purchase header section -->
+
+      <!-- start purchase tab body section -->
+      <div class="gaybg-tab-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="products-tb" role="tabpanel" aria-labelledby="products-tb-tab">
+            <div class="gaybg-tab-inner">
+              <div class="row">
+                <!-- start purchase card -->
+                {% if message %}
+                <h1 style="text-align: center;">{{ message }}</h1>
+                {% else %}
+
+                {% for product in products %}
+                <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 mb-4">
+                  <div class="prodt-card">
+                    <div class="card-img-hover position-relative mb-4">
+                      {% with photo=product.productphoto_set.first %}
+<!--                        <img src="{% static 'img/dummy-img.png' %}" alt="product image" class="card-image w-100">-->
+                        <img src="{{ photo.product_photo.url|default:'img/dummy-img.png' }}" alt="product image" class="card-image w-100">
+                      {% endwith %}
+                      <div class="edit-action-hover">
+                        <div class="edit-action-sec gap-4 d-flex">
+                          <a href="{% url 'product_info' product.id %}"><button type="button"><span
+                                class="d-flex align-items-center justify-content-center"><img
+                                  src="{% static 'img/forword-arrow.png' %}" alt="arrow"></span></button></a>
+                        </div>
+<!--                          <div style="background: white; position:relative; width:100px">-->
+<!--                            <label>Select a Quantity:</label>-->
+<!--                            <input type="number" placeholder="1" min="0" name="quantityToAddToCart" id="quantityToAddToCart">-->
+<!--                          </div>-->
+                          <button type="submit" class="red-btn add-crt-btn" value="{{ product.id }}">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-body">
+                      <div class="prdname-price-sec d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0">{{ product.product_title }}</h4>
+                        <p>${{ product.price_transport.amount }}/{{ product.product_packaging.sku_unit }}</p>
+                      </div>
+                      <h4>Seller: {{ product.supplier.company.company_name }}</h4>
+                      <div class="prd-rating-sec">
+                        <p><img src="{% static 'img/star-icon.png' %}" alt="star"> {{ product.review_count|default:'N/A' }} <span>({{ product.review_count|default:0 }})</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- <div class="tab-pane fade" id="requests-tb" role="tabpanel" aria-labelledby="requests-tb-tab">...2</div> -->
+        </div>
+      </div>
+      <!-- end purchase tab body section -->
+    </div>
+
+  </div>
+  <!-- End inner body section -->
+</div>
+
+{% block tab %}
+{% endblock %}
+<script>
+  $(document).ready(function () {
+    // Define the getCookie function within the same script block
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Check if this cookie string begins with the name we want
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  // Iterate over each button with the class 'add-crt-btn'
+  $('.add-crt-btn').each(function() {
+      $(this).on('click', function () {
+        var product_id = $(this).val();
+        var buttonClicked = $(this); // Reference to the button clicked
+        // Check if the span element with ID 'cart_item_count' exists
+        var cartItemCountSpan = $('#cart_item_count');
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+        $.ajax({
+          type: 'POST',
+          url: '/add-to-cart/' + product_id + '/',
+          dataType: 'json',
+          headers: { 'X-CSRFToken': csrftoken },
+          success: function (data) {
+            // Check if the span element with ID 'cart_item_count' exists
+            if (cartItemCountSpan.length > 0) {
+              // Update the existing span element with the fetched count
+              cartItemCountSpan.text(data.cart_item_count);
+            } else {
+                // Create a new span element with the cart item count
+                $('#cartCount').append('<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-crt" id="cart_item_count">'+ data.cart_item_count +'</span>');
+            }
+            if (data.success) {
+              // Create a new button element with the desired attributes and styles
+              var newButton = $('<a>', {
+                href: '{% url "cart" %}',
+                html: $('<button>', {
+                  type: 'submit',
+                  class: 'red-btn add-crt-btn',
+                  text: 'Go to Cart',
+                })
+              });
+
+              // Replace the existing button with the new button
+              buttonClicked.replaceWith(newButton);
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+          }
+        });
+      });
+    });
+  });
+</script>
+{% endblock %}

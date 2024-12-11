@@ -1,0 +1,1231 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<style>
+  .tooltip-inner {
+    background-color: red !important;  
+    color: white !important;          
+    font-size: 14px !important;       
+    padding: 10px !important;          
+    border-radius: 5px !important;     
+}
+
+.tooltip.bs-tooltip-top .arrow::before {
+    border-top-color: red !important;  
+}
+</style>
+<!-- End top header section -->
+<div class="content-wrapper content-wrapper-bg footer-padding">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="page-title mb-0">New product</h1>
+    <!-- <button type="button" class="red-btn uploadfile-btn d-flex justify-content-between align-items-center"> <img
+        src="{% static 'img/upload-file.png' %}" alt="Upload" class="me-3"> Upload from File</button> -->
+  </div>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start add product section -->
+    <div class="addproduct-sec">
+      <div class="horiztl-tab">
+        <ul class="nav nav-pills mb-5" role="tablist" id="myTab">
+          <li class="nav-item me-3" role="presentation">
+            <button class="nav-link" id="automatedupl-tab" data-bs-toggle="pill" data-bs-target="#automatedupl"
+              type="button" role="tab">Automated Upload</button>
+          </li>
+          <li class="nav-item me-3" role="presentation">
+            <button class="nav-link" id="manualupl-tab" data-bs-toggle="pill" data-bs-target="#manualupl" type="button"
+              role="tab">Manual Upload</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade" id="automatedupl" role="tabpanel" aria-labelledby="automatedupl">
+            <div class="horiztl-tb-inner">
+              <div class="card-section">
+                <div class="uploadprodt-txts text-center pt-5">
+                  <h4 class="mb-4">Upload product info from file</h4>
+                  <p>We’ll extract your product info from your uploaded files and pre-populate your product listing.</p>
+                </div>
+                <div class="file-upload cus-inputs my-5">
+                  <label class="form-label">Files to extract products from <i class="bi bi-exclamation-circle-fill"
+                      data-bs-toggle="tooltip" data-bs-placement="top"
+                      data-bs-original-title="Tooltip on top"></i></label>
+                  <div class="file-upload-inner form-group position-relative">
+                    <input type="file" class="form-control" name="Files[]" multiple id="upload-img4">
+                    <button type="button" class="uplaod-file flex-center"> <img src="{% static 'img/upload-icon.svg' %}"
+                        alt="upload icon">Click or drop files</button>
+                  </div>
+                  <div class="img-thumbs img-thumbs-hidden" id="img-preview4">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form action="{% url 'add_product' pk=0 %}" method="post" enctype="multipart/form-data" id="form-upload">
+            {% csrf_token %}
+            <input type="hidden" id="publishAction" name="publish_action" value="">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+
+            <div class="tab-pane fade" id="manualupl" role="tabpanel" aria-labelledby="manualupl-tab">
+              <div class="row">
+                <div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8">
+                  <div class="horiztl-tb-inner left-column-sec">
+                    <!-- Name & description card -->
+                    <div class="card-section mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="tab-heading">
+                          <h3>Name & Description</h3>
+                        </div>
+                        <div class="bck-btn">
+                          <button type="button" class="white-btn"> <img src="{% static 'img/back-icon.png' %}"
+                              alt="back" class="me-2"> Back</button>
+                        </div>
+                      </div>
+
+                      <div class="cus-inputs">
+                        <!--  start Auto complete box -->
+                        <div class="col-12 mb-5" style="margin-top: 0px; margin-bottom: 0px;">
+                          <div class="auto-complete">
+                            <div class="search-bar">
+                              <label class="form-label">Product title
+                                <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                              </label>
+                              <input id="inputTxt" type="text" name="product_title" placeholder="Bottled Day & Night" 
+                              {% if product %}value="{{ product.product_title }}" {% endif %}>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Category & attibutes card -->
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                          <div class="tab-heading">
+                            <h3>Category & Attributes</h3>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5 cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label class="form-label">Category
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                            </label>
+                            <div>
+                              <select class="selectpicker form-control custom_select" name="product_category_id"
+                                id="productCategoryId">
+                                <option value="notvalid" disabled selected="selected"> ---Select category---</option>
+                                {% for product_category in product_categories %}
+                                <option value="{{ product_category.id }}" 
+                                {% if product_category.id == product.product_category.id %} selected {% endif %}>
+                                  {{ product_category.category_name }}</option>
+                                {% endfor %}
+                                <option value="0">Other</option>
+                              </select>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5" id="other-category"
+                              style="display: none;">
+                              <input type="text" class="form-control mb-3" name="other_category_name" id="otherCat"
+                                placeholder="Write Other Category Name">
+                            </div>
+                          </div>
+
+                          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5 cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label class="form-label"> Sub Category
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                            </label>
+                            <div>
+                              <select class="selectpicker form-control" name="sub_category_id" id="subCategorySelect">
+                                <option value="notvalid" selected="selected"> ---Select sub category---</option>
+
+                              </select>
+                            </div>
+                            <br>
+                            <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5" id="other-subCategory"
+                              style="display: none;">
+                              <input type="text" class="form-control mb-3" name="other_subcategory_name"
+                                id="otherSubCat" placeholder="Write Other Sub Category">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="inputtag-cust">
+                          <!-- What attributes make your product outstand in the market? -->
+                          <label for="text-tags">External Tags 
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum">
+                            </i>
+                          </label>
+                          <input type="text" id="product-attributes" class="tags" value="{% for attribute in attributes %}{{ attribute }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                            style="border: none; width: auto; margin: 0; padding: 0; background-color: transparent;">
+                        </div>
+                          <!--
+                          <div class="col-12">
+                            <div class="inputtag-cust">
+                              What are the main tags of your product?
+                              <label for="text-tags">Internal 
+                                <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-original-title="Lorem ipsum">
+                                </i>
+                              </label>
+                              <input type="text" id="product-tags" class="tags"
+                                style="border: none; width: auto; margin: 0; padding: 0; background-color: transparent;">
+                            </div>
+                          </div>-->
+                          
+                        <div class="cus-inputs">
+                          <label class="form-label">Description
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                          <textarea name="description_content" class="editor">{{ product.description }}</textarea>
+                        </div>
+                      </div>
+                    </div>
+                      <!--
+                      <div class="mb-5">
+                        <div class="tab-heading">
+                          <h3>Product & Packaging</h3>
+                        </div>
+                      </div>-->
+                      <!-- <div class="row"> -->
+                      <!--<div class="col-12 cus-inputs" style="margin-top: 20px;">
+                        
+                        <label class="form-label">Do you buy this product from someone else, or are you finished
+                          product manufacturer?
+                          <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                        </label>
+
+                        <select class="selectpicker form-control custom_select" name="product_manufacturer">
+                          <option value="0" selected="selected"> ---Select---</option>
+                          {% for product_manufacturer in product_manufacturers %}
+                          <option value="{{ product_manufacturer.id }}" {% if product_manufacturer.id == product.product_packaging.product_manufacturer.id %} selected {% endif %}>
+                            {{ product_manufacturer.manufacture_option }} </option>
+                          {% endfor %}
+                        </select>
+                      </div> -->
+
+                      <!-- <div class="col-12 mb-5">
+                          <label class="form-label">Attributes
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                              data-bsform-placement="top"
+                              data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                          </label>
+                          <div class="row">
+                            {% for product_attribute in product_attributes %}
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-4 mb-3">
+                              <div class="attricheck-sec">
+                                <div class="custom-checkbox">
+                                  <label class="custom-check">
+                                    {{ product_attribute.attribute_name }}
+                                    <input type="checkbox" name="product_attribute_ids"
+                                      value="{{ product_attribute.id }}"
+                                      {% for attribute in product.product_attribute.all %}
+                                      {% if attribute.id == product_attribute.id %} checked {% endif %}
+                                      {% endfor %}>
+                                    <span class="checkmark"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            {% endfor %}
+                          </div>
+                        </div> -->
+                      
+                      <!-- How SKU sold/priced -->
+                      <div class="col-12 cus-inputs" style="margin-top: 20px;">
+                        
+
+                        <!-- Bulk Dropdown -->
+                        <div class="col-6 cus-inputs" id="bulkOptions" style="display: none; margin-top: 10px;">
+                          <select class="selectpicker form-control" id="bulk" name="sku_bulk_selling">
+                            <option value="" selected="selected">---Select---</option>
+                            {% for choice in bulk_choices %}
+                            <option value="{{ choice.bulk_option }}" {% if choice.id == product.product_packaging.sku_bulk.id %} selected {% endif %}>
+                              {{ choice.bulk_option }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                        <div class="col-6 cus-inputs" id="perUnitOptions" style="display: none; margin-top: 10px;">
+                          <select class="selectpicker form-control" id="perUnit" name="sku_unit_selling">
+                            <option value="" selected="selected">---Select---</option>
+                            {% for choice in unit_choices %}
+                            <option value="{{ choice.unit_option }}" {% if choice.id == product.product_packaging.sku_unit.id %} selected {% endif %}>
+                              {{ choice.unit_option }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                        <!-- Pallet Options -->
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6" id="palletOptions"
+                          style="display: none;">
+                          <br>
+                          <input type="text" class="form-control mb-3" id="pallet" name="sku_pallet_selling"
+                            placeholder="Enter pallet information" {% if product %} value="{{ product.product_packaging.sku_pallet.pallet_info }}" {% endif %}>
+                        </div>
+
+                        <!-- Other (Free Text) -->
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6" id="otherOptions"
+                          style="display: none;">
+                          <br>
+                          <input type="text" class="form-control mb-3" id="other" placeholder="Enter other information" name="other_sku_selling"
+                          {% if product %} value="{{ product.product_packaging.other_sku_sold.other_info }}" {% endif %}>
+                        </div>
+                      </div>
+                      <!--
+                      <div class="row cus-inputs" style="margin-top: 20px;">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                          <label class="form-label">How many layers can it be stacked?
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <input type="number" class="form-control mb-3" placeholder="0" name="stacked_layer"
+                          {% if product %} value="{{ product.product_packaging.stacked_layer }}" {% endif %}>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                          <label class="form-label"> How many pieces per package per SKU?
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <input type="number" class="form-control mb-3" placeholder="0" name='pieces_per_sku'
+                          {% if product %} value="{{ product.product_packaging.pieces_per_sku }}" {% endif %}>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-6 cus-inputs" style="margin-top: 20px;">
+                          <label class="form-label">Add window of sale
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <select class="selectpicker form-control" id="windowOfSale" name="window_sale">
+                            <option value="" selected="selected">---Select---</option>
+                            {% for choice in window_choices %}
+                            <option value="{{ choice.window_name }}" {% if choice.id == product.product_packaging.sale_window.id %} selected {% endif %}>
+                              {{ choice.window_name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div> 
+                      </div> -->
+
+                      <!-- <div class="col-6 cus-inputs">
+                          <label class="form-label">What is your capacity? <i class="bi bi-exclamation-circle-fill"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <select class="selectpicker form-control" id="windowOfSale">
+                            <option>select</option>
+                            <option>tons</option>
+                            <option>liters</option>
+                            <option>packages</option>
+                            <option>pallets</option>
+                            <option>other</option>
+                          </select>
+                        </div> -->
+                      <!--
+                      <div class="col-12 cus-inputs" style="margin-top: 20px;">
+                        <label class="form-label">How much do you waste on average per month? <i
+                            class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="Tooltip on top"></i>
+                        </label>
+                        <input type="text" class="form-control" id="averageWaste" placeholder="Enter average waste" name="average-waste"
+                        {% if product %} value="{{ product.product_packaging.waste_per_month }}" {% endif %}>
+                      </div> -->
+                      <!--
+                      <div class="col-12 cus-inputs" style="margin-top: 20px;">
+                        <label class="form-label">Do you sell it in more than one presentation? <i
+                            class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="Tooltip on top"></i>
+                        </label>
+                        <select class="selectpicker form-control" name="sale_presentation">
+                          <option value="" selected="selected">---Select---</option>
+                          {% for choice in presentation_choices %}
+                          <option value="{{ choice.presentation_name }}" {% if choice.id == product.product_packaging.sale_presentation.id %} selected {% endif %}>
+                            {{ choice.presentation_name }}</option>
+                          {% endfor %}
+                        </select>
+                         <input type="text" class="form-control" id="multiplePresentations" placeholder="Enter presentation details">
+                      </div>
+                      <div class="col-12 cus-inputs">
+                        <div class="auto-complete mb-5">
+                          <div class="search-bar">
+                            <label class="form-label">Dimensions
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                            </label>
+                            <div class="height_card row">
+                              <div class="col-md-2">
+                                <select class="selectpicker form-control h-100 w-100" name="dimension_unit">
+                                  <option value="" selected="selected">---Select---</option>
+                                  {% for dimension_value, dimension_label in dimension_choices %}
+                                  <option value="{{ dimension_value }}" {% if dimension_value == product.product_packaging.product_dimension.dimension_unit %} selected {% endif %}>
+                                    {{ dimension_label }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-md-10">
+                                <div class="d-flex unit_test">
+                                  <input type="text" placeholder="Enter Hight" name="height"
+                                  {% if product %} value="{{ product.product_packaging.product_dimension.height }}" {% endif %}>
+                                  <input type="text" placeholder="Enter Length" name="length"
+                                  {% if product %} value="{{ product.product_packaging.product_dimension.length }}" {% endif %}>
+                                  <input type="text" placeholder="Enter width" name="width"
+                                  {% if product %} value="{{ product.product_packaging.product_dimension.width }}" {% endif %}>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 cus-inputs">
+                        <div class="auto-complete mb-5">
+                          <div class="search-bar">
+                            <label class="form-label">Weight / Volume
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                            </label>
+                            <div class="height_card row">
+                              <div class="col-md-2">
+                                <select class="selectpicker form-control h-100 w-100" name="weight_unit">
+                                  <option value="" selected="selected">---Select---</option>
+                                  {% for weight_value, weight_label in weight_choices %}
+                                  <option value="{{ weight_value }}" {% if weight_value == product.product_packaging.product_weight.weight_unit %} selected {% endif %}>
+                                    {{ weight_label }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-md-10">
+                                <div class="d-flex unit_test">
+                                  <input type="text" placeholder="Enter Weight" name="weight"
+                                    {% if product %} value="{{ product.product_packaging.product_weight.weight_value }}" {% endif %}>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="custom-checkbox" style="margin-top: 30px; margin-bottom: 20px;">
+                        <label class="custom-check">
+                          <strong>Does it accept fast / immediate turnaround? 
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                              data-bs-placement="top" data-bs-original-title="Tooltip on top">
+                            </i>
+                          </strong>
+                          <input type="checkbox" id="" name="is_fast" {% if product.product_packaging.is_fast %} checked {% endif %}>
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    -->
+                    <!-- Price & Transport card -->
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        <div class="mb-5">
+                          <div class="tab-heading">
+                            <h3>Price & Transport</h3>
+                          </div>
+                        </div>
+
+                        <!-- How is the SKU sold/priced? -->
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5 cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label class="form-label">How is the unit sold/priced? <i class="bi bi-exclamation-circle-fill"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                            </label>
+                            <select class="selectpicker form-control" id="skuSold" name="sku_sold" >
+                              <option value="" selected>---Select---</option>
+                              {% for choice in selling_choices %}
+                              <option value="{{ choice.id }}" {% if choice.id == product.product_packaging.sku_sold.id %} selected {% endif %}>
+                                {{ choice.selling_option }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5 cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label class="form-label">How is the unit picked? <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i>
+                            </label>
+                            <select class="selectpicker form-control" id="skuPicked" name="sku_picked"  >
+                              <option value="" selected>---Select---</option>
+                              {% for choice in selling_choices %}
+                              <option value="{{ choice.id }}" {% if choice.id == product.product_packaging.sku_sold.id %} selected {% endif %}>
+                                {{ choice.selling_option }}</option>
+                                
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+
+                        <br>
+
+                        <div class="prices-input mb-5">
+                          <div class="col-12">
+                            <label class="form-label">Unit Price
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Lorem ipsum"></i>
+                            </label>
+                            <div class="input-group">
+                              <span class="input-group-text">$</span>
+                              <input type="number" class="form-control" placeholder="0" name="price" id="amount"
+                                value="{{ product.price_transport.amount }}">
+                            </div>
+                          </div>
+                        </div>
+                      <!--
+                      <div class="row prices-input ">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-4">
+                          <label class="form-label">Minimum order
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                          <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" placeholder="6" name="minimum_order"
+                            value="{% if product.price_transport.minimum_price %}{{ product.price_transport.minimum_price }}{% else %}0{% endif %}">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-4">
+                          <label class="form-label">Flat fee for delivery
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                          <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" placeholder="4" name="delivery_charge"
+                              value="{% if product.price_transport.delivery_charge %}{{ product.price_transport.delivery_charge }}{% else %}0{% endif %}">
+                          </div>
+                        </div>
+                      </div>
+                    -->
+                        <div class="col-12 mb-5">
+                          <div class="col-12 cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label class="form-label">Public / Private? <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i>
+                            </label>
+                            <select class="selectpicker form-control">
+                              <option selected="selected">---Select---</option>
+                              <option value="1">Public</option>
+                              <option value="2">Private</option>
+                            </select>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="col-12 cus-inputs" style="margin-top: 0px;">
+                          <label class="form-label">How often is price to be revised? <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                              data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <select class="selectpicker form-control" id="pingFrequency" name="notification_preference">
+                            <option value="" selected="selected">---Select---</option>
+                            {% for choice in frequency_choices %}
+                            <option value="{{ choice.frequency }}" {% if choice.id == product.product_packaging.notification_preference.id %} selected {% endif %}>
+                              {{ choice.frequency }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                    <!--
+                      <div class="cus-inputs d-flex justify-content-between align-items-center" style="margin-top: 0px; margin-bottom: 10px;">
+                        <div>
+                          <label class="form-label mb-0">Stock count:
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                        </div>
+                        <div>
+                          <input type="number" class="form-control mb-0" placeholder="39" name="stock_count"
+                          value="{% if product.price_transport.stock_count %}{{ product.price_transport.stock_count }}{% else %}0{% endif %}">
+                        </div>
+                      </div>
+
+                       Mode of Transportation
+                      <div class="cus-inputs d-flex justify-content-between align-items-center" style="margin-top: 0px; margin-bottom: 10px;">
+                        <div>
+                          <label class="form-label mb-0">Mode of Transportation:
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                        </div>
+                        <div>
+                          <select class="selectpicker form-control" id="transportation" name="transportation">
+                            <option value="" selected="selected">---Select---</option>
+                            {% for choice in conditions %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == product.price_transport.transportation.condition %} selected {% endif %}>
+                              {{ choice.1 }}</option>
+                            {% endfor %}
+                             <option selected="selected">Select Conditions</option>
+                            <option value="1">Can stay in outside weather</option>
+                            <option value="2">Dry / Normal</option>
+                            <option value="3">Temperature controlled</option>
+                            <option value="4">Cold</option>
+                            <option value="5">Frozen</option>
+                            <option value="condition">Other</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="cus-inputs d-flex justify-content-between align-items-center" style="margin-top: 0px;">
+                        <div> </div>
+                        <div>
+                          <input type="text" class="form-control" placeholder="Enter Other Transportation Condition." name="custom_condition"
+                            id="other1" style="display: none;" {% if product.price_transport.transportation.custom_condition %} value="{{ product.price_transport.transportation.custom_condition }}" {% endif %}>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                         <div class="col-12 cus-inputs" style="margin-top: 0px;">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-4">
+                          <div class="custom-checkbox">
+                            <label class="custom-check" for="editableCheckbox">
+                              <strong> Would you like help with figuring out the best transportation costing? 
+                                <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Lorem ipsum">
+                                </i>
+                              </strong>
+                              <input type="checkbox" id="editableCheckbox" name="best_ransportation"
+                              {% if product.price_transport.is_best_transportation %} checked {% endif %}>
+                              <span class="checkmark"></span>
+                            </label> 
+                            <p id="message" style="font-size: 15px;">This eventually will be a paid feature, for now take a look on what we
+                              mean by structural cost reduction</p>
+                          </div>         
+                        </div>
+                        
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-4">
+                          <div class="custom-checkbox">
+                            <label class="custom-check"><strong> Does it accept special packaging requests? </strong>
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                              <input type="checkbox" id="editableCheckbox" name="special_packaging"
+                              {% if product.price_transport.is_special_packaging %} checked {% endif %}>
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="hr-line my-3 my-sm-4"></div>
+
+                        <div class="col-12 cus-inputs" style="margin-top: 0px;">
+                          <div class="flex-space">
+                            <label class="form-label mb-0">Allow customers to request specific conditions <i
+                                class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i> </label>
+                              <div class="cust-switch"> <label class="switch">
+                                <input type="checkbox" name="specific_condition" {% if product.price_transport.allowing_customer_request %} checked {% endif %}>
+                                <span class="slider round"></span>
+                            </label></div>
+                          </div>
+                        </div>
+
+                        <div class="cus-inputs d-flex justify-content-between align-items-center" style="margin-top: 0px; margin-bottom: 10px;">
+                          <div>
+                            <label class="form-label mb-0">Are you handling the transport?:
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Lorem ipsum"></i>
+                            </label>
+                          </div>
+                          <div>
+                            <select class="selectpicker form-control" name="handling_transport">
+                              <option value="" selected="selected">---Select---</option>
+                              {% for choice in handling_choices %}
+                              <option value="{{ choice.0 }}" {% if choice.0 == product.price_transport.handling_transport.handling_option %} selected {% endif %}>
+                                {{ choice.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="cus-inputs d-flex justify-content-between align-items-center" style="margin-top: 0px; margin-bottom: 10px;">
+                          <div>
+                            <label class="form-label mb-0">Does your product have any certifications that can help it
+                              stand out in the market?:
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Lorem ipsum"></i>
+                            </label>
+                          </div>
+                          <div>
+                            <select class="selectpicker form-control" name="certification">
+                              <option value="" selected="selected">---Select---</option>
+                              {% for choice in certifications %}
+                              <option value="{{ choice.0 }}" {% if choice.0 == product.price_transport.certification.certification %} selected {% endif %}>
+                                {{ choice.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      -->
+                        <br>
+                        <div class="row cus-inputs" style="margin-top: 0px; margin-bottom: 0px;">
+                          <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                            <label class="form-label">Location
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i>
+                            </label>
+                            <select class="selectpicker form-control" name="address_id" id="loca">
+                              <option value="0" selected="selected">---Select Location---</option>
+                              {% for address in addresses %}
+                              <option value="{{ address.id }}" {% if address.id ==  product.price_transport.address.id %} selected {% endif %}>{{ address }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <!--
+                          <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                            <label class="form-label">* Add seasonality or span of publication
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i>
+                            </label>
+
+                            <div class="input-daterange input-group">
+                              <input type="date" class="form-control" name="start_date" id="start" placeholder="Start Date" value="{{ product.price_transport.from_seasonality|date:'Y-m-d' }}" >
+                              <span class="form-label" style="margin: 0 10px; align-self: center;">To</span>
+                              <input type="date" class="form-control" name="end_date" id="end" placeholder="End Date" value="{{ product.price_transport.to_seasonality|date:'Y-m-d' }}" >
+                            </div>
+                          </div>
+                          -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Product files card -->
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        
+                        <div class="mb-5">
+                          <div class="tab-heading">
+                            <h3>Product files <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="It
+                              seems that this products needs these legal requirements, you can add the now or
+                              later, but they should be uploaded before sales can begin"></i></h3>
+                          </div>
+                        </div>
+                        <!--
+                        <div class="file-upload cus-inputs my-5"> -->
+                          <!-- <form enctype="multipart/form-data" id="form-upload" class="mb-5"> -->
+                          <!-- <div class="d-flex justify-content-between align-items-center mb-4">
+                            <label class="form-label mb-0">Documents of Origin <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="It
+                                  seems that this products needs these legal requirements, you can add the now or
+                                  later, but they should be uploaded before sales can begin"></i></label> -->
+                            <!-- <button type="button" class="white-btn">GustoMarket imagery</button> -->
+                          <!-- </div>
+                          <div class="file-upload-inner form-group position-relative">
+                            <input type="file" class="form-control" name="Documents[]" multiple id="upload-img2">
+                            <button type="button" class="uplaod-file flex-center"> <img
+                                src="{% static 'img/upload-icon.svg' %}" alt="upload icon">Click or drop files</button>
+                          </div>
+                          <div class="img-thumbs img-thumbs-hidden" id="img-preview2">
+                          </div>
+                          <br> -->
+                          <!-- <form enctype="multipart/form-data" id="form-upload1" class="mb-5"> -->
+                          <!-- <label class="form-label">Certificates <i class="bi bi-exclamation-circle-fill"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i></label>
+                          <div class="file-upload-inner form-group position-relative">
+                            <input type="file" class="form-control" name="Certificates[]" multiple id="upload-img1">
+                            <button type="button" class="uplaod-file flex-center"> <img
+                                src="{% static 'img/upload-icon.svg' %}" alt="upload icon">Click or drop files</button>
+                          </div>
+                          <div class="img-thumbs img-thumbs-hidden" id="img-preview1"> </div>
+                        </div> -->
+
+                        <div class="col-12 cus-inputs">
+                          <label class="form-label">Certifications <i class="bi bi-exclamation-circle-fill"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i>
+                          </label>
+                          <select class="selectpicker form-control" id="certificates">
+                            <option selected="selected">---Select certifications---</option>
+                            <option value="organic">Organic certified</option>
+                            <option value="1">Local manufacturing</option>
+                            <option value="2">Traceable sourcing</option>
+                            <option value="3">Minority ownership</option>
+                            <option value="4">Government sponsored program</option>
+                            <option value="4">Good Manufacturing Practice (GMP - FDA)</option>
+                            <option value="iso">ISO</option>
+                            <option value="grade">Product Grade</option>
+                            <option value="other-info">Other</option>
+                            <option value="4">None</option>
+                          </select>
+
+                          <div class="col-6 cus-inputs">
+                            <input type="text" class="form-control" id="organization"
+                              placeholder="Organization Name (if applicable)" style="display: none;">
+                            <input type="text" class="form-control" id="isoTypeInput"
+                              placeholder="Enter ISO Type eg. ISO 9001" style="display: none;">
+                            <input type="text" class="form-control" id="otherInfo" placeholder="Enter Other Information"
+                              style="display: none;">
+                          </div>
+                          <div class="col-6 cus-inputs" id="grade" style="display: none;">
+                            <select class="selectpicker form-control">
+                              <option selected="selected">Select Grade</option>
+                              <option value="0">Grade A</option>
+                              <option value="1">Grade B</option>
+                              <option value="2">Grade C</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Images & CTA card -->
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        <div class="mb-5">
+                          <div class="tab-heading">
+                            <h3>Images & CTA</h3>
+                          </div>
+                        </div>
+                        <div class="file-upload cus-inputs my-5">
+                          <!-- <form enctype="multipart/form-data" id="form-upload3" class="mb-5"> -->
+                          <label class="form-label">Cover image or video <i class="bi bi-exclamation-circle-fill"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Tooltip on top"></i></label>
+                          <div class="file-upload-inner form-group position-relative">
+                            <input type="file" class="form-control" name="images[]" multiple id="upload-img" multiple>
+                            <button type="button" class="uplaod-file flex-center"> <img
+                                src="{% static 'img/upload-icon.svg' %}" alt="upload icon">Click or drop image or video
+                            </button>
+                          </div>
+                          <div class="img-thumbs img-thumbs-hidden" id="img-preview">
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="row"> 
+                      <div class="col-12 cus-inputs">
+                        <label class="form-label">Procurement Conditions <i class="bi bi-exclamation-circle-fill"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="Tooltip on top"></i>
+                        </label>
+                        <select class="selectpicker form-control">
+                          <option selected="selected">Select</option>
+                          <option value="1">lorem ipsum</option>
+                          <option value="2">lorem ipsum</option>
+                          <option value="3">lorem ipsum</option>
+                          <option value="4">lorem ipsum</option>
+                        </select>
+                      </div>
+                    -->
+                    </div>
+                    <!--
+                    <div class="card-section mb-3">
+                      <div class="mb-5">
+                        <div class="tab-heading">
+                          <h3>Discussion</h3>
+                        </div>
+                      </div>
+                      <div class="cus-inputs">
+                        <div class="col-12">
+                          <label class="form-label">Message to reviewer
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Lorem ipsum"></i>
+                          </label>
+                          <textarea name="discussion_content" class="editor1">{{ product.description }}</textarea>
+                        </div>
+                      </div>
+                    </div>
+                  -->
+                  <!-- Advanced card -->
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                          <div class="tab-heading">
+                            <h3>Advanced</h3>
+                          </div>
+                        </div>
+
+                        <div class="cus-inputs">
+                          <!-- Product ID -->
+                          <div class="col-12">
+                            <div class="search-bar">
+                              <label class="form-label">Product ID
+                                <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-original-title="Maximum 100 characters. No HTML or emoji allowed"></i>
+                              </label>
+                              <input type="text" name="productID"
+                                placeholder="Would you like to copy a similar product? Enter Product ID">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+                  <div class="horiztl-tb right-column-sec">
+                    <div class="card-section">
+                      <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div class="tab-heading">
+                            <h3>Preview</h3>
+                        </div>
+                        <div class="viewimg-sec">
+                            <img src="{% static 'img/view-img.png' %}" alt="view">
+                        </div>
+                    </div>
+                    
+                    <div class="product-img mb-4">
+                        {% if product and product.productphoto_set.exists %}
+                            <img src="{{ product.productphoto_set.first.product_photo.url }}" alt="product image">
+                        {% else %}
+                            <img src="{% static 'img/product-item.png' %}" alt="product image">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="product-prc-sec flex-space mb-2">
+                        <div class="product-name">
+                            <h4>{% if product %}{{ product.product_title }}{% else %}Bottled Day & Night{% endif %}</h4>
+                        </div>
+                        <div class="product-prc">
+                            <p>${% if product %}{{ product.price_transport.amount }}{% else %}0{% endif %}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="company-auther-sec d-flex align-items-center gap-4">
+                      {% if product %}
+                        {% if product.supplier.company.logo %}
+                            <img src="{{ product.supplier.company.logo.url }}" alt="Product Image">
+                        {% else %}
+                            <img src="{% static 'img/avatar.png' %}" alt="Default Image">
+                        {% endif %}
+                      {% endif %}
+                        <p class="mb-0"><span>by </span>{% if product %}{{ product.supplier.company.company_name }}{% else %}CompanyName{% endif %}</p>
+                    </div>
+                    
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <!-- End add product section -->
+  </div>
+  <!-- End inner body section -->
+</div>
+<!-- product footer section -->
+<div class="footer-bottom flex-space">
+  <div class="last-saved">
+    <p><span><img src="{% static 'img/lastcheck-icon.png' %}" alt="check" class="me-2"> Last saved</span> Jun 18, 2023 -
+      23:32
+    </p>
+  </div>
+  <div class="footer-rigt-sec d-flex gap-3">
+    <div class="save-draft-btn">
+      <button type="button" class="white-btn" id="saveDraftButton">Save Draft</button>
+    </div>
+    <div class="publish-now-btn">
+      <button type="button" class="red-btn" id="publishNowButton">Publish
+        now</button>
+    </div>
+    <!-- start message dropdown -->
+    <div class="vertical-doot">
+      <div class="dropdown">
+        <button class="header-actionbtn position-relative" type="button" data-bs-toggle="dropdown">
+          <img src="{% static 'img/vertical-doot.png' %}" alt="doot">
+        </button>
+        <ul class="dropdown-menu custom-dropdown message-drop">
+          <li><a class="dropdown-item" href="#">Take a Photo</a></li>
+          <li><a class="dropdown-item" href="#">Choose From Photos</a></li>
+          <li><a class="dropdown-item" href="#">Choose From Files</a></li>
+          <li><a class="dropdown-item" href="#">Cancel</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End product footer section -->
+
+<script>
+  function handleCertificateChange() {
+    var selectedCertificate = document.getElementById('certificates').value;
+    toggleElement('organization', selectedCertificate === 'organic');
+    toggleElement('isoTypeInput', selectedCertificate === 'iso');
+    toggleElement('otherInfo', selectedCertificate === 'other-info');
+    toggleElement('grade', selectedCertificate === 'grade');
+  }
+
+  function handleTransportationChange() {
+    var selectedTransportation = document.getElementById('transportation').value;
+    toggleElement('other1', selectedTransportation === 'condition');
+  }
+
+  function handleSKUSoldChange() {
+    var selectedSKU = document.getElementById('skuSold').value;
+    localStorage.setItem("sku",selectedSKU)
+    toggleElement('bulkOptions', selectedSKU === 'Bulk');
+    toggleElement('perUnitOptions', selectedSKU === 'Per Unit');
+    toggleElement('palletOptions', selectedSKU === 'Pallet');
+    toggleElement('otherOptions', selectedSKU === 'Other');
+  }
+
+  function handleSKUPickedChange() {
+    var selectedSKU = document.getElementById('skuPicked').value;
+    alert(selectedSKU);
+  }
+
+  function handlePingFrequencyChange() {
+    var selectedFrequency = document.getElementById('pingFrequency').value;
+    toggleElement('otherReview', selectedFrequency === 'other-review');
+  }
+
+  function handleOtherCategoryChange() {
+    var selectedCategory = document.getElementById('productCategoryId').value;
+    toggleElement('other-category', selectedCategory === '0');
+
+    if (selectedCategory === '0') {
+      var subCategorySelect = document.getElementById('subCategorySelect');
+
+      // Clear existing options
+      // subCategorySelect.innerHTML = '';
+
+      // Append the 'Other' option
+      var otherOption = document.createElement('option');
+      otherOption.value = '0';
+      otherOption.text = 'Other';
+      subCategorySelect.add(otherOption);
+
+      // Refresh the SelectPicker
+      $('#subCategorySelect').selectpicker('refresh');
+    }
+  }
+
+  function handleOtherSubCategoryChange() {
+    var selectedSubCategory = document.getElementById('subCategorySelect').value;
+    toggleElement('other-subCategory', selectedSubCategory === '0');
+  }
+
+  function toggleElement(elementId, condition) {
+    var element = document.getElementById(elementId);
+    element.style.display = condition ? 'block' : 'none';
+  }
+
+  document.getElementById('certificates').addEventListener('change', handleCertificateChange);
+  document.getElementById('transportation').addEventListener('change', handleTransportationChange);
+  document.getElementById('skuSold').addEventListener('change', handleSKUSoldChange);
+  document.getElementById('skuPicked').addEventListener('change', handleSKUPickedChange);
+  document.getElementById('pingFrequency').addEventListener('change', handlePingFrequencyChange);
+  document.getElementById('productCategoryId').addEventListener('change', handleOtherCategoryChange);
+  document.getElementById('subCategorySelect').addEventListener('change', handleOtherSubCategoryChange);
+
+</script>
+<script>
+  // by AC
+  $(document).ready(function () {
+    // Function to populate sub-category and set the selected option
+    function populateSubCategory(categoryId, productSubCategoryId) {
+      $.ajax({
+        url: '/get-sub-category/', // Replace with the actual URL to fetch sub-category data
+        type: 'GET',
+        data: { 'category_id': categoryId },
+        dataType: 'json',
+        success: function (data) {
+          var subCategorySelect = $('#subCategorySelect');
+          
+          // Clear existing options
+          subCategorySelect.empty();
+          
+          // Populate sub-category options
+          $.each(data, function (index, subCategory) {
+            var option = $('<option value="' + subCategory.id + '">' + subCategory.sub_category_name + '</option>');
+            // Check if the current state's ID matches the supplier's state ID
+            if (subCategory.id == productSubCategoryId) {
+              option.prop('selected', true);
+            }
+
+            // Append the option to the select element
+            $('#subCategorySelect').append(option);
+          });
+
+          // Refresh the SelectPicker to reflect changes
+          subCategorySelect.selectpicker('refresh');
+        },
+        error: function(data) {
+          // Log detailed error information
+          console.log('Error fetching subcategories: ' + data.error_message);
+        }
+      });
+    }
+
+    // Initial state list (when the page loads)
+    var selectedCategoryId = $('#productCategoryId').val();
+    var productSubCategoryId = '{{ product.product_sub_category.id }}'
+    populateSubCategory(selectedCategoryId, productSubCategoryId);
+
+    // Event listener for when the category selection changes
+    $('#productCategoryId').change(function () {
+      var selectedCategoryId = $(this).val();
+      // populateSubCategory(selectedCategoryId, productSubCategoryId);
+      // Check if the selected category is not "other"
+      if (selectedCategoryId !== '0') {
+        populateSubCategory(selectedCategoryId, productSubCategoryId);
+      } else {
+        // Handle the case when "other" is selected (optional logic)
+        console.log('Other option selected. Handle accordingly.');
+      }
+    });
+  });
+</script>
+
+<script>
+  document.getElementById('saveDraftButton').addEventListener('click', function () {
+    if (validateForm()) {
+      document.getElementById('publishAction').value = 'draft';
+      debugger
+      document.getElementById('form-upload').submit(); // Submit the form
+    }
+  });
+
+  document.getElementById('publishNowButton').addEventListener('click', function () {
+    if (validateForm()) {
+      document.getElementById('publishAction').value = 'publish';
+      document.getElementById('form-upload').submit(); // Submit the form
+    }
+  });
+
+  function validateForm() {
+    var productTitle = document.getElementById("inputTxt").value;
+    var productCategory = document.getElementById("productCategoryId").value;
+    var subCategory = document.getElementById("subCategorySelect").value;
+    var amount = document.getElementById("amount").value;
+    var image = document.getElementById("upload-img").value;
+    var otherCategory = document.getElementById("otherCat");
+    var otherSubCategory = document.getElementById("otherSubCat");
+    var skuSold = document.getElementById("skuSold").value;
+    var skuPicked = document.getElementById("skuPicked").value;
+    var location = document.getElementById('loca').value;
+
+    // Remove previous error messages
+    removeError("inputTxtError");
+    removeError("productCategoryIdError");
+    removeError("subCategorySelectError");
+    removeError("amountError");
+    removeError("upload-imgError");
+    // removeError("otherCatError");
+    // removeError("otherSubCatError");
+
+    // Perform validation
+    var isValid = true;
+
+    if (productTitle.trim() === '') {
+      createError("inputTxt", "Please enter a product title.");
+      isValid = false;
+    }
+    if (amount.trim() === '') {
+      createError("amount", "Please enter an amount.");
+      isValid = false;
+    }
+    // Check the selected index of the product category
+    if (productCategory.trim() === '' || productCategory === 'notvalid') {
+      createError("productCategoryId", "Please select a valid product category.");
+      isValid = false;
+    }
+    if (subCategory.trim() === '' || subCategory === 'notvalid') {
+      createError("subCategorySelect", "Please select a valid sub category.");
+      isValid = false;
+    }
+    if (skuSold.trim() === '' || skuSold === 'notvalid') {
+      createError("skuSold", "Please select a valid unit sold");
+      isValid = false
+    }
+    if (skuPicked.trim() === '' || skuPicked === 'notvaid') {
+      createError("skuPicked", "Please select a valid unit price");
+      isValid = false
+    }
+    if (location.trim() === '' || location === '0') { // Check the location value
+        createError("loca", "Please select a valid location."); // Match the field ID
+        isValid = false;
+    }
+    // if (!image) {
+    //   createError("upload-img", "Please upload an image.");
+    //   isValid = false;
+    // }
+    // if (otherCategory && otherCategory.value.trim() === '' && getComputedStyle(otherCategory).display !== 'none') {
+    // createError("otherCat", "Please enter a category name.");
+    // isValid = false;
+    // }
+    // if (otherSubCategory && otherSubCategory.value.trim() === '' && getComputedStyle(otherSubCategory).display !== 'none') {
+    //   createError("otherSubCat", "Please enter a sub category name.");
+    //   isValid = false;
+    // }
+
+    return isValid;
+  }
+
+  function createError(fieldId, message) {
+    // Remove previous error messages
+    removeError(fieldId + "Error");
+
+    var errorElement = document.createElement("p");
+    errorElement.id = fieldId + "Error";
+    errorElement.style.color = "red";
+    errorElement.style.fontSize = "15px";
+    errorElement.textContent = message;
+
+    var field = document.getElementById(fieldId);
+    field.parentNode.appendChild(errorElement);
+
+    // Set focus on the field
+    field.focus();
+  }
+
+  function removeError(errorId) {
+    var errorElement = document.getElementById(errorId);
+    if (errorElement) {
+      errorElement.parentNode.removeChild(errorElement);
+    }
+  }
+</script>
+
+<!-- created for button by default red -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const redButton = document.getElementById('manualupl-tab');
+    const whiteButton = document.getElementById('automatedupl-tab');
+
+    // Initial state
+    redButton.style.backgroundColor = '#a12c25';
+    redButton.style.color = '#fff';
+
+    whiteButton.style.backgroundColor = '#fff';
+    whiteButton.style.color = '#000';
+
+    // Event listener for white button
+    whiteButton.addEventListener('click', function () {
+      redButton.style.backgroundColor = '#fff';
+      redButton.style.color = '#000';
+      whiteButton.style.backgroundColor = '#a12c25';
+      whiteButton.style.color = '#fff';
+    });
+
+    // Event listener for red button
+    redButton.addEventListener('click', function () {
+      redButton.style.backgroundColor = '#a12c25';
+      redButton.style.color = '#fff';
+      whiteButton.style.backgroundColor = '#fff';
+      whiteButton.style.color = '#000';
+    });
+    redButton.click();
+  });
+</script>
+
+
+{% endblock %}
+
+{% block tab %}
+{% endblock %}

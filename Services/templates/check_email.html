@@ -1,0 +1,101 @@
+{% extends "signup_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 p-0">
+  <!-- start sign up right -->  
+ <div class="sigup-right">
+     <div class="top-sign-sec text-end">
+         <p>Already a member? <a href="{% url 'sign_in' %}"><b>Sign in</b></a></p>
+     </div>
+     <div class="get-started-sec flex-center">
+       <div class="get-started-inr">
+           <div class="sigup-logo p-0 text-center mb-4 d-md-none d-block">
+             <h1>GUSTO</h1> 
+           </div>  
+          <div class="get-started-hed text-center">
+          <h2>Check your email</h2> 
+       </div>
+       <div class="com-bold-txt text-center">
+           <p>We’ve sent a 6-character code to: {{email}}<br>The code expires shortly, so please enter it soon.</p> 
+       </div>
+       <div class="form">
+         <form action="{% url 'verify_otp' %}", method="post">
+             {% csrf_token %}
+         <div class="checkform-sec d-flex justify-content-between mb-5">
+             <input type="hidden", name="email", value="{{email}}">
+             <input type="text" class="form-control testinp"  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(1)' name="digit_1">
+             <input type="text" class="form-control testinp"  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(2)' name="digit_1">
+             <input type="text" class="form-control testinp"  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(3)' name="digit_1">
+             <input type="text" class="form-control testinp "  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(4)' name="digit_1">
+             <input type="text" class="form-control testinp"  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(5)' name="digit_1">
+             <input type="text" class="form-control testinp"  maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(6)' name="digit_1">
+          </div>
+          <div class="incorrect-msg text-center mb-4">
+           {% for message in messages %}
+             <ul class="messages">
+               <li style="color: red; font-size: 15px;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+             </ul>
+           {% endfor %}
+           </div>
+           <div class="disable-btn mb-5">
+            <button type="submit">Verify</button>
+          </div>
+         </form>
+         <form action="{% url 'resend_otp' %}" method="post">
+           {% csrf_token %}
+           <input type="hidden", name="email", value="{{email}}">
+           <div class="receive-code-sec text-center mb-5">
+            <p>Didn't receive a code? <button type="submit" class="btn p-0"><b>Resend it</b></button></p>
+          </div>      
+         </form>
+          <div class="opengamil-sec d-flex justify-content-between w-75 w-sm-100">
+            <a href="#"><img src="{% static 'img/check-circle.svg' %}" alt="check circle" class="me-3">Open Gmail</a>
+            <a href="#"><img src="{% static 'img/check-circle.svg' %}" alt="check circle" class="me-3">Open Outlook</a>
+          </div>
+       </div>
+       </div>
+     </div>
+     <div class="bottom-sign-sec text-center">
+        <ul>
+           <li><a href="#">Privacy & Terms</a></li>
+           <li><a href="#">Contact Us</a></li>
+           <li><a href="#">Change region</a></li> 
+        </ul> 
+     </div>
+     <!-- start window chat pop -->
+     <div class="window-chat-pop" id="window-chat-pop">
+        <div id="chatbot" class="main-card collapsed">
+         <button id="chatbot_toggle" class="chatbot-tg-close">
+             <img src="{% static 'img/chat-icon.svg' %}" alt="chat">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+         
+         </button>
+         <div class="main-title">
+             <div>
+             <svg viewBox="0 0 640 512">
+                 <path fill="currentColor" d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z" />
+             </svg>
+             </div>
+             <span>Gusto Chat</span>
+
+         </div>
+         <div class="chat-area" id="message-box">
+         </div>
+         <div class="line"></div>
+         <div class="input-div">
+             <input class="input-message" name="message" type="text" id="message" placeholder="Type your message ...">
+             <button class="input-send" onclick="send()">
+             <svg style="width:24px;height:24px">
+                 <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+             </svg>
+             </button>
+         </div>
+         </div> 
+     </div>
+     <!-- End window chat pop -->
+ </div> 
+  <!-- End  ign up right --> 
+{% endblock %}

@@ -1,0 +1,112 @@
+/* #manualupl-tab{
+    background-color: #a12c25;
+} */
+#message {
+  display: none;
+  color: red;
+}
+
+/* input tags */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tag_tags {
+  background-color: #2a85ff;
+  color: #ffff;
+  padding: 5px 10px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.tag-text {
+  margin-right: 5px;
+}
+
+.tag-close {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.tag-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+
+
+/*hide google translate link | logo | banner-frame */
+.goog-logo-link,
+.gskiptranslate,
+.goog-te-gadget span,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+div#goog-gt- {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0px;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide default dropdown arrow */
+#google_translate_element select::-ms-expand,
+#google_translate_element select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Custom styling for the dropdown arrow */
+#google_translate_element select {
+  background: whitesmoke;
+  color: rgba(0, 0, 0, 0.8);
+  border: none;
+  /* Remove border */
+  border-radius: 11px;
+  /* Rounded border */
+  padding: 13px 3px 13px 7px;
+  /* Increased height and reduced width */
+  width: 150px;
+  /* Adjusted width */
+  font-size: 14px;
+  font-weight: 550;
+  cursor: pointer;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  /* Optional: Add a subtle box shadow */
+}
+
+/* Custom arrow icon */
+#google_translate_element select::after {
+  content: '\25BC';
+  /* Unicode character for down arrow */
+  font-size: 12px;
+  color: #555;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* Hover effect for the dropdown */
+#google_translate_element select:hover {
+  background: #f0f0f0;
+}
+
+/* Focus effect for the dropdown */
+#google_translate_element select:focus {
+  outline: none;
+  box-shadow: black;
+}

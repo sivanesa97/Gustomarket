@@ -1,0 +1,48 @@
+
+<h1>Buy for Rs 500</h1>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<button id="customButton">Purchase</button>
+
+<script>
+  var handler = StripeCheckout.configure({
+    key: "{{ stripe_publishable_key }}",  // Use the Django variable
+    image: "https://your-image-url.com/logo.png",  // Set the URL of your logo or image
+    locale: "auto",
+    token: function(token) {
+      // Redirect to your success page with the token information
+      window.location.href = "/success/?token=" + token.id;
+    }
+  });
+
+  document.getElementById("customButton").addEventListener("click", function(e) {
+    // Open the Checkout modal when the button is clicked.
+    handler.open({
+      name: "Your Company Name",
+      description: "Payment for Product/Service",
+      amount: 50000,  // Amount in cents (e.g., Rs 500.00)
+      currency: "INR",  // Replace with your desired currency code
+    });
+
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation
+  window.addEventListener("popstate", function() {
+    handler.close();
+  });
+</script>
+
+
+<!-- # views.py
+from django.shortcuts import render
+
+def success_view(request):
+    # Retrieve the token from the query parameters, if needed
+    token = request.GET.get('token', '')
+    
+    # Add any additional logic or data retrieval if necessary
+    context = {'token': token}
+
+    return render(request, 'success.html', context) -->

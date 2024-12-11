@@ -1,0 +1,258 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Customer List</h1>
+  <!-- start inner body section -->
+  <form action="{% url 'customer_list' %}" method="post" id="form-upload">
+    {% csrf_token %}
+    <input type="hidden" id="publishAction" name="publish_action" value="">
+      <div class="page-content whitebg-remove p-0">
+        <!-- start Customer list page -->
+        <div class="dashboard-inners">
+
+          <!-- start Customer list table section -->
+          <div class="prod-salestble-section">
+            <div class="card-section">
+
+              <!-- start Customer top  section -->
+              <div class="customertops-sec flex-space mrginbtm-same">
+                <div class="customer-left-column d-flex align-items-center gap-5">
+                  <div class="tab-heading">
+                    <h3>Customer</h3>
+                  </div>
+                  <div class="customer-serch">
+                    <div class="serach-boxs position-relative">
+                      <input class="search form-control" type="search" placeholder="Search by name or email">
+                      <label class="search-label d-block">
+                        <span class="search-icons">
+                          <img src="{% static 'img/search-icon.png' %}" alt="search">
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Customer top section -->
+              <div class="customer-right-column horiztl-tab-gry position-relative">
+                <div class="d-flex gap-3 align-items-center">
+                  <ul class="nav nav-pills gap-3" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="active-tb-tab" data-bs-toggle="pill" data-bs-target="#active-tb"
+                        type="button" role="tab">Total</button>
+                    </li>
+                  </ul>
+                  <div class="filter-wrapper">
+                    <button class="position-relative filter-btns filter-cliking" type="button">
+                      <img src="{% static 'img/filter-icon.png' %}" alt="filter">
+                    </button>
+                    <div class="dash-filter-show" style="display: none;">
+                      <div class="filter-section">
+                        <div class="tab-heading">
+                          <h3>Filters/order</h3>
+                        </div>
+                        <div class="hr-line-small my-4 my-sm-5"></div>
+                        <div class="gary-txts mb-4">
+                          <p>Showing</p>
+                        </div>
+                        <div class="widgets-check-list">
+                          <div class="widget-listing flex-space mb-4">
+                            <div class="black-txts">
+                              <p class="mb-0">By seller</p>
+                            </div>
+                            <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"
+                                  checked=""><span class="checkmark"></span></label> </div>
+                          </div>
+                          <div class="widget-listing flex-space mb-4">
+                            <div class="black-txts">
+                              <p class="mb-0">By product name</p>
+                            </div>
+                            <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"><span
+                                  class="checkmark"></span></label> </div>
+                          </div>
+
+                        </div>
+                        <div class="hr-line-small my-4 my-sm-5"></div>
+
+                        <div class="d-flex justify-content-end gap-4">
+                          <button type="button" class="white-btn">Reset to Default</button>
+                          <button type="button" class="red-btn">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- start Customer table section -->
+              <div class="customer-list-bdy">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="active-tb" role="tabpanel" aria-labelledby="active-tb-tab">
+                    <div class="customers-prod-table">
+                      <div class="data-table-sec">
+                        <table id="customerlists-table" class="table dt-responsive nowrap" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th>
+                                <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" id="selectAllListCustomers"><span
+                                  class="checkmark"></span></label></div>
+                              </th>
+                              <th>Name</th>
+                              <th>Orders</th>
+                              <th>Lifetime</th>
+                              <th>Rating</th>
+                              <th>Reorders</th>
+                              <th>Discount</th>
+                              <th>Term</th>
+                              <th>Unpaid</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if customers %}
+                              {% for customer in customers %}
+                                {% with customer_list=customers|get_item:customer%}
+                                  <tr>
+                                    <td>
+                                      <div class="custom-checkbox"> <label class="custom-check">
+                                              <input type="checkbox" class="product-checkbox common-checkbox"
+                                                  value="{{ customer.id }}" name="selected_customers" id="selectedCustomers">
+                                              <span class="checkmark"></span></label></div>
+                                    </td>
+                                    <td>
+                                      <div class="customerlist-names d-flex gap-4">
+                                        {% if company_logos|get_item:customer %}
+                                          <div class="supplier-img">
+                                            <img src="{{ company_logos|get_item:customer }}" alt="supplier">
+                                          </div>
+                                        {% else %}
+                                          <div class="supplier-img">
+                                            <i class="mdi mdi-account-circle" style="font-size: 49px;"></i>
+                                          </div>
+                                        {% endif %}
+                                        {% if company_names|get_item:customer %}
+                                          <div class="customers-txts">
+                                            <b>{{ company_names|get_item:customer }}</b>
+                                          </div>
+                                        {% else %}
+                                          <div class="customers-txts">
+                                            <b> {{ customer.name }} </b>
+                                          </div>
+                                        {% endif %}
+                                      </div>
+                                    </td>
+                                    <td><span class="cust-name pad-bg pndg-bgcmn">{{customer_list.0}}</span></td>
+                                    <td><span class="lifline-bg pndg-bgcmn">24</span> <span class="lifetime-down"><i
+                                          class="bi bi-arrow-down"></i> 12.8%</span></td>
+                                    <td>8</td>
+                                    <td>16</td>
+                                    <td>
+                                      <div class="input-group">
+                                          <input type="number" class="form-control" placeholder="0" name="discount" id="amount"
+                                              value="100" class="input-qty input-rounded">
+                                          <span class="input-group-text">%</span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div>
+                                        <select class="selectpicker form-control" name="payment_terms"
+                                          id="payment_terms">
+                                            <option value="" selected="selected">---Select---</option>
+                                            {% for choice in payment_terms %}
+                                            <option value="{{ choice.term_option }}"> {{ choice.term_option}} </option>
+                                            {% endfor %}
+                                            <!--{% for product_category in product_categories %}
+                                            <option value="{{ product_category.id }}" 
+                                            {% if product_category.id == product.product_category.id %} selected {% endif %}>
+                                            {{ product_category.category_name }}</option>
+                                            {% endfor %}-->
+                                        </select>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="bi">${{ customer_list.1 }}</div>
+                                    </td>
+                                  </tr>
+                                {%endwith%}
+                              {% endfor %}
+                            {% endif %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="new-tb" role="tabpanel" aria-labelledby="new-tb-tab">...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Customer list table -->
+      </div>
+    </input>
+    <!-- Begin customer list footer section -->
+    <div class="footer-bottom flex-space">
+      <div class="last-saved">
+          <p id="selectedCustomerCount"><span><img src="{% static 'img/lastcheck-icon.png' %}" alt="check" class="me-2">0 customer selected</span></p>
+      </div>
+      <div class="footer-rigt-sec d-flex gap-3">
+          <div class="publish-now-btn">
+              <button type="button" class="red-btn" id="Change">Publish
+                  Now</button>
+          </div>
+      </div>
+    </div>
+    <!-- End customer list footer section -->
+  </form>
+  <!-- End Customer list page -->
+  <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.common-checkbox').change(function () {
+            const isChecked = this.checked;
+            const customerId = $(this).val();
+            // Update the corresponding checkbox in the other view
+            $(`.common-checkbox[value="${customerId}"]`).prop('checked', isChecked);
+            updateSelectAllCheckboxes(); // Update "Select All" checkboxes
+            updateSelectedCustomerCount(); // Update the count
+        });
+
+        // Function to update "Select All" checkboxes
+        function updateSelectAllCheckboxes() {
+            const allCheckboxes = $('.common-checkbox');
+            const allChecked = allCheckboxes.length === allCheckboxes.filter(':checked').length;
+            $('#selectAllListCustomers').prop('checked', allChecked);
+        }
+
+        // Function to update the selected product count
+        function updateSelectedCustomerCount() {
+            const selectedCount = $('.common-checkbox:checked').length;
+            const countText = selectedCount === 1 ? '1 customer selected' : selectedCount + ' customers selected';
+            $('#selectedCustomerCount').text(countText);
+        }
+
+        // Add a change event to "Select All" checkboxes to synchronize selections
+        $('#selectAllListCustomers').change(function () {
+            const isChecked = this.checked;
+            $('.common-checkbox').prop('checked', isChecked);
+            $('#selectAllListCustomers').prop('checked', isChecked);
+            updateSelectedCustomerCount(); // Update the count
+        });
+
+        $('.search').on('keyup', function() {
+          let filter = $(this).val().toLowerCase();
+          $('#customerlists-table tbody tr').filter(function() {
+              const prodName = $(this).find('.customers-txts b').text().toLowerCase();
+              $(this).toggle(prodName.indexOf(filter)> -1)
+          });
+        });
+    });
+</script>
+
+{% endblock %}

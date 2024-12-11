@@ -1,0 +1,184 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<!-- start Payment tab section -->
+
+<div class="tab-inner-sec">
+  <div class="">
+    <div class="tab-heading">
+      <h3>Pay or be Paid</h3>
+    </div>
+    {% csrf_token %}
+    <div class="paypaid-sec cus-inputs my-5">
+      <div class="row">
+        <div class="paypal-sec">
+          <div class="col-12">
+            <div class="flex-space">
+              <label class="form-label mb-0">Paypal <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                  data-bs-placement="top" aria-label="Tooltip on top" data-bs-original-title="Tooltip on top"></i>
+              </label>
+              <button type="button" class="white-btn">Setup</button>
+            </div>
+          </div>
+          <div class="hr-line my-4 my-sm-5"></div>
+          <div class="col-12">
+            <div class="flex-space">
+              <label class="form-label mb-0">Stripe <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                  data-bs-placement="top" aria-label="Tooltip on top" data-bs-original-title="Tooltip on top"></i>
+              </label>
+              <a href="{% url 'setup_stripe_connect' %}"><button type="submit" class="white-btn" id="setup-stripe-button">Setup</button></a>
+            </div>
+          </div>
+          <div class="hr-line my-4 my-sm-5"></div>
+        </div>
+        <div class="horizontal-tb-sec">
+          <ul class="nav nav-pills mb-3" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="bankaccont-tab" data-bs-toggle="pill" data-bs-target="#bankaccont"
+                type="button" role="tab">Bank
+                account</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="creditcrd-tab" data-bs-toggle="pill" data-bs-target="#creditcrd"
+                type="button" role="tab">Credit card</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="debitcrd-tab" data-bs-toggle="pill" data-bs-target="#debitcrd" type="button"
+                role="tab">Debit
+                card</button>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade" id="creditcrd" role="tabpanel" aria-labelledby="creditcrd-tab">
+              <div class="horizontal-tb-inner">
+                <div class="row">
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Name on card <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Name">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                    <label class="form-label">Credit card number <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="xxxx xxxx xxxx xxxx">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3 cus-inputs">
+                    <label class="form-label">Expiration <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="MM/YY">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3 cus-inputs">
+                    <label class="form-label">CVV <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="***">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="debitcrd" role="tabpanel" aria-labelledby="debitcrd-tab">
+              <div class="horizontal-tb-inner">
+                <div class="row">
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Name on card <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Name">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                    <label class="form-label">Debit card number <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="xxxx xxxx xxxx xxxx">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3 cus-inputs">
+                    <label class="form-label">Expiration <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="MM/YY">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3 cus-inputs">
+                    <label class="form-label">CVV <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="***">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade show active" id="bankaccont" role="tabpanel" aria-labelledby="bankaccont-tab">
+              <div class="horizontal-tb-inner">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                    <label class="form-label">Routing Number <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="ABA-XX-29230">
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                    <label class="form-label">Bank Name <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Chase Bank">
+                  </div>
+                  <div class="col-12 cus-inputs">
+                    <label class="form-label">Bank Account <i class="bi bi-exclamation-circle-fill"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                    </label>
+                    <input type="text" class="form-control mb-4" placeholder="XX023302-322AD">
+                    <p class="inputbtm-txt">Payout fee is 1% of the amount transferred, with a minimum of USD $0.25
+                      and a maximum of USD $20</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex gap-4">
+      <a href="{% url 'document_registration' %}"><button type="button" class="previous white-btn">Skip</button></a>
+      <a href="{% url 'document_registration' %}"><button type="button" class="red-btn next">Continue</button></a>
+    </div>
+  </div>
+</div>
+
+<!-- End Payment tab section -->
+<script src="https://js.stripe.com/v3/"></script>
+<!-- <script>
+  var stripePublicKey = "{{ stripe_public_key }}"; // Access the Stripe public key from the context
+  var stripe = Stripe(stripePublicKey);
+</script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var stripePublicKey = "{{ stripe_public_key }}"; // Access the Stripe public key from the context
+      var stripe = Stripe(stripePublicKey);
+
+        document.getElementById('setup-stripe-button').addEventListener('click', function () {
+            // Make a request to your Django backend to initiate the Connect account creation process
+            fetch('setup-stripe-connect/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}', // Use Django template tag to include CSRF token
+                },
+                body: JSON.stringify({}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirect the user to the Stripe Express onboarding flow
+                stripe.redirectToCheckout({ sessionId: data.sessionId });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}

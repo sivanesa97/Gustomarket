@@ -1,0 +1,184 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Statements</h1>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start Statements page -->
+    <div class="dashboard-inners">
+      <!-- start Statements top section -->
+      <div class="card-section mb-4">
+        <div class="earnings-crd-bg">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/earnings-icon.png' %}" alt="earnings">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Funds <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$128,789</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/balance-icon.png' %}" alt="balance">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Earning <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$128,789</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative border-0 lastcrd-boder">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/free-icn.png' %}" alt="free">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Fees <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$338.98</h2>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- start Transactions table section -->
+      <div class="prod-salestble-section">
+        <div class="card-section">
+          <div class="transactions-top-sec flex-space mrginbtm-same">
+            <div class="transactions-left-column">
+              <div class="tab-heading">
+                <h3>Transactions</h3>
+              </div>
+            </div>
+            <div class="transactions-right-column">
+              <div class="d-flex gap-4">
+                <select class="selectpicker">
+                  <option selected="selected"> Last 30 days</option>
+                  <option value="1">One Week</option>
+                  <option value="2">Two Week</option>
+                </select>
+                <button type="button" class="red-btn">Download SCV</button>
+              </div>
+
+            </div>
+          </div>
+          <div class="data-table-sec">
+            <table id="transactions-table" class="table dt-responsive nowrap" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Detail</th>
+                  <th>Analytics</th>
+                  <th>Price</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Sale</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td>+$88.20</td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Sale</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td>+$88.20</td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="gustfree-bg pndg-bgcmn">Gusto Fee</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td><span class="gustfree-txt">+$88.20</span></td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Sale</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td>+$88.20</td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="gustfree-bg pndg-bgcmn">Gusto Fee</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td><span class="gustfree-txt">+$88.20</span></td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Sale</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td>+$88.20</td>
+                </tr>
+                <tr>
+                  <td>14 Oct 2023</td>
+                  <td><span class="gustfree-bg pndg-bgcmn">Gusto Fee</span></td>
+                  <td>
+                    <p class="blckprodt-txt mb-0">Day & Night Product Name</p>
+                    <p class="smal-invoice-txt mb-0">Invoice: GU-8934AS</p>
+                  </td>
+                  <td>lorem ipsum</td>
+                  <td>$98.00</td>
+                  <td><span class="gustfree-txt">+$88.20</span></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Statements page -->
+  </div>
+  <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

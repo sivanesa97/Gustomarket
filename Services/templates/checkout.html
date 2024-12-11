@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+</head>
+<body>
+    <!-- Include the Stripe.js script -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<form id="payment-form">
+    <!-- Add payment form elements here -->
+    <div id="card-element"></div>
+    <button type="submit">Pay Now</button>
+</form>
+
+<script>
+    // Initialize Stripe.js with your public key
+    var stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+
+    // Create an instance of Elements
+    var elements = stripe.elements();
+
+    // Create a card element and add it to the DOM
+    var card = elements.create('card');
+    card.mount('#card-element');
+
+    // Handle form submission
+    var form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        stripe.confirmCardPayment('{{ client_secret }}', {
+            payment_method: {
+                card: card,
+            },
+        }).then(function (result) {
+            if (result.error) {
+                // Show error to the user
+                console.error(result.error.message);
+            } else {
+                // Payment successful, you can redirect or perform other actions
+                console.log('Payment successful');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

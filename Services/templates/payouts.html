@@ -1,0 +1,156 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Payouts</h1>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start Payouts page -->
+    <div class="dashboard-inners">
+      <!-- start Current balance top section -->
+      <div class="card-section mb-4">
+        <div class="earnings-crd-bg">
+          <div class="tab-heading mrginbtm-same">
+            <h3>Current balance</h3>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/earnings-icon.png' %}" alt="earnings">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Current account balance <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$128k</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/balance-icon.png' %}" alt="balance">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Available for withdrawal <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$0.00</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 d-flex align-items-center">
+              <div class="earnings-card position-relative border-0 lastcrd-boder">
+                <button type="button" class="red-btn">Withdraw balance</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- start Payout history table section -->
+      <div class="prod-salestble-section">
+        <div class="card-section">
+          <div class="tab-heading mrginbtm-same">
+            <h3>Payout history</h3>
+          </div>
+          <div class="data-table-sec">
+            <table id="currentblance-table" class="table dt-responsive nowrap" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Status</th>
+                  <th>Method</th>
+                  <th>Earnings</th>
+                  <th>Amount withdrawn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Oct 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="strip-bg pndg-bgcmn">Stripe </span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Sep 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="swift-bg pndg-bgcmn">Swift</span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Aug 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="strip-bg pndg-bgcmn">Stripe </span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Jul 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="swift-bg pndg-bgcmn">Swift</span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Jun 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="swift-bg pndg-bgcmn">Swift</span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>May 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="strip-bg pndg-bgcmn">Stripe </span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Jun 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="swift-bg pndg-bgcmn">Swift</span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>May 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="strip-bg pndg-bgcmn">Stripe </span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>Jun 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="swift-bg pndg-bgcmn">Swift</span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+                <tr>
+                  <td>May 2023</td>
+                  <td><span class="pad-bg pndg-bgcmn">Paid</span></td>
+                  <td><span class="strip-bg pndg-bgcmn">Stripe </span></td>
+                  <td>$128,899.00</td>
+                  <td>$128,899.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Payouts page -->
+  </div>
+  <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,667 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper content-wrapper-bg">
+  <div class="past-purchases-secs flex-space position-relative">
+    <h1 class="page-title">Past Purchases </h1>
+    <div class="filterorder-rights">
+      <div class="filter-wrapper">
+        <button class="position-relative filter-btns filter-cliking" type="button">
+          <img src="{% static 'img/filter-icon.png' %}" alt="filter">  
+        </button>
+        <div class="dash-filter-show" style="display: none;">
+          <div class="filter-section">
+            <div class="tab-heading">
+              <h3>Filters/order</h3>
+            </div>
+            <div class="hr-line-small my-4 my-sm-5"></div>
+            <div class="gary-txts mb-4">
+              <p>Showing</p>
+            </div>
+            <div class="widgets-check-list">
+              <div class="widget-listing flex-space mb-4">
+                <div class="black-txts">
+                  <p class="mb-0">By seller</p>
+                </div>
+                <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span
+                      class="checkmark"></span></label> </div>
+              </div>
+              <div class="widget-listing flex-space mb-4">
+                <div class="black-txts">
+                  <p class="mb-0">By product name</p>
+                </div>
+                <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"><span
+                      class="checkmark"></span></label> </div>
+              </div>
+
+            </div>
+            <div class="hr-line-small my-4 my-sm-5"></div>
+
+            <div class="d-flex justify-content-end gap-4">
+              <button type="button" class="white-btn">Reset to Default</button>
+              <button type="button" class="red-btn">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start add product section -->
+    <div class="addproduct-sec">
+      <div class="horiztl-tab">
+        <ul class="nav nav-pills mb-5 gap-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="orderscrdtb-tab" data-bs-toggle="pill" data-bs-target="#orderscrdtb"
+              type="button" role="tab">Past Purchase Orders</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="productspurtb-tab" data-bs-toggle="pill" data-bs-target="#productspurtb"
+              type="button" role="tab">Previously purchased products</button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="orderscrdtb" role="tabpanel" aria-labelledby="orderscrdtb-tab">
+            <div class="horiztl-tb-inner">
+              <div class="card-section">
+                <div class="tab-heading">
+                  <h3>Purchase Orders</h3>
+                </div>
+                <div class="product-reoder-table">
+                  <div class="data-table-sec">
+                    <table id="purchaseodr-table" class="table dt-responsive nowrap custom-table table-hover"
+                      style="width: 100%">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Product</th>
+                          <th>Analytics</th>
+                          <th>Contextual data</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Seller</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                          <td>
+                            <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"
+                                  checked><span class="checkmark"></span></label></div>
+                          </td>
+                          <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>lorem ipsum</td>
+                          <td>lorem ipsum</td>
+                          <td><span class="price-bg">Delivered</span></td>
+                          <td>Jul 24, 2023 at 3:55 PM</td>
+                          <td>
+                            <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                              <div class="sellavtor-img">
+                                <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                              </div>
+                              <div class="sellavtor-txt black-txts">
+                                <p class="mb-0"> Carlo Herman</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                          <td>
+                            <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"
+                                  checked><span class="checkmark"></span></label></div>
+                          </td>
+                          <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>lorem ipsum</td>
+                          <td>lorem ipsum</td>
+                          <td><span class="price-bg transit-bg">In Transit</span></td>
+                          <td>Jul 24, 2023 at 3:55 PM</td>
+                          <td>
+                            <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                              <div class="sellavtor-img">
+                                <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                              </div>
+                              <div class="sellavtor-txt black-txts">
+                                <p class="mb-0"> Carlo Herman</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                          <td>
+                            <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox"
+                                  checked><span class="checkmark"></span></label></div>
+                          </td>
+                          <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>lorem ipsum</td>
+                          <td>lorem ipsum</td>
+                          <td><span class="price-bg">New request</span></td>
+                          <td>Jul 24, 2023 at 3:55 PM</td>
+                          <td>
+                            <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                              <div class="sellavtor-img">
+                                <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                              </div>
+                              <div class="sellavtor-txt black-txts">
+                                <p class="mb-0"> Carlo Herman</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="productspurtb" role="tabpanel" aria-labelledby="productspurtb-tab">
+            <div class="horiztl-tb-inner">
+              <div class="card-section">
+                <div class="purcased-prod-hedsection flex-space mb-4">
+                  <div class="tab-heading">
+                    <h3>Purchased Products </h3>
+                  </div>
+                  <div class="tab-inner-tabs">
+                    <ul class="nav nav-pills gap-3" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="allprodt-tb-tab" data-bs-toggle="pill"
+                          data-bs-target="#allprodt-tb" type="button" role="tab">All</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="transitprodt-tb-tab" data-bs-toggle="pill"
+                          data-bs-target="#transitprodt-tb" type="button" role="tab">In Transit</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="deliveredprod-tb-tab" data-bs-toggle="pill"
+                          data-bs-target="#deliveredprod-tb" type="button" role="tab">Delivered</button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- start Purchased Products tabs section -->
+                <div class="tabbdy-inner-bdy">
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="allprodt-tb" role="tabpanel" aria-labelledby="allprodt-tb-tab">
+                      <div class="allproduct-inners">
+                        <div class="product-reoder-table">
+                          <div class="data-table-sec">
+                          <table id="purchasedprod-tables" class="table dt-responsive nowrap custom-table table-hover" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Product</th>
+                              <th>Analytics</th>
+                              <th>Contextual data</th>
+                              <th>Status</th>
+                              <th>Date</th>
+                              <th>Seller</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                            <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                            <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                            </td>
+                            <td>lorem ipsum</td>
+                            <td>lorem ipsum</td>
+                            <td><span class="price-bg">Delivered</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                            <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                            <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                            </td>
+                            <td>lorem ipsum</td>
+                            <td>lorem ipsum</td>
+                            <td><span class="price-bg transit-bg">In Transit</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                            <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                            <td>
+                            <div class="product-name-price d-flex align-items-center gap-4">
+                              <div class="prd-img">
+                                <img src="{% static 'img/product-list.png' %}" alt="product list">
+                              </div>
+                              <div class="prd-name">
+                                <h4>Day & Night</h4>
+                                <p>$1200.00</p>
+                              </div>
+                            </div>
+                            </td>
+                            <td>lorem ipsum</td>
+                            <td>lorem ipsum</td>
+                            <td><span class="price-bg">New Request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                              </div>
+                            </td>
+                          </tr>
+                          </tbody>
+                          </table>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="transitprodt-tb" role="tabpanel" aria-labelledby="transitprodt-tb-tab">
+                      <div class="product-reoder-table">
+                          <div class="data-table-sec">
+                          <table id="transitprodt-tables" class="table dt-responsive nowrap custom-table table-hover" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Product</th>
+                              <th>Analytics</th>
+                              <th>Contextual data</th>
+                              <th>Status</th>
+                              <th>Date</th>
+                              <th>Seller</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                              <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                              <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                              </td>
+                              <td>lorem ipsum</td>
+                              <td>lorem ipsum</td>
+                              <td><span class="price-bg transit-bg">In Transit</span></td>
+                              <td>Jul 24, 2023 at 3:55 PM</td>
+                              <td>
+                                <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                  <div class="sellavtor-img">
+                                    <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                  </div>
+                                  <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                              <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                              <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                              </td>
+                              <td>lorem ipsum</td>
+                              <td>lorem ipsum</td>
+                              <td><span class="price-bg transit-bg">In Transit</span></td>
+                              <td>Jul 24, 2023 at 3:55 PM</td>
+                              <td>
+                                <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                  <div class="sellavtor-img">
+                                    <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                  </div>
+                                  <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="deliveredprod-tb" role="tabpanel" aria-labelledby="deliveredprod-tb-tab">
+                       <div class="product-reoder-table">
+                        <div class="data-table-sec">
+                          <table id="deliveredprod-tables" class="table dt-responsive nowrap custom-table table-hover" style="width: 100%">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Product</th>
+                              <th>Analytics</th>
+                              <th>Contextual data</th>
+                              <th>Status</th>
+                              <th>Date</th>
+                              <th>Seller</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                              <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                              <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                              </td>
+                              <td>lorem ipsum</td>
+                              <td>lorem ipsum</td>
+                              <td><span class="price-bg">Delivered</span></td>
+                              <td>Jul 24, 2023 at 3:55 PM</td>
+                              <td>
+                                <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                  <div class="sellavtor-img">
+                                    <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                  </div>
+                                  <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr data-bs-toggle="modal" data-bs-target="#repurchase-prod-pop">
+                              <td><div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" checked=""><span class="checkmark"></span></label></div></td>
+                              <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                              </td>
+                              <td>lorem ipsum</td>
+                              <td>lorem ipsum</td>
+                              <td><span class="price-bg">Delivered</span></td>
+                              <td>Jul 24, 2023 at 3:55 PM</td>
+                              <td>
+                                <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                  <div class="sellavtor-img">
+                                    <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                  </div>
+                                  <div class="sellavtor-txt black-txts"><p class="mb-0"> Carlo Herman</p></div>
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                          </table>
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End add product section -->
+  </div>
+  <!-- End inner body section -->
+
+</div>
+
+<!-- Modal pop Repurchase Product calendar-->
+<div class="modal fade" id="repurchase-prod-pop">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">Repurchase Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="orderproduct-pops">
+          <div class="row">
+
+            <div class="col-12 col-md-12 col-lg-6 col-xl-5">
+              <div class="ordertbs-section horiztl-tab">
+                <div class="order-details-form">
+                  <div class="order-prod-bx d-flex align-items-center gap-4 mb-5">
+                    <div class="orderprod-imgs"><img src="{% static 'img/square-product.png' %}" alt="product"></div>
+                    <div class="orderprod-txts">
+                      <h3 class="mb-4">Day & Night</h3>
+                      <b class="bg-odr">Product Delivered</b>
+                    </div>
+                  </div>
+                  <div class="small-details-prod cus-inputs delivery-time mb-4">
+                    <label class="form-label mb-2">Description</label>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                      the industry's</p>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Request date</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">Jul 24, 2023</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Purchase date</p>
+                    </div>
+                    <div class="rquest-date black-txts"><b class="bg-odr mb-0">July 01, 2023</b></div>
+                  </div>
+
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Purchase code</p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">6373ads-hd73h-8373DS</p>
+                    </div>
+                  </div>
+                  <!-- <div class="rquestsend-row flex-space py-3">
+                          <div class="rquest-name gary-txts"><p class="mb-0">Last purchase quantity</p></div>
+                          <div class="rquest-date black-txts"><p class="mb-0">3</p></div>
+                        </div> -->
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Market fee <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                          data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">$7.28</p>
+                    </div>
+                  </div>
+                  <div class="rquestsend-row flex-space py-3">
+                    <div class="rquest-name gary-txts">
+                      <p class="mb-0">Price <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                          data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></p>
+                    </div>
+                    <div class="rquest-date black-txts">
+                      <p class="mb-0">$72.88</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-6 col-xl-7">
+              <div class="repurchase-product-sec-rgt">
+                <div class="col-12 labelheds mb-5">
+                  <label class="form-label">Quantity <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                      data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                  </label>
+                  <div class="d-flex">
+                    <div class="flex-space gap-4">
+                      <div class="rquest-name delivery-time">
+                        <p class="mb-0">Last purchase quantity</p>
+                      </div>
+                      <div class="rquest-date black-txts">
+                        <p class="mb-0">3</p>
+                      </div>
+                    </div>
+                    <div class="qty-container d-flex align-items-center">
+                      <button class="qty-btn-minus btn-primary btn-rounded mr-1" type="button"><i
+                          class="bi bi-dash-lg"></i></button>
+                      <input type="text" name="qty" value="0" class="input-qty input-rounded">
+                      <button class="qty-btn-plus btn-primary btn-rounded ml-1" type="button"><i
+                          class="bi bi-plus-lg"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="delivered-hour d-flex justify-content-between align-items-center">
+                  <div class="delivered-label">
+                    <p>Pay With Card on File <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Tooltip on top"></i></p>
+                  </div>
+                  <div class="delivered-switch">
+                    <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                          class="slider round"></span> </label> </div>
+                  </div>
+                </div>
+                <div class="hr-line-small my-4"></div>
+                <div class="delivery-time mb-5">
+                  <p>Request a delivery date and time.</p>
+                </div>
+
+                <div class="datetimefiled-sec">
+                  <div class="datetime-filed position-relative mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="datetime-filed position-relative">
+                    <label class="form-label">Time</label>
+                    <input type="time" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer gap-4">
+        <button type="button" class="red-btn" data-bs-toggle="modal" data-bs-target="#congrats-pop">Repurchase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal pop Congratulations!-->
+<div class="modal fade" id="congrats-pop">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">Congratulations!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="custom-modal-bdy text-center">
+          <div class="congrats-img mb-5">
+            <img src="{% static 'img/congrats-img.png' %}" alt="congrats">
+          </div>
+          <div class="congrats-text">
+            <p>Congratulations!</p>
+          </div>
+          <div class="congrats-subtext gary-txts">
+            <h2 class="mb-3">Order ID: 03XXS</h2>
+            <p>Your Supplier will inform you when the order is in transit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="red-btn">Done!</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% block tab %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // $(document).ready(function () {
+  //     // Activate the "Past Purchase Orders" button
+  //     $('#orderscrdtb-tab').tab('show');
+  // });
+  document.addEventListener("DOMContentLoaded", function() {
+  // Activate the "Past Purchase Orders" button
+  var orderscrdtbTab = document.getElementById("orderscrdtb-tab");
+  if (orderscrdtbTab) {
+    console.log('JJJJJ')
+      orderscrdtbTab.click();
+  }
+})
+</script>
+{% endblock %}

@@ -1,0 +1,335 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg footer-padding">
+    <h1 class="page-title">Listed & Unlisted Products</h1>
+    <!-- start inner body section -->
+    <form action="{% url 'listed_unlisted_product' %}" method="post" id="form-upload">
+        {% csrf_token %}
+        <input type="hidden" id="publishAction" name="publish_action" value="">
+    <div class="page-content">
+        <!-- start Products header section -->
+        <div class="draft-prduct-top d-flex justify-content-between mb-sm-5 mb-4">
+            <div class="draft-lft-sec d-flex gap-5">
+                <div class="tab-heading">
+                    <h3>Products</h3>
+                </div>
+                <div class="serach-bar position-relative d-none d-sm-block">
+                    <input class="form-control search" type="search" placeholder="Search product" aria-label="Search">
+                    <label class="searchbutton" for="searchleft">
+                        <span class="mglass">
+                            <span class="search-icn">
+                                <img src="{% static 'img/search-icon.png' %}" alt="search">
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="draft-rgt-sec d-flex gap-3">
+                <button type="button" class="list-btn active"><img src="{% static 'img/list-icon.png' %}"
+                        alt="list"></button>
+                <button type="button" class="grid-btn"><img src="{% static 'img/grid-icon.png' %}" alt="grid"></button>
+            </div>
+        </div>
+        <!-- start mobile-serch-secsection -->
+        <div class="mobile-serch-sec d-sm-none">
+            <div class="serach-bar position-relative">
+                <input class="form-control search" type="search" placeholder="Search product" aria-label="Search">
+                <label class="searchbutton" for="searchleft">
+                    <span class="mglass">
+                        <span class="search-icn">
+                            <img src="{% static 'img/search-icon.png' %}" alt="search">
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <!-- End Products header section -->
+        <div class="product-drat-table">
+            <div class="data-table-sec show-panel mb-4">
+                <table id="product-tables" class="table dt-responsive nowrap custom-table table-hover"
+                    style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="custom-checkbox"> <label class="custom-check"><input type="checkbox" id="selectAllListProducts"><span
+                                            class="checkmark"></span></label></div>
+                            </th>
+                            <th>Product</th>
+                            <th>Analytics</th>
+                            <th>Price</th>
+                            <th>Last edited</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                <div class="custom-checkbox"> <label class="custom-check">
+                                        <input type="checkbox" class="product-checkbox common-checkbox"
+                                            value="{{ product.id }}" name="selected_products" id="selectedProducts">
+                                        <span class="checkmark"></span></label></div>
+                            </td>
+                            <td>
+                                <div class="product-name-price d-flex align-items-center gap-4">
+                                    <div class="prd-img">
+                                        {% with photo=product.productphoto_set.first %}
+                                        <img src="{{ photo.product_photo.url }}" alt="product list">
+                                        {% endwith %}
+                                    </div>
+                                    <div class="prd-name">
+                                        <h4>{{ product.product_title }}</h4>
+                                        <!-- <p>$1200.00</p> -->
+                                    </div>
+                                </div>
+                            </td>
+                            <td>lorem ipsum</td>
+                            <td><span class="price-bg">${{ product.price_transport.amount }}</span></td>
+                            <td>{{ product.updated_at }}</td>
+                            <td>
+                                {% if product.is_draft %}
+                                <span class="price-bg drfts-bg">Unlisted</span>
+                                {% else %}
+                                <span class="price-bg active-bgs">listed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="edit-action-sec gap-4 d-flex">
+                                    <button type="button"><span><img src="{% static 'img/calendar-icon.png' %}"
+                                                alt="calander"></span></button>
+                                    <a href="{% url 'add_product' pk=product.id %}"><button type="button"><span><img
+                                                src="{% static 'img/edit-icon.png' %}" alt="edit"></span></button></a>
+            
+                                    <button type="button" class="delete-btn" data-bs-toggle="modal" data-bs-target="#proddelete-pop"
+                                        data-product-item-id="{{ product.id }}">
+                                        <span><img src="{% static 'img/delete-icon.png' %}" alt="delete"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-view-section">
+                <div class="custom-checkbox mb-4"> <label class="custom-check"><input type="checkbox"
+                            id="selectAllGridProducts"><span class="checkmark"></span></label></div>
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3 mb-lg-0 mb-4">
+                        <div class="card-custom position-relative">
+                            <div class="card-img-hover position-relative">
+                                <div class="crd-img">
+                                    {% with photo=product.productphoto_set.first %}
+                                    <img src="{{ photo.product_photo.url }}" class="img-prod-hover" alt="product list">
+                                    {% endwith %}
+                                </div>
+                                <div class="edit-action-hover">
+                                    <div class="edit-action-sec gap-4 d-flex">
+                                        <button type="button"><span
+                                                class="d-flex align-items-center justify-content-center"><img
+                                                    src="{% static 'img/calendar-icon.png' %}"
+                                                    alt="calander"></span></button>
+                                        <a href="{% url 'add_product' pk=product.id %}"><button type="button"><span
+                                                class="d-flex align-items-center justify-content-center"><img
+                                                    src="{% static 'img/edit-icon.png' %}" alt="edit"></span></button></a>
+                                        <button type="button" class="delete-btn" data-bs-toggle="modal" data-bs-target="#proddelete-pop"
+                                            data-product-item-id="{{ product.id }}">
+                                            <span><img src="{% static 'img/delete-icon.png' %}" alt="delete"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="custom-checkbox"> <label class="custom-check">
+                                    <input type="checkbox" class="product-checkbox common-checkbox"
+                                        value="{{ product.id }}" name="selected_products">
+                                    <span class="checkmark"></span></label></div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h4 class="card-title">{{ product.product_title }}</h4>
+                                    <!-- <p class="card-text">$1200.00</p> -->
+                                </div>
+                                <div class="lastedit-crds d-flex justify-content-between align-items-center mb-4">
+                                    <label class="card-title">Analytics</label>
+                                    <p>lorem ipsum</p>
+                                </div>
+                                <div class="price-crds d-flex justify-content-between align-items-center mb-4">
+                                    <label class="card-title">Price</label>
+                                    <span class="price-bg">${{ product.price_transport.amount }}</span>
+                                </div>
+                                <div class="lastedit-crds d-flex justify-content-between align-items-center mb-4">
+                                    <label class="card-title">Last edited</label>
+                                    <p>{{ product.updated_at }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title"> Status</h4>
+                                    <p>
+                                        {% if product.is_draft %}
+                                        <span class="price-bg drfts-bg">Unlisted</span>
+                                        {% else %}
+                                        <span class="price-bg active-bgs">listed</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<!-- End inner body section -->
+
+</div>
+<!-- product footer section -->
+<div class="footer-bottom flex-space">
+    <div class="last-saved">
+        <p id="selectedProductCount"><span><img src="{% static 'img/lastcheck-icon.png' %}" alt="check" class="me-2">0 product selected</span></p>
+    </div>
+    <div class="footer-rigt-sec d-flex gap-3">
+        <div class="save-draft-btn d-flex align-items-center">
+            <button type="button" class="white-btn trash-btn" id="unPublish">Unpublish</button>
+        </div>
+        <div class="save-draft-btn d-flex align-items-center">
+            <button type="button" class="white-btn trash-btn" data-bs-toggle="modal" data-bs-target="#prodsdelete-pop">Deleted
+                <img src="{% static 'img/trash-icon.png' %}" alt="trash"></button>
+        </div>
+        <div class="publish-now-btn">
+            <button type="button" class="red-btn" id="Publish">Publish
+                now</button>
+        </div>
+    </div>
+</div>
+<!-- End product footer section -->
+
+<!-- Modal pop add Single Products delete-->
+<div class="modal fade" id="proddelete-pop">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-pop">
+            <div class="modal-header">
+                <h5 class="modal-title">Product delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-modal-inner text-center">
+                    <img src="{% static 'img/delate-img.png' %}" alt="delate">
+                    <p class="mt-5">Are you sure you want to delete the Products?</p>
+                </div>
+            </div>
+            <div class="modal-footer gap-4">
+                <button type="button" class="white-btn" data-bs-dismiss="modal"> Cancel</button>
+                <a href="#" id="delete-product-item" class="red-btn">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pop add Multiple Products delete-->
+<div class="modal fade" id="prodsdelete-pop">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-pop">
+            <div class="modal-header">
+                <h5 class="modal-title">Products delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-modal-inner text-center">
+                    <img src="{% static 'img/delate-img.png' %}" alt="delate">
+                    <p class="mt-5">Are you sure you want to delete the Products?</p>
+                </div>
+            </div>
+            <div class="modal-footer gap-4">
+                <button type="button" class="white-btn" data-bs-dismiss="modal"> Cancel</button>
+                <button type="button" id="deleteProducts" class="red-btn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% block tab %}
+{% endblock %}
+
+<script>
+    $(document).ready(function () {
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const productItemId = this.getAttribute('data-product-item-id');
+          document.getElementById('delete-product-item').href = `/product-delete/${productItemId}`;
+        });
+      });
+    });
+  </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.common-checkbox').change(function () {
+            const isChecked = this.checked;
+            const productId = $(this).val();
+            // Update the corresponding checkbox in the other view
+            $(`.common-checkbox[value="${productId}"]`).prop('checked', isChecked);
+            updateSelectAllCheckboxes(); // Update "Select All" checkboxes
+            updateSelectedProductCount(); // Update the count
+        });
+
+        // Function to update "Select All" checkboxes
+        function updateSelectAllCheckboxes() {
+            const allCheckboxes = $('.common-checkbox');
+            const allChecked = allCheckboxes.length === allCheckboxes.filter(':checked').length;
+            $('#selectAllListProducts, #selectAllGridProducts').prop('checked', allChecked);
+        }
+
+        // Function to update the selected product count
+        function updateSelectedProductCount() {
+            const selectedCount = $('.common-checkbox:checked').length / 2;
+            const countText = selectedCount === 1 ? '1 product selected' : selectedCount + ' products selected';
+            $('#selectedProductCount').text(countText);
+        }
+
+        // Add a change event to "Select All" checkboxes to synchronize selections
+        $('#selectAllListProducts, #selectAllGridProducts').change(function () {
+            const isChecked = this.checked;
+            $('.common-checkbox').prop('checked', isChecked);
+            $('#selectAllListProducts, #selectAllGridProducts').prop('checked', isChecked);
+            updateSelectedProductCount(); // Update the count
+        });
+
+        $('.search').on('keyup', function() {
+            let filter = $(this).val().toLowerCase();
+            $('#product-tables tbody tr').filter(function() {
+                const prodName = $(this).find('.prd-name h4').text().toLowerCase();
+                $(this).toggle(prodName.indexOf(filter)> -1)
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // The following event listeners will execute once the DOM is fully loaded
+
+        document.getElementById('deleteProducts').addEventListener('click', function () {
+            document.getElementById('publishAction').value = 'delete';
+            document.getElementById('form-upload').submit(); // Submit the form
+        });
+
+        document.getElementById('unPublish').addEventListener('click', function () {
+            document.getElementById('publishAction').value = 'unlisted';
+            document.getElementById('form-upload').submit(); // Submit the form
+        });
+        document.getElementById('Publish').addEventListener('click', function () {
+            document.getElementById('publishAction').value = 'listed';
+            document.getElementById('form-upload').submit(); // Submit the form
+        });
+    });
+</script>
+{% endblock %}

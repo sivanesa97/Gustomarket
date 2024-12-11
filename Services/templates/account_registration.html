@@ -1,0 +1,581 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+
+<form action="{% url 'account_registration' editable=None %}" method="post" enctype="multipart/form-data" id="form-id">
+    {% csrf_token %}
+    <!-- start Account tab section -->
+    <div class="tab-inner-sec">
+        <div class="personal-form-sec">
+            <div class="tab-heading mb-5">
+                <h3>Personal information</h3>
+            </div>
+            <div class="col-12 mb-5">
+                <div class="custom-checkbox">
+                    <label class="custom-check" for="editableCheckbox"><strong style="color: red;"> Want to Edit or Add: </strong>
+                        <input type="checkbox" id="editableCheckbox" name="checked">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="avatar-upload d-flex align-items-center gap-5 my-5">
+                <div class="avatar-preview">
+                    <div id="imagePreview"
+                        {% if supplier.photo %} style="background-image: url({{supplier.photo.url}})"
+                        {% else %}
+                        style="background-image: url('{% static 'img/user-img.png' %}')"
+                        {% endif %}>
+                    </div>
+                </div>
+                <div class="avatar-edit">
+                    <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="photo" disabled>
+                    <label for="imageUpload">
+                        <i class="bi bi-plus-lg"></i> Upload new picture
+                    </label>
+                </div>
+            </div>
+            <div class="form-sec cus-inputs">
+                <div class="row"> <label class="form-label">Display name <i class="bi bi-exclamation-circle-fill"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i> </label>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <input type="text" name="first-name"
+                            class="form-control" placeholder="First Name" id="firstName" {% if supplier.first_name %}
+                            value="{{supplier.first_name}}" {% endif %} disabled>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <input type="text" id="lastName"
+                            name="last-name" class="form-control" placeholder="Last Name" {% if supplier.last_name %}
+                            value="{{supplier.last_name}}" {% endif %} disabled>
+                    </div>
+                    <input type="hidden" , name="email" {% if supplier.email %} value="{{supplier.email}}" {% endif %}>
+                    <div class="col-12 mb-3"> <label class="form-label">Email <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i> </label>
+                        <input type="email" id="email" name="email" {% if supplier.email %} value="{{ supplier.email }}"
+                            {% endif %} class="form-control mb-4" placeholder="user@gustomarketplace.com" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Do you want this public or private </label>
+                        <div class="custom-checkbox d-flex gap-5 mb-5">
+                            <label class="custom-check"> Public
+                                <input type="checkbox" {% if supplier.public %} checked {% endif %} name="public" id="public" value="public">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="custom-check"> Private 
+                                <input type="checkbox" {% if supplier.private %} checked {% endif %} name="private" id="private" value="private">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-3"> <label class="form-label">Cellphone
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i>
+                        </label> <input type="text" name="phone" class="form-control mb-4" id="phone"
+                            placeholder="(000) 000-0000" value="{% if supplier.phone %} {{supplier.phone}} {% endif %}" disabled required>
+                            {% if validation_dict %}
+                            <p class="error-message" id="cellphone-error" style="color: red; font-size: 15px;">{{ validation_dict.supplier_phone_exists }}</p>
+                            {% endif %}
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-3"> <label class="form-label">BirthDate
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i>
+                        </label> <input type="date" name="birth-date" class="form-control mb-4" id="birthDate"
+                            value="{{ supplier.birth_date|date:'Y-m-d' }}" disabled>
+                    </div>
+                    <div class="col-12 mb-5">
+                        <div class="custom-checkbox"> <label class="custom-check"> i don't have cell phone
+                                <input type="checkbox" name="checked" id="notCellphone" disabled> <span
+                                    class="checkmark"></span> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="company-form-sec cus-inputs mt-5">
+            <div class="tab-heading">
+                <h3>Company Information</h3>
+            </div>
+            <div class="avatar-upload d-flex align-items-center gap-5 my-5">
+                <div class="avatar-preview">
+                    <div id="imagePreview1"
+                        {% if supplier.company.logo %}
+                        style="background-image: url({{supplier.company.logo.url}})"
+                        {% else %}
+                        style="background-image: url('{% static 'img/user-img.png' %}')"
+                        {% endif %}>
+                    </div>
+                </div>
+                <div class="avatar-edit">
+                    <input type="file" id="imageUpload1" accept=".png, .jpg, .jpeg" name="logo" disabled>
+                    <label for="imageUpload1">
+                        <i class="bi bi-plus-lg"></i> Upload new picture
+                    </label>
+                </div>
+            </div>
+            <div class="form-sec">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Company
+                            Name <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text"
+                            name="name" class="form-control" placeholder="Company Name" id="companyName"
+                            value="{{supplier.company.company_name}}" disabled>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">EIN <i
+                                class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i> </label> <input type="number" id="EIN" disabled name="ein"
+                            class="form-control" placeholder="e.g. 12-3456789" {% if supplier.company.ein %} value="{{supplier.company.ein}}" {% endif %}>
+                            {% if validation_dict %}
+                            <p class="error-message" id="ein-error" style="color: red; font-size: 15px;">{{ validation_dict.company_ein_exists }}</p>
+                            {% endif %}
+                    </div>
+                    <div class="col-12 mb-5"> <label class="form-label">Internal Signature Code <i
+                                class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i> </label> <input type="text" name="code" class="form-control"
+                            placeholder="X39302XA2" id="code" disabled {% if supplier.company.signature_code %} value="{{supplier.company.signature_code}}" {% endif %}>
+                            {% if validation_dict %}
+                            <p class="error-message" id="code-error" style="color: red; font-size: 15px;">{{ validation_dict.signature_code_exists }}</p>
+                            {% endif %}
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Company
+                            Phone <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text"
+                            name="company_phone" class="form-control" id="companyPhone" disabled
+                            value="{{supplier.company.company_phone}}" placeholder="(000) 000-0000">
+                            {% if validation_dict %}
+                            <p class="error-message" id="phone-error" style="color: red; font-size: 15px;">{{ validation_dict.company_phone_exists }}</p>
+                            {% endif %}
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Company
+                            Mobile Number <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="number"
+                            name="mobile" class="form-control" id="mobile" disabled
+                            value="{{supplier.company.company_mobile}}" placeholder="99-000-00-00">
+                            {% if validation_dict %}
+                            <p class="error-message" id="mobile-error" style="color: red; font-size: 15px;">{{ validation_dict.company_mobile_exists }}</p>
+                            {% endif %}
+                    </div>
+                    <div class="col-12 mb-5"> <label class="form-label">Industry / Company Type *</label>
+                        <select class="selectpicker form-control" name="company_type" id="companyType">
+                            <option value="notvalid">---Select Industry / Company Type---</option>
+                            {% for company_type in company_types %}
+                            <option value="{{ company_type.id }}" {% if company_type.id == supplier.company.company_type.id %} selected {% endif %}>
+                                {{ company_type.company_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">*
+                            Location <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text"
+                            placeholder="Enter Location" id="location" disabled class="form-control" name="location" {% if supplier.company.address.location %} value="{{supplier.company.address.location}}" {% endif %}>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Location
+                            Type <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label>
+
+                        <select class="selectpicker form-control" name="location_type" id="locationType">
+                            <option value="notvalid">---Select Location Type---</option>
+                            {% for location_type in location_types %}
+                            <option value="{{ location_type.id }}" {% if location_type.id == supplier.company.address.location_type.id %} selected {% endif %}>
+                                {{ location_type.location_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Address
+                            Line-1 <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text"
+                            id="address1" disabled name="address_lane_1" class="form-control"
+                            value="{{supplier.company.address.address_lane_1}}" placeholder="Street name and number">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Address
+                            Line-2 <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text"
+                            id="address2" disabled name="address_lane_2" class="form-control"
+                            value="{{supplier.company.address.address_lane_2}}" placeholder="Apartment">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">City <i
+                                class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i> </label> <input type="text" id="city" disabled name="city"
+                            class="form-control" value="{{supplier.company.address.city}}" placeholder="City">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5">
+                        <label class="form-label">Country <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i>
+                        </label>
+
+                        <select class="selectpicker form-control" id="countrySelect" name="country">
+                            <option value="notvalid">---Select Country---</option>
+                            {% for country in countrys %}
+                            <option value="{{country.id}}" {% if country.id == supplier.company.address.country.id %}
+                                selected {% endif %}>{{country.country_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-sm-5 mb-4">
+                        <label class="form-label">State/Province
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i>
+                        </label>
+                        <select class="selectpicker form-control" , id="stateSelect" name="state"
+                            data-live-search="true">
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-5"> <label class="form-label">Zip Code
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Tooltip on top"></i> </label> <input id="zipCode" disabled type="number"
+                            name="zip_code" class="form-control" value="{{supplier.company.address.zip_code}}"
+                            placeholder="Enter Zip Code">
+                    </div>
+
+                    <!-- <div class="col-12"> <label class="form-label">Address <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i> </label> <input type="text" class="form-control" placeholder="Street 001, Streeterville, DC 671892, USA"> </div> -->
+                    <div class="col-12">
+                        <div class="map-img mb-5"> <img class="img-fulid" src="{% static 'img/map.png' %}" alt="map">
+                        </div>
+                    </div>
+                    <div class="col-12 mb-5"> <button type="button" class="white-btn">Add another
+                            location</button>
+                    </div>
+                    <div class="col-12 mb-5"> <label class="form-label">Website <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i> </label>
+                        <input type="text" id="website" disabled class="form-control" name="website"
+                            placeholder="www.website.com" {% if supplier.company.website %}
+                            value="{{supplier.company.website}}" {% endif %}>
+                            {% for message in messages %}
+                            <p class="error-message" style="color: red; font-size: 15px;">{{message}}</p>
+                            {% endfor %}
+                    </div>
+                    <div class="col-12 d-flex gap-4">
+                        <a href="{% url 'team_registration' %}"><button type="button" class="previous white-btn">Skip</button></a>
+                        <button type="submit" id="button_continue" class="red-btn">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Account tab section -->
+</form>
+
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get references to the form fields
+        var fieldIds = [
+            'firstName', 'lastName', 'public', 'private', 'phone',
+            'birthDate', 'notCellphone', 'imageUpload', 'companyName',
+            'imageUpload1', 'EIN', 'code', 'companyPhone', 'mobile',
+            'location', 'address1', 'address2', 'city', 'zipCode', 'website', 
+        ];
+
+        var fields = fieldIds.map(function (id) {
+            return document.getElementById(id);
+        });
+
+        // Attach an event listener to the checkbox
+        var checkbox = document.getElementById('editableCheckbox');
+
+        // Assuming 'editable' is a Django template variable holding the value
+        var editableValue = '{{ editable }}';
+        // Set the initial state of the checkbox based on the 'editable' value
+        checkbox.checked = (editableValue === 'editable');
+
+        checkbox.addEventListener('change', toggleEditability);
+
+        // Function to toggle field editability
+        function toggleEditability() {
+            var isEditable = checkbox.checked;
+
+            fields.forEach(function (field) {
+                field.disabled = !isEditable;
+            });
+        }
+
+        // Initial state: disable fields (uncheck the checkbox to enable)
+        toggleEditability();
+
+    });
+</script>
+
+<script>
+    '{% if validation_dict.supplier_phone_exists %}'
+    document.addEventListener('DOMContentLoaded', function () {
+        var ErrorElement = document.getElementById('cellphone-error');
+        ErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    '{% endif %}'
+
+    '{% if validation_dict.company_ein_exists %}'
+    document.addEventListener('DOMContentLoaded', function () {
+        var ErrorElement = document.getElementById('ein-error');
+        ErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    '{% endif %}'
+
+    '{% if validation_dict.signature_code_exists %}'
+    document.addEventListener('DOMContentLoaded', function () {
+        var ErrorElement = document.getElementById('code-error');
+        ErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    '{% endif %}'
+
+    '{% if validation_dict.company_phone_exists %}'
+    document.addEventListener('DOMContentLoaded', function () {
+        var ErrorElement = document.getElementById('phone-error');
+        ErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    '{% endif %}'
+
+    '{% if validation_dict.company_mobile_exists %}'
+    document.addEventListener('DOMContentLoaded', function () {
+        var ErrorElement = document.getElementById('mobile-error');
+        ErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    '{% endif %}'
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#button_continue').click(function (e) {
+            e.preventDefault();
+
+            // Remove previous error messages and dynamically create error message containers
+            $('.error-message').remove();
+
+            // Perform validation checks for each field
+            var isValid = true;
+            var emptyFields = [];
+
+            var fieldIds = [
+                'firstName', 'lastName', 'email', 'phone', 'countrySelect',
+                'birthDate', 'notCellphone', 'companyName', 'locationType',
+                'EIN', 'code', 'companyPhone', 'mobile', 'companyType',
+                'location', 'address1', 'city', 'zipCode', 'website',
+            ];
+
+            $.each(fieldIds, function (index, fieldId) {
+                var fieldValue = $('#' + fieldId).val().trim();
+                // Check if 'notCellphone' is checked
+                var notCellphoneChecked = $('#notCellphone').prop('checked');
+
+                if (fieldValue === '' && fieldId === 'phone' && !notCellphoneChecked) {
+                    // If 'phone' is empty and 'notCellphone' is not checked, show error
+                    isValid = false;
+                    $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">This field is required.</p>').insertAfter('#' + fieldId);
+                    $('#' + fieldId).focus();
+                } else if ((fieldValue === '' || fieldValue === 'notvalid') &&
+                    (fieldId !== 'website' && fieldId !== 'phone')) {
+                    isValid = false;
+                    // Create and insert the error message container
+                    $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">This field is required.</p>').insertAfter('#' + fieldId);
+                    $('#' + fieldId).focus();
+                
+                } else if (fieldId === 'firstName' || fieldId === 'lastName') {
+                    if (!isValidName(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">Please enter a valid name with letters only.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'phone' && fieldValue !== '') {
+                    if (!isValidPhone(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">Please enter a valid cell phone number with 10 digits.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'companyPhone') {
+                    if (!isValidPhone(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">Please enter a valid phone number with 10 digits.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'mobile') {
+                    if (!isValidMobile(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">Please enter a valid phone number with 10 digits.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'zipCode') {
+                    if (fieldValue.length != 5) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">The zip code should be 5 digits long.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'EIN') {
+                    if (fieldValue.length != 9) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">The EIN should be 9 digits long.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'birthDate') {
+                    if (!isValidBirthDate(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">You must be at least 18 years old.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                } else if (fieldId === 'website') {
+                    if (fieldValue !== '' && !isValidURL(fieldValue)) {
+                        isValid = false;
+                        $('<p class="error-message" id="' + fieldId + '-error" style="color: red; font-size: 15px;">Invalid URL.</p>').insertAfter('#' + fieldId);
+                        $('#' + fieldId).focus();
+                    }
+                // } else if (fieldId === 'EIN' || fieldId === 'code' || fieldId === 'phone' || fieldId === 'companyPhone' || fieldId === 'mobile') {
+                //     // Checking duplicacy using AJAX
+                //     checkDuplicacy(fieldId, fieldValue);
+                }
+            });
+
+            // Add a message if 'editableCheckbox' is not checked
+            if (!$('#editableCheckbox').prop('checked')) {
+                isValid = false;
+                $('<p class="error-message" id="editableCheckbox-error" style="color: red; font-size: 15px;">Please check the box first to enable editing.</p>').insertAfter('#editableCheckbox');
+                $('#editableCheckbox').focus();
+            }
+
+            if (isValid) {
+                // Form is valid, you can submit it
+                $('#form-id').submit();
+            }
+        });
+    });
+
+    // Function to check if a name contains only letters
+    function isValidName(name) {
+        var regex = /^[A-Za-z]+$/;
+        return regex.test(name);
+    }
+
+    function isValidMobile(phone) {
+        // Remove any non-digit characters from the input
+        var cleanedPhone = phone.replace(/\D/g, '');
+        // Check if the cleaned phone number is exactly 10 digits and starts with 2-9
+        return /^\d{10}$/.test(cleanedPhone) && /^[2-9]/.test(cleanedPhone);
+    }
+
+
+    function isValidPhone(phone) {
+        // Remove any non-digit characters from the input
+        var cleanedPhone = phone.replace(/\D/g, '');
+
+        // Check if the cleaned phone number is 10 digits in length and matches the US phone pattern
+        var regex = /^\(\d{3}\) \d{3}-\d{4}$/;
+        return regex.test(phone);
+    }
+
+
+    // Function to check if a birth date is valid
+    function isValidBirthDate(birthDate) {
+        // Create a date object for the input birth date
+        var inputDate = new Date(birthDate);
+
+        // Calculate the current date
+        var currentDate = new Date();
+
+        // Calculate the date 18 years ago
+        var eighteenYearsAgo = new Date(currentDate);
+        eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+
+        // Check if the input date is less than the date 18 years ago
+        return inputDate <= eighteenYearsAgo;
+    }
+
+    // Function to check a valid url.
+    function isValidURL(str) {
+        // Use a regular expression to match valid URLs
+        // This regex allows http, https, or www at the beginning
+        // It also includes subdomains and various URL components
+        const urlPattern = /^(https?:\/\/|www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/i;
+
+        return urlPattern.test(str);
+    }
+    
+</script>
+<script>
+// Function to format the phone number as the user types
+function formatPhoneNumber(inputId) {
+  var input = document.getElementById(inputId);
+  var value = input.value.replace(/\D/g, ''); // Remove non-digit characters
+  var formattedValue = '';
+
+  if (value.length > 0) {
+    formattedValue = '(';
+
+    for (var i = 0; i < value.length && i < 10; i++) {
+      if (i === 3) {
+        formattedValue += ') ';
+      } else if (i === 6) {
+        formattedValue += '-';
+      }
+      formattedValue += value.charAt(i);
+    }
+  }
+
+  input.value = formattedValue;
+}
+
+// Add input event listeners to the input fields
+document.getElementById('phone').addEventListener('input', function() {
+  formatPhoneNumber('phone');
+});
+
+document.getElementById('companyPhone').addEventListener('input', function() {
+  formatPhoneNumber('companyPhone');
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize the SelectPicker plugin
+        $('.selectpicker').selectpicker();
+
+        // Function to populate states and set the selected option
+        function populateStates(countryId, supplierStateId) {
+            $.ajax({
+                url: '/get-country-state/',
+                type: 'GET',
+                data: { 'country_id': countryId },
+                dataType: 'json',
+                success: function (data) {
+                    // Clear existing options and refresh the SelectPicker
+                    $('#stateSelect').empty().selectpicker('refresh');
+
+                    $.each(data, function (index, state) {
+                        var option = $('<option value="' + state.id + '">' + state.state_name + '</option>');
+
+                        // Check if the current state's ID matches the supplier's state ID
+                        if (state.id == supplierStateId) {
+                            option.prop('selected', true);
+                        }
+
+                        // Append the option to the select element
+                        $('#stateSelect').append(option);
+                    });
+
+                    // Refresh the SelectPicker to reflect changes
+                    $('#stateSelect').selectpicker('refresh');
+                },
+            });
+        }
+
+        // Initial state list (when the page loads)
+        var selectedCountryId = $('#countrySelect').val();
+        var supplierStateId = '{{ supplier.company.address.state.id}}'; // Get the supplier's state ID
+
+
+        populateStates(selectedCountryId, supplierStateId);
+
+        // Event listener for when the country selection changes
+        $('#countrySelect').change(function () {
+            var selectedCountryId = $(this).val();
+            populateStates(selectedCountryId, supplierStateId);
+        });
+    });
+</script>
+
+
+{% endblock %}

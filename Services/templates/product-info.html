@@ -1,0 +1,295 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+
+  <!-- start inner body section -->
+  <div class="page-content">
+    <div class="shops-inner">
+      <!-- start inner body section -->
+
+      <!-- start shop top section -->
+      <div class="shop-top-sec flex-space">
+        <li class="shop-left-sec">
+          <a href="{% url 'products' %}"><button type="button" class="btn"><i class="bi bi-arrow-left"></i></button></a>
+        </li>
+        <div class="shop-right-sec gap-4 d-flex">
+          <button type="button" class="white-btn"><span class="pe-2"><img src="{% static 'img/heart-icon.png' %}"
+                alt="heart"></span> 32</button>
+          <button type="submit" class="red-btn position-relative" id="addToCartBtn">
+            <span class="dolor-sapn pe-1">${{product.price_transport.amount }}</span>
+            <span class="addcrd-btn ps-5 pe-1">Add to Cart</span>
+            <i class="bi bi-bag"></i>
+          </button>
+        </div>
+      </div>
+      <!-- end shop top section -->
+
+      <!-- start Bottled top section -->
+      <div class="bottled-sec flex-space mt-5 mb-2">
+        <div class="bottled-left">
+          <h2>{{ product.product_title }}</h2>
+        </div>
+        <div class="bottled-right">
+          <h2>Gusto Approved</h2>
+        </div>
+      </div>
+      <!-- end Bottled top section -->
+
+      <div class="mini-txt">
+        <p>Mini description of the product or key category or tags</p>
+      </div>
+      <div class="d-flex gap-4 mb-5">
+        <div class="company-auther-sec d-flex align-items-center gap-4">
+          {% if product.supplier.company.logo %}
+          <img src="{{ product.supplier.company.logo.url }}" alt="avatar">
+          {% else %}
+          <img src="{% static 'img/avatar.png' %}" alt="avatar">
+          {% endif %}
+          <p class="mb-0"><span>by</span> {{ product.supplier.company.company_name }}</p>
+        </div>
+        <div class="start-txt-img d-flex align-items-center gap-3">
+          <img src="{% static 'img/star-icon.png' %}" alt="star">
+          <p class="mb-0"><span>4.8</span> (87)</p>
+        </div>
+      </div>
+
+      <div class="shop-img position-relative">
+        {% with photo=product.productphoto_set.first %}
+        <img class="img-fluid" src="{{ photo.product_photo.url }}" alt="product">
+        {% endwith %}
+        <button type="button" class="white-btn" data-bs-toggle="modal" data-bs-target="#showall-photo-pop">Show all
+          photos</button>
+      </div>
+      <div class="row mt-5 justify-content-between gap-3">
+        <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+          <div class="left-shop-sec">
+            <div class="certification-sec">
+              <div class="tab-heading">
+                <h3>Certifications</h3>
+              </div>
+              <div class="d-flex gap-4 my-5 flex-wrap ">
+                <div><img src="{% static 'img/dummy-img.png' %}" alt="dummy"></div>
+                <div><img src="{% static 'img/dummy-img.png' %}" alt="dummy"></div>
+                <div><img src="{% static 'img/dummy-img.png' %}" alt="dummy"></div>
+                <div><img src="{% static 'img/dummy-img.png' %}" alt="dummy"></div>
+                <div><img src="{% static 'img/dummy-img.png' %}" alt="dummy"></div>
+              </div>
+            </div>
+            <div class="overview-sec">
+              <div class="tab-heading mb-5">
+                <h3>Overview</h3>
+              </div>
+              <div class="cmn-text">
+                {% if product.description %}
+                <p> {{product.description }} </p>
+                {% else %}
+                <p> No description </p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+          <div class="right-shop-sec">
+            <div class="tab-heading">
+              <h3>Features</h3>
+            </div>
+            <div class="features-lista">
+              <ul class="mb-0">
+                <li><img class="me-4" src="{% static 'img/check-list.png' %}" alt="check">Feature or Atribute</li>
+                <li><img class="me-4" src="{% static 'img/check-list.png' %}" alt="check">Feature or Atribute</li>
+                <li><img class="me-4" src="{% static 'img/check-list.png' %}" alt="check">Feature or Atribute</li>
+                <li><img class="me-4" src="{% static 'img/check-list.png' %}" alt="check">Feature or Atribute</li>
+                <li><img class="me-4" src="{% static 'img/check-list.png' %}" alt="check">Feature or Atribute</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hr-line-small my-5"></div>
+
+      <div class="morelike-sec">
+        <div class="flex-space mb-5">
+          <div class="tab-heading">
+            <h3>Related </h3>
+          </div>
+          <a href="{% url 'products' %}">
+            <button type="button" class="white-btn">View all
+              <img class="ms-2" src="{% static 'img/forword-icon.png' %}" alt="arrow">
+            </button>
+          </a>
+        </div>
+        <div class="row">
+          {% for product in products %}
+          <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 mb-4">
+            <div class="prodt-card">
+              <div class="card-img-hover position-relative mb-4">
+                {% with photo=product.productphoto_set.first %}
+                <img src="{{ photo.product_photo.url }}" alt="product image" class="card-image w-100">
+                {% endwith %}
+                <div class="edit-action-hover">
+                  <div class="edit-action-sec gap-4 d-flex">
+                    <a href="{% url 'product_info' product.id %}"><button type="button"><span
+                          class="d-flex align-items-center justify-content-center"><img
+                            src="{% static 'img/forword-arrow.png' %}" alt="arrow"></span></button></a>
+                  </div>
+                  <div class="custom-checkbox">
+                    <label class="custom-check">
+                      <input type="checkbox" class="product-checkbox common-checkbox" value="{{ product.id }}"
+                        name="selected_products">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="product-body">
+                <div class="prdname-price-sec d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">{{ product.product_title }}</h4>
+                  <p>${{ product.price_transport.amount }}</p>
+                </div>
+                <div class="prd-rating-sec">
+                  <p><img src="{% static 'img/star-icon.png' %}" alt="star"> 4.8 <span>(87)</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End inner body section -->
+</div>
+
+<!-- Modal pop Show all photos-->
+<div class="modal fade" id="showall-photo-pop">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ product.product_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-inner-sec">
+          <div class="showall-img">
+            <ul>
+              {% for photo in product.productphoto_set.all %}
+              <li>
+                <img src="{{ photo.product_photo.url }}" alt="product" data-bs-toggle="modal"
+                  data-bs-target="#zoom-photo-pop">
+              </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal pop Show all photos-->
+<div class="modal fade" id="zoom-photo-pop">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ product.product_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-inner-sec">
+          <div class="showall-zoom-img">
+            <ul>
+              <li><img src="" alt="product"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% block tab %}
+{% endblock %}
+<!-- Add this script to your HTML file -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Add a click event listener to each image in showall-photo-pop modal
+    $('#showall-photo-pop img').on('click', function () {
+      // Get the source of the clicked image
+      var imageUrl = $(this).attr('src');
+
+      // Update the source of the image in the zoom-photo-pop modal
+      $('#zoom-photo-pop img').attr('src', imageUrl);
+
+      // Show the zoom-photo-pop modal
+      $('#zoom-photo-pop').modal('show');
+    });
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    // Define the getCookie function within the same script block
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Check if this cookie string begins with the name we want
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    $('#addToCartBtn').on('click', function () {
+      // Check if the span element with ID 'cart_item_count' exists
+      var cartItemCountSpan = $('#cart_item_count');
+      var product_id = '{{ product.id }}';
+      // Get the CSRF token from the cookie
+      var csrftoken = getCookie('csrftoken');
+      $.ajax({
+        type: 'POST',
+        url: '/add-to-cart/' + product_id + '/',
+        dataType: 'json',
+        headers: { 'X-CSRFToken': csrftoken },
+        success: function (data) {
+          // Check if the span element with ID 'cart_item_count' exists
+          if (cartItemCountSpan.length > 0) {
+            // Update the existing span element with the fetched count
+            cartItemCountSpan.text(data.cart_item_count);
+          } else {
+              // Create a new span element with the cart item count
+              $('#cartCount').append('<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-crt" id="cart_item_count">'+ data.cart_item_count +'</span>');
+          }
+          if (data.success) {
+            // Create a new button element with the desired attributes and styles
+            var newButton = $('<a>', {
+              href: '{% url "cart" %}',
+              html: $('<button>', {
+                type: 'submit',
+                class: 'red-btn position-relative',
+                text: 'Go to Cart',
+              })
+            });
+
+            // Replace the existing button with the new button
+            $('#addToCartBtn').replaceWith(newButton);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', status, error);
+        }
+
+      });
+    });
+  });
+</script>
+{% endblock %}

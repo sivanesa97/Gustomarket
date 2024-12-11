@@ -1,0 +1,416 @@
+@media only screen and (min-width:320px) and (max-width:992px) {
+:root { 
+/* font-sizes css variables */
+--f-hedprmsize: 4.0rem;
+--f-subheadsize: 3.0rem;
+--f-midheadsize: 1.8rem;
+--f-hedsecsize: 2.2rem;
+--f-normalsize: 1.6rem;
+--f-paraprmsize: 1.3rem;
+--f-parasecsize: 1.3rem;
+--f-member-size: 1.3rem;
+--f-small-size: 1.3rem;
+}
+
+.sigup-logo h1 {
+    font-size: 32px;
+    padding-left: 0;
+}
+.get-started-hed h2 {
+    margin-bottom: var(--m-com-bottom);
+}
+.serach-bar {
+    max-width: 232px;
+}
+.earnings-card:before {
+    right: 25px;
+}
+}
+@media only screen and (min-width:320px) and (max-width:768px) {
+   .tophead-right {
+    width: 214px;
+} 
+.tophead-right .white-btn {
+    display: none;
+}
+.tophead-right .red-btn {
+    display: none;
+}
+main.main-body .content-wrapper-bg .page-content {
+    border-radius: 4px;
+    padding: 25px 16px;
+}
+main.main-body .content-wrapper {
+    padding: 25px 16px;
+}
+.cus-inputs input[type="email"], .cus-inputs input[type="password" i], .cus-inputs input[type="text" i], .cus-inputs input[type="number"], .cus-inputs input[type="date"], .cus-inputs select {
+    margin-bottom: 15px;
+}
+.file-upload .uplaod-file {
+    width: 66%;
+}
+main.main-body .footer-padding {
+    padding-bottom: 100px;
+}
+.purchase-head-sec {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.purchase-head-lft {
+    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.purchase-head-rgt {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.amountprice-row {
+    width: 85%;
+}
+.card-price-sec h3 {
+    width: 85%;
+}
+.card-section {
+    padding: 16px 12px;
+}
+.payment-method-crd {
+    padding: 20px 10px;
+}
+.pay-crd-bg {
+    padding: 14px 10px;
+}
+.crd-number h3 {
+    font-size: 24px;
+}
+.tickets-card {
+    margin-bottom: 20px;
+}
+.overview-card {
+    padding: 16px 10px;
+}
+.overcrd-text h3 {
+    font-size: 20px;
+}
+.overcrd-text p {
+    font-size: 11px;
+}
+.crd-incress-txt b {
+    padding: 8px 4px;
+}
+.tickets-card {
+    padding: 20px 10px;
+}
+.checkmark {
+    height: 20px;
+    width: 20px;
+    border-radius: 2px;
+}
+.custom-check .checkmark:after {
+    top: 1px;
+    left: 6px;
+    width: 6px;
+}
+.role-drop-sec .custom-check {
+    padding: 4px 15px 4px 37px;
+}
+.cust-switch .switch {
+    width: 50px;
+    height: 26px;
+}
+.cust-switch .slider:before {
+    height: 18px;
+    width: 18px;
+}
+input:checked+.slider:before {
+    transform: translateX(24px);
+}
+.earnings-card {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--c-border-primary);
+    padding: 20px 0px;
+}
+.earnings-card:before {
+    display: none;
+}
+.tab-heading h3:before {
+    top: -7px;
+}
+.lite-num h2 {
+    font-size: 40px;
+}
+.upgrad-btns button {
+    width: 100%;
+}
+.num-user-active .qty-container .input-qty {
+    max-width: 100px;
+}
+.num-user-active .qty-container .input-group-text {
+    padding: 0px 10px;
+}
+.totalmnth-sec .lite-num h2 {
+    font-size: 22px;
+}
+}
+/* @media only screen and (min-width: 768px) { 
+.earnings-card {
+    border-bottom: none;
+    padding: 0;
+    gap: 10px;
+}
+} */
+@media only screen and (device-width: 768px) {
+.procrd-sec {
+    padding: 0px 16px 0px 16px;
+}
+.litecrd-sec {
+    padding: 0px 16px 0px 16px;
+}
+.earnings-card {
+    border-bottom: none;
+    padding: 0;
+    gap: 10px;
+    border-right: 1px solid var(--c-border-primary);
+}
+}
+@media only screen and (min-width:320px) and (max-width:500px) {
+:root { 
+/* font-sizes css variables */
+--f-hedprmsize: 4.0rem;
+--f-subheadsize: 3.0rem;
+--f-midheadsize: 1.8rem;
+--f-hedsecsize: 2.2rem;
+--f-normalsize: 1.6rem;
+--f-paraprmsize: 1.3rem;
+--f-parasecsize: 1.3rem;
+--f-member-size: 1.3rem;
+--f-small-size: 1.3rem;
+}
+.custom-modal-pop .modal-body {
+    padding: 30px 12px;
+}
+.footer-bottom {
+    flex-direction: column;
+}
+.last-saved {
+    margin-bottom: 20px;
+    width: 100%;
+}
+.footer-rigt-sec {
+    width: 100%;
+    justify-content: space-between;
+}
+main.main-body .footer-padding {
+    padding-bottom: 150px;
+} 
+.red-btn {
+    padding: 9px 18px;
+} 
+.white-btn {
+    padding: 9px 18px;
+} 
+.attricheck-sec {
+    margin-bottom: 16px;
+} 
+.card-section {
+    padding: 25px 12px;
+}  
+ .wizard ul.nav {
+    max-width: 100%;
+}   
+.wizard {
+    flex-direction: column;
+}
+.avatar-upload .avatar-preview {
+    width: 72px;
+    height: 72px;
+}   
+.get-started-inr {
+    width: 100%;
+    padding: 0px 16px;
+}
+.top-sign-sec p {
+    padding: 12px 24px 0px 0px;
+    text-align: center;
+}
+.get-started-sec {
+    height: auto;
+}
+.bottom-sign-sec ul li {
+    margin-right: 12px;
+}
+.checkform-sec input[type="text"] {
+    width: 45px;
+    height: 60px;
+}
+.com-bold-txt p br {
+    display: none;
+}
+#chatbot_toggle {
+    height: 5rem;
+    width: 5rem;
+    padding: 1rem;
+}
+#window-chat-pop .collapsed {
+    width: 5rem;
+    height: 5rem;
+}
+.main-title {
+    height: 5rem;
+}
+.serach-bar input {
+    position: absolute;
+    left: 29px;
+    z-index: 10;
+    transition-duration: 0.4s;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.serach-bar input:focus {
+    background-color: var(--c-bg-body);
+    width: 200px;
+    padding: 11px 8px;
+    font-size: var(--f-paraprmsize);
+    height: 40px;
+    top: -10px;
+    border-radius: 4px;
+}
+.serach-bar {
+    max-width: unset;
+    width: unset;
+}
+span.search-icn {
+    position: relative;
+    top: unset;
+    left: unset;
+}
+.tophead-right {
+    width: 166px;
+}
+.file-upload .uplaod-file {
+    width: 85%;
+}
+.bottled-sec {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.shop-top-sec{
+    flex-direction: column;
+    align-items: self-start;
+}
+.features-lista ul li {
+    padding: 12px 0px;
+}
+.showall-img ul li {
+    width: 45.5%;
+}
+.showall-img ul li img {
+    width: 100%;
+}
+.amountprice-row {
+    width: 100%;
+}
+.card-price-sec h3 {
+    width: 100%;
+}
+.overcrd-text h3 {
+    font-size: 22px;
+}
+
+.purcased-prod-hedsection {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.purcased-prod-hedsection .tab-inner-tabs {
+    margin-top: 20px;
+}
+.prod-chart-heads {
+    flex-direction: column;
+    align-items: self-start;
+}
+.prod-chart-heads .prod-chart-tab {
+    margin-top: 26px;
+}
+.transactions-top-sec {
+    flex-direction: column;
+    align-items: self-start;
+}
+.transactions-left-column {
+    margin-bottom: 20px;
+}
+.transactions-right-column .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 160px;
+}
+.past-purchases-secs {
+    margin-bottom: 20px;
+}
+table.dataTable>tbody>tr.child ul.dtr-details>li {
+    padding: 15px 0;
+}
+.customertops-sec {
+    flex-direction: column;
+    align-items: end;
+}
+.customertops-sec .customer-right-column {
+    margin-top: 20px;
+}
+.mrginbtm-same {
+    margin-bottom: 20px;
+}
+.cus-suppliers-inner {
+    flex-direction: column;
+}
+.cust-profile-img img {
+    width: 46px;
+}
+.cus-suppliers-nav {
+    border-bottom: 2px solid var(--c-border-primary);
+    padding-bottom: 20px;
+}
+main.main-body .page-title {
+    font-size: 20px;
+}
+.cus-suppliers-tabs {
+    margin-top: 0;
+}
+.litecrd-sec:before {
+    background-color: unset;
+}
+.litecrd-sec {
+    padding: 0px;
+}
+.lite-pro-section {
+    padding: 0;
+}
+.reson-lists {
+    height: unset;
+}
+.procrd-sec {
+    padding: 0px;
+    margin-top: 40px;
+}
+
+.asked-question-flx {
+    flex-direction: column;
+}
+.asked-question-nav {
+    max-width: 100%;
+}
+.feature-lists {
+    margin-bottom: 24px;
+}
+.mobile-serch-sec {
+    margin-bottom: 30px;
+}
+}  
+@media (min-width: 450px) {
+#window-chat-pop  .main-card {
+  max-width: 400px;
+  max-height: 600px;
+}
+
+}

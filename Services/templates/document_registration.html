@@ -1,0 +1,125 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<form action="{% url 'document_registration' %}" method="post" enctype="multipart/form-data" id="form-upload"
+  class="mb-5">
+  {% csrf_token %}
+  <!-- start Documents tab section -->
+  <div class="tab-inner-sec">
+    <div class="documents-sec">
+      <div class="tab-heading">
+        <h3>Documents</h3>
+      </div>
+
+      <div class="file-upload cus-inputs my-5">
+        <label class="form-label">Company Registration Files (optional)
+          <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-original-title="Tooltip on top"></i>
+        </label>
+        <div class="file-upload-inner form-group position-relative">
+          <input type="file" class="form-control" name="document" multiple id="upload-img" multiple>
+          <button type="button" class="uplaod-file flex-center"> <img src="{% static 'img/upload-icon.svg' %}"
+              alt="upload icon">Click or drop image or video</button>
+        </div>
+        <div class="img-thumbs img-thumbs-hidden" id="img-preview"></div>
+
+        <label class="form-label mt-5">Licenses & Certifications (optional)
+          <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-original-title="Tooltip on top"></i>
+        </label>
+        <div class="file-upload-inner form-group position-relative">
+          <input type="file" class="form-control" name="document1" multiple id="upload-img1">
+          <button type="button" class="uplaod-file flex-center"> <img src="{% static 'img/upload-icon.svg' %}"
+              alt="upload icon">Click or drop
+            image or video</button>
+        </div>
+        <div class="img-thumbs img-thumbs-hidden" id="img-preview1"></div>
+
+      </div>
+      <div class="col-12 d-flex gap-4">
+        <a href="{% url 'terms_conditions' %}"><button type="button" class="previous white-btn">Skip</button></a>
+        <button type="submit" class="red-btn next">Continue</button>
+      </div>
+    </div>
+  </div>
+  <!-- end Documents tab section -->
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/css/bootstrap-select.min.css"> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/js/bootstrap-select.min.js"></script> -->
+
+<!-- <script>
+  $(document).ready(function () {
+    $(document).on('click', '#upload-img', function () {
+      if ($('.wrapper-thumb img').attr('src') !== '') {
+        var selectoption = '<select name="document_id" class="selectpicker mb-2"><option selected="selected">File Type</option>';
+
+        // Iterate through the document_types passed from Django
+        "{% for document_type in document_types %}"
+        selectoption += '<option value="{{ document_type.id }}">{{ document_type.document_type }}</option>';
+        "{% endfor %}"
+
+        selectoption += '</select>';
+
+        $("#img-preview").append(selectoption);
+      }
+    });
+  });
+</script> -->
+
+<script>
+  $(document).ready(function () {
+  // Function to populate the select dropdown
+  function populateSelectDropdown(data, targetId, selectName) {
+    var selectoption = '<select name="' + selectName + '"id="selectType" class=" mb-2"><option value=0 selected="selected">Select File Type</option>';
+    for (var i = 0; i < data.length; i++) {
+      selectoption += '<option value="' + data[i].id + '">' + data[i].document_type + '</option>';
+    }
+    selectoption += '</select>';
+    $("#" + targetId).append(selectoption);
+  }
+
+  // Common function to handle both #upload-img and #upload-img1
+  function handleUploadClick(uploadId, targetId, selectName, wrapperClass) {
+    $(document).on('click', uploadId, function () {
+      if ($(wrapperClass + ' img').attr('src') !== '') {
+        // Make an AJAX request to fetch document types
+        $.ajax({
+          url: '/get-document-types/', // Replace with your actual API endpoint URL
+          method: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            // Populate the select dropdown with the received data
+            populateSelectDropdown(data, targetId, selectName);
+          },
+          error: function (error) {
+            console.log('Error:', error);
+          }
+        });
+      }
+    });
+  }
+
+  // Handle the click event for #upload-img
+  handleUploadClick('#upload-img', 'img-preview', 'document_id', '.wrapper-thumb');
+
+  // Handle the click event for #upload-img1
+  handleUploadClick('#upload-img1', 'img-preview1', 'document_id1', '.wrapper-thumb1');
+});
+
+$(document).on('click', '.remove-btn', function () {
+    // Remove the Bootstrap Select dropdown
+    $('.selectpicker').selectpicker('destroy');
+    
+    // Remove the image
+    $(".bootstrap-select").remove();
+    $(".selectpicker").remove();
+    $("#selectType").remove();
+});
+
+</script>
+{% endblock %}

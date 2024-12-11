@@ -1,0 +1,210 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg footer-padding">
+  <h1 class="page-title">Purchase Details</h1>
+
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <div class="row">
+      <!-- start Billing Details left section -->
+      <div class="col-12 col-md-7 col-lg-8 col-xl-8 col-xxl-8">
+        <div class="purchase-details-sec">
+          <div class="card-section mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <div class="tab-heading">
+                <h3>Billing Details</h3>
+              </div>
+              <div class="bck-btn">
+                <button type="button" class="white-btn"> <img src="{% static 'img/back-icon.png' %}" alt="back" class="me-2">
+                  Back</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                <label class="form-label">Company Name <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <input type="text" class="form-control" placeholder="Company Name">
+              </div>
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                <label class="form-label">Company Tax Code <i class="bi bi-exclamation-circle-fill"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <input type="text" class="form-control" placeholder="Company Tax Code">
+              </div>
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                <label class="form-label">Location <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <input type="text" class="form-control" placeholder="Location">
+              </div>
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 cus-inputs">
+                <label class="form-label">Location Type <i class="bi bi-exclamation-circle-fill"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"></i>
+                </label>
+                <select class="selectpicker form-control">
+                  <option selected="selected"> Restaurant / Hotel </option>
+                  <option value="1">Lorem </option>
+                  <option value="2">Lorem </option>
+                </select>
+              </div>
+              <div class="col-12 cus-inputs">
+                <label class="form-label">Location <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <input type="text" class="form-control mb-3" placeholder="Location">
+              </div>
+            </div>
+          </div>
+          <div class="card-section mb-3">
+            <div class="tab-heading">
+              <h3>Shipping & Transport</h3>
+            </div>
+            <div class="col-12 cus-inputs mt-5">
+              <div class="flex-space">
+                <label class="form-label mb-0">I will pick up the product from the Seller <i
+                    class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-original-title="Tooltip on top"></i> </label>
+                <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                      class="slider round"></span> </label> </div>
+              </div>
+            </div>
+            <div class="hr-line my-3 my-sm-4"></div>
+            <div class="col-12 cus-inputs mt-5">
+              <div class="flex-space">
+                <label class="form-label mb-0">Shipping details are the same as Billing Details <i
+                    class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-original-title="Tooltip on top"></i> </label>
+                <div class="cust-switch"> <label class="switch"><input type="checkbox"><span
+                      class="slider round"></span> </label> </div>
+              </div>
+            </div>
+            <div class="hr-line my-3 my-sm-4"></div>
+            <div class="col-12 cus-inputs mt-5">
+              <div class="flex-space">
+                <label class="form-label mb-0">Total Transport Cost <i class="bi bi-exclamation-circle-fill"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <div class="transport-cost-pr">
+                  <p>$184.00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-section mb-3">
+            <div class="tab-heading">
+              <h3>Delivery</h3>
+            </div>
+            <div class="col-12 cus-inputs mt-5">
+              <div class="flex-space">
+                <label class="form-label mb-0">Expected Delivery <i class="bi bi-exclamation-circle-fill"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                </label>
+                <div class="transport-cost-pr d-flex align-items-center gap-3">
+                  <p class="mb-0">28 August 2023</p> <i class="bi bi-calendar4"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- start Payment Method right section -->
+      <div class="col-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+        <div class="card-section">
+          <div class="tab-heading mb-5">
+            <h3>Payment Method</h3>
+          </div>
+          <div class="payment-method-crd">
+            <div class="pay-crd-bg">
+              <div class="pay-crd-head flex-space">
+                <p>Credit Card</p>
+                <p>Edit</p>
+              </div>
+              <div class="crd-number">
+                <h3>****411</h3>
+              </div>
+            </div>
+            <div class="pay-crd-bg">
+              <div class="pay-crd-head">
+                <p>Pay on Delivery</p>
+              </div>
+              <div class="crd-number">
+                <h3>28 April</h3>
+              </div>
+            </div>
+            <div class="pay-crd-bg">
+              <div class="pay-crd-head">
+                <p>Credits Available</p>
+              </div>
+              <div class="crd-availble">
+                <h4>3242</h4>
+              </div>
+              <div class="col-12 cus-inputs">
+                <div class="flex-space">
+                  <label class="form-label mb-0">Deduct available credits <i class="bi bi-exclamation-circle-fill"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                  </label>
+                  <div class="cust-switch"> <label class="switch"><input type="checkbox" checked=""><span
+                        class="slider round"></span> </label> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End inner body section -->
+</div>
+<!-- product footer section -->
+<div class="footer-bottom flex-space">
+  <div class="last-saved">
+    <p>Order Summary: 5 Products + Delivery Charges</p>
+  </div>
+  <div class="footer-rigt-sec d-flex gap-5">
+    <div class="total-picess align-items-center d-flex">
+      <h3 class="mb-0">Total: $109,00</h3>
+    </div>
+    <div class="publish-now-btn">
+      <button type="button" class="red-btn" data-bs-toggle="modal" data-bs-target="#congrats-pop">Complete
+        Order</button>
+    </div>
+  </div>
+</div>
+<!-- End product footer section -->
+
+<!-- Modal pop Congratulations!-->
+<div class="modal fade" id="congrats-pop">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal-pop">
+      <div class="modal-header">
+        <h5 class="modal-title">Congratulations!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="custom-modal-bdy text-center">
+          <div class="congrats-img mb-5">
+            <img src="{% static 'img/congrats-img.png' %}" alt="congrats">
+          </div>
+          <div class="congrats-text">
+            <p>Congratulations!</p>
+          </div>
+          <div class="congrats-subtext">
+            <h2 class="mb-3">Order ID: 03XXS</h2>
+            <p>Your Supplier will inform you when the order is in transit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="red-btn">Done!</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

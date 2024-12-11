@@ -1,0 +1,172 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+    <h1 class="page-title">Supplier list</h1>
+    <!-- start inner body section -->
+    <div class="page-content whitebg-remove p-0">
+        <!-- start Customer list page -->
+        <div class="dashboard-inners">
+
+            <!-- start Customer list table section -->
+            <div class="prod-salestble-section">
+                <div class="card-section">
+
+                    <!-- start Customer top  section -->
+                    <div class="customertops-sec flex-space mrginbtm-same">
+                        <div class="customer-left-column d-flex align-items-center gap-5">
+                            <div class="tab-heading">
+                                <h3>Supplier</h3>
+                            </div>
+                            <div class="customer-serch">
+                                <div class="serach-boxs position-relative">
+                                    <input class="form-control" type="search" placeholder="Search by name or email">
+                                    <label class="search-label d-block">
+                                        <span class="search-icons">
+                                            <img src="{% static 'img/search-icon.png' %}" alt="search">
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="customer-right-column horiztl-tab-gry position-relative">
+                            <div class="d-flex gap-3 align-items-center">
+
+                                <div class="filter-wrapper">
+                                    <button class="position-relative filter-btns filter-cliking" type="button">
+                                        <img src="{% static 'img/filter-icon.png' %}" alt="filter">
+                                    </button>
+                                    <div class="dash-filter-show" style="display: none;">
+                                        <div class="filter-section">
+                                            <div class="tab-heading">
+                                                <h3>Filters/order</h3>
+                                            </div>
+                                            <div class="hr-line-small my-4 my-sm-5"></div>
+                                            <div class="gary-txts mb-4">
+                                                <p>Showing</p>
+                                            </div>
+                                            <div class="widgets-check-list">
+                                                <div class="widget-listing flex-space mb-4">
+                                                    <div class="black-txts">
+                                                        <p class="mb-0">By seller</p>
+                                                    </div>
+                                                    <div class="custom-checkbox"> <label class="custom-check"><input
+                                                                type="checkbox" checked=""><span
+                                                                class="checkmark"></span></label> </div>
+                                                </div>
+                                                <div class="widget-listing flex-space mb-4">
+                                                    <div class="black-txts">
+                                                        <p class="mb-0">By product name</p>
+                                                    </div>
+                                                    <div class="custom-checkbox"> <label class="custom-check"><input
+                                                                type="checkbox"><span class="checkmark"></span></label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="hr-line-small my-4 my-sm-5"></div>
+
+                                            <div class="d-flex justify-content-end gap-4">
+                                                <button type="button" class="white-btn">Reset to Default</button>
+                                                <button type="button" class="red-btn">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- start Customer table section -->
+                    <div class="customer-list-bdy">
+                        <div class="tab-content">
+                                <div class="customers-prod-table">
+                                    <div class="data-table-sec">
+                                        <!-- <table id="customerlists-table" class="table dt-responsive nowrap" style="width: 100%"> -->
+                                        <table id="" class="table dt-responsive nowrap" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Analytics</th>
+                                                    <th>Analytics</th>
+                                                    <th>Red Flags</th>
+                                                    <th>Supplier Ratings</th>
+                                                    <th>Website</th>
+                                                    <!-- <th>Approve / Unapprove</th>
+                                                    <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for supplier in suppliers %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="customerlist-names d-flex gap-4">
+                                                            {% if supplier.photo %}
+                                                            <div class="supplier-img">
+                                                                <img src="{{ supplier.photo.url }}" alt="supplier">
+                                                            </div>
+                                                            {% else %}
+                                                            <div class="supplier-img">
+                                                                <!-- <img src="{% static 'img/user-img.png' %}" alt="supplier"> -->
+                                                                <!-- <i class="bi bi-person-circle" style="font-size: 49px;"></i> -->
+                                                                <i class="mdi mdi-account-circle" style="font-size: 49px;"></i>
+                                                            </div>
+                                                            {% endif %}
+                                                            <div class="customers-txts">
+                                                                <b>{{ supplier.first_name }} {{ supplier.last_name }}</b>
+                                                                <!-- <p class="mb-0">@username</p> -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{supplier.email }}</td>
+                                                    <td><span class="">{{supplier.phone }}</span></td>
+                                                    <td>lorem ipsum</td>
+                                                    <td>lorem ipsum</td>
+                                                    <td></td>
+                                                    <td>
+                                                        <p><img src="/static/img/star-icon.png" alt="star"> 4.8
+                                                            <span>(87)</span>
+                                                        </p>
+                                                    </td>
+                                                    <td><a href="https://{{ supplier.company.website }}" target="_blank">
+                                                            {{ supplier.company.website }}
+                                                        </a>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <div class="cust-switch">
+                                                          <label class="switch">
+                                                            <input type="checkbox"  checked  name="checked">
+                                                            <span class="slider round"></span>
+                                                          </label>
+                                                        </div>
+                                                      </td>
+                                                      <td>
+                                                        <div class="col-12">
+                                                          <button type="submit" class="red-btn next">Approve</button>
+                                                        </div>
+                                                      </td> -->
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- End Customer list page -->
+    </div>
+    <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

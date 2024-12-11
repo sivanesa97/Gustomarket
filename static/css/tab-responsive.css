@@ -1,0 +1,96 @@
+@media (max-width:1199.98px) {
+    main.main-body {
+        width: 100%;
+    }
+
+    .sidebar {
+        overflow-y: auto;
+        left: -1000px;
+        transition: all .8s ease;
+    }
+
+    .sidebar-expanded main.main-body {
+        width: 100%;
+    }
+
+    .sidebar-expanded .sidebar {
+        left: 0;
+        width: 340px;
+        transition: all .8s ease;
+        box-shadow: 2px 0px 6px 1px #0000001a;
+    }
+
+    .close-sidebar {
+        display: block;
+        position: absolute;
+        top: 9px;
+        right: 15px;
+        z-index: 999;
+        color: #1A1D1F;
+        font-size: 20px;
+        background-color: transparent;
+        border: none;
+    }
+
+    .sidebar-expanded .sidebar .logo img {
+        display: block;
+    }
+
+    .gm-logo {
+        display: none;
+    }
+
+    .header-icon {
+        z-index: 0;
+    }
+
+    .sidebar-expanded .sidebar .menu-item .menu-item-title {
+        display: block;
+    }
+
+    .sidebar-reduced.sidebar-expanded .gm-logo {
+        display: none;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        padding: 16px 12px;
+    }
+
+    #orderedprod-pop .custom-modal-pop .modal-body {
+        padding: 32px 15px;
+    }
+
+    #prchsdprod-pop .custom-modal-pop .modal-body {
+        padding: 32px 15px;
+    }
+
+    .ordertbs-section {
+        padding: 20px 10px;
+    }
+}
+
+@media only screen and (min-width:992px) and (max-width:1200px) {
+    .overcrd-text h3 {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (min-width:769px) and (max-width:992px) {
+    .payment-method-crd {
+        padding: 20px 10px;
+    }
+
+    .crd-number h3 {
+        font-size: 24px;
+    }
+
+    .pay-crd-bg {
+        padding: 14px 10px;
+        margin-bottom: 10px;
+    }
+
+    .card-section {
+        padding: 25px 12px;
+    }
+}

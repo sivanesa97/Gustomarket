@@ -1,0 +1,333 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<!-- End top header section -->
+<div class="content-wrapper content-wrapper-bg">
+  <h1 class="page-title">Notes of Credit</h1>
+  <!-- start inner body section -->
+  <div class="page-content whitebg-remove p-0">
+    <!-- start Earnings page -->
+    <div class="dashboard-inners">
+      <!-- start Earnings top section -->
+      <div class="card-section mb-4">
+        <div class="earnings-crd-bg">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/earnings-icon.png' %}" alt="earnings">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Total Sales <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$128,789</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/balance-icon.png' %}" alt="balance">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Notes of Credit Requests <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$3234.64</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+              <div class="earnings-card position-relative border-0 lastcrd-boder">
+                <div class="earnings-icon">
+                  <img src="{% static 'img/totalvalue-icon.png' %}" alt="total value">
+                </div>
+                <div class="earnings-txt-sec">
+                  <label><b>Total Credits <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Lorem ipsum"></i></b></label>
+                  <h2>$2338.98</h2>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- start Product sales and Top Clients section -->
+      <div class="product-sales-section">
+        <div class="row">
+          <div class="col-12">
+            <div class="card-section">
+              <div class="prod-chart-heads horiztl-tab-gry flex-space mrginbtm-same">
+                <div class="tab-heading">
+                  <h3>Credits requests</h3>
+                </div>
+                <div class="prod-chart-tab">
+                  <ul class="nav nav-pills gap-3">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="openrequests-tb-tab" data-bs-toggle="pill"
+                        data-bs-target="#openrequests-tb" type="button" role="tab">Open requests</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="closedrequests-tb-tab" data-bs-toggle="pill"
+                        data-bs-target="#closedrequests-tb" type="button" role="tab">Closed requests</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- start Credits requests table section -->
+              <div class="prod-chart-bdy">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="openrequests-tb" role="tabpanel"
+                    aria-labelledby="openrequests-tb-tab">
+                    <div class="data-table-sec">
+                      <table id="creditsrequests-table" class="table dt-responsive nowrap" style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg transit-bg">In progress</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg">New request</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg transit-bg">In progress</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="closedrequests-tb" role="tabpanel"
+                    aria-labelledby="closedrequests-tb-tab">
+                    <div class="data-table-sec">
+                      <table id="closerequests-table" class="table dt-responsive nowrap" style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="product-name-price d-flex align-items-center gap-4">
+                                <div class="prd-img">
+                                  <img src="{% static 'img/product-list.png' %}" alt="product list">
+                                </div>
+                                <div class="prd-name">
+                                  <h4>Day & Night</h4>
+                                  <p>$1200.00</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="price-bg clg-bg">Closed</span></td>
+                            <td>Jul 24, 2023 at 3:55 PM</td>
+                            <td>
+                              <div class="seller-avtore-sec d-flex align-items-center gap-4">
+                                <div class="sellavtor-img">
+                                  <img src="{% static 'img/seller-avtor.png' %}" alt="seller">
+                                </div>
+                                <div class="sellavtor-txt black-txts">
+                                  <p class="mb-0"> Carlo Herman</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End Earnings page -->
+  </div>
+  <!-- End inner body section -->
+</div>
+{% block tab %}
+{% endblock %}
+{% endblock %}

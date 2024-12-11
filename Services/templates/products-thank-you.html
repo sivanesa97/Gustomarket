@@ -1,0 +1,28 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+
+
+<div class="content-wrapper content-wrapper-bg">
+  <!-- start inner body section -->
+  <div class="page-content">
+    <!-- start thank you section -->
+    <div class="thankyou-sec flex-center">
+      <div class="thankyou-inner text-center">
+        <h1 class="page-title">Thank you for listing your products</h1>
+        <h4>Our team is reviewing your products. We’ll <br> get back to you very soon.</h4>
+        <button type="button" class="red-btn my-5">Need help?</button>
+        <p>The approval process might take up to 72h.</p>
+      </div>
+    </div>
+    <!-- End thank you section -->
+  </div>
+  <!-- End inner body section -->
+</div>
+
+  {% block tab %}
+  {% endblock %}
+{% endblock %}

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GustoMarket</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap css link -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- bootstrap select css link -->
+    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
+    <!-- bootstrap data table css link -->
+    <link rel="stylesheet" href="assets/css/data-tables.bootstrap5.min.css">
+    <link rel="stylesheet" href="assets/css/responsive-data-table.min.css">
+    <!-- style css link -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- mobile responsive css link -->
+    <link rel="stylesheet" href="assets/css/tab-responsive.css">
+    <!-- mobile responsive css link -->
+    <link rel="stylesheet" href="assets/css/mobile-responsive.css">
+    <!-- bootstrap css link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+</head>
+<body class="sidebar-reduced">
+     <div class="sidebar">
+      <div class="close-sidebar"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+        <div class="logo">
+            <a href="purchases.html"><img src="assets/img/logo.png" alt="logo"></a>
+            <div class="gm-logo">
+                <h1><a href="purchases.html">GM</a></h1>
+            </div>
+            <button class="close-sidebar"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="sidebar-menu">
+            <nav class="menu-nav js-menu">
+                <ul class="menu-list">
+                  <li class="menu-item">
+                    <a href="dashboard-seller.html" class="menu-item-inner">
+                        <img src="assets/img/gusto-icon.png" alt="gusto">
+                        <span class="menu-item-title"><span>GustoMarket Dashboard</span></span>
+                    </a>
+                  </li>
+                  <li class="menu-item has-submenu">
+                    <a href="#" class="menu-item-inner">
+                      <img src="assets/img/listed-icon.png" alt="listed">
+                      <span class="menu-item-title">
+                          <span>Products for sale</span><i class="bi bi-chevron-down"></i>
+                      </span>
+                    </a>
+                    <ul class="menu-submenu menu-list">
+                      <li><a href="drafts-product.html"><span>Listed / unlisted products</span></a></li>
+                      <li><a href="new-product.html"><span>Upload product</span></a></li>
+                    </ul>
+                  </li>
+                  
+                  <li class="menu-item has-submenu">
+                    <a href="#" class="menu-item-inner">
+                      <img src="assets/img/analyses-icon.png" alt="analyses">
+                      <span class="menu-item-title"><span>Pervious activity / analytics</span><i class="bi bi-chevron-down"></i> </span>
+                    </a>
+                    <ul class="menu-submenu menu-list">
+                        <li><a href="customer-list.html"><span>Customers / transactions</span></a></li>
+                        <li><a href="earnings.html"><span>Analysis, purchases and sales</span></a></li>
+                    </ul>
+                  </li>
+<!--                  <li class="menu-item has-submenu">-->
+<!--                      <a href="increase-your-sales.html" class="menu-item-inner">-->
+<!--                        <img src="assets/img/increse-icon.png" alt="increase">-->
+<!--                        <span class="menu-item-title"> <span>Increase your sales</span></span>-->
+<!--                      </a>-->
+<!--                  </li>-->
+                  <li class="menu-item has-submenu">
+                    <a href="#" class="menu-item-inner">
+                      <img src="assets/img/manage-icon.png" alt="analyses">
+                      <span class="menu-item-title"><span>Team / preferences / account</span><i class="bi bi-chevron-down"></i> </span>
+                    </a>
+                    <ul class="menu-submenu menu-list">
+                        <li><a href="manage-team.html"><span>Team / Location</span></a></li>
+                        <li><a href="preference.html"><span>Preferences</span></a></li>
+                        <li><a href="services-account2.html"><span>Account</span></a></li>
+                    </ul>
+                  </li>
+<!--                  <li class="menu-item has-submenu">-->
+<!--                      <a href="fun-interesting.html" class="menu-item-inner">-->
+<!--                        <img src="assets/img/fun-menu1.png" alt="increase">-->
+<!--                        <span class="menu-item-title"> <span>What's new, fun and interesting in GustoMarket</span></span>-->
+<!--                      </a>-->
+<!--                  </li>-->
+                </ul>
+            </nav>
+
+             <!-- dark switch button section -->
+            <div class="darktheam-sec">
+                <div class="hr-line my-3 my-sm-4"></div>
+<!--                <div class="help-listbtm my-3 my-sm-4">-->
+<!--                  <ul>-->
+<!--                    <li class="menu-item has-submenu">-->
+<!--                      <a href="#" class="menu-item-inner">-->
+<!--                        <img src="assets/img/help-icon.png" alt="help">-->
+<!--                        <span class="menu-item-title"><span>Help & getting started</span><span class="badge bg-bluedrk">8</span></span>-->
+<!--                      </a>-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+                <div class="darktheam-inner">
+                  <div class="theme-switcher">
+                    <input type="radio" id="light-theme" name="themes" checked>
+                    <label for="light-theme">
+                        <span>
+                            <i class="bi bi-brightness-high-fill"></i>
+                            <span class="mob-txt">Light</span>
+                        </span>
+                    </label>
+                    <input type="radio" id="dark-theme" name="themes">
+                    <label for="dark-theme">
+                        <span>
+                            <i class="bi bi-moon"></i> <span class="mob-txt">Dark</span>
+                        </span>
+                    </label>
+                    <span class="slider"></span>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main-body">
+        <!-- start top header section -->
+        <header class="top-header">
+            <div class="header-inner clearfix">
+                <div class="header-icon js-hamburger">
+                    <div class="hamburger-toggle">
+                        <span class="bar-top"></span> <span class="bar-mid"></span>
+                        <span class="bar-bot"></span>
+                    </div>
+                </div>
+                <!-- start serach bar -->
+                <div class="serach-bar position-relative">
+                    <input class="form-control search" type="search" id="searchleft" placeholder="Search or type a command" aria-label="Search">
+                    <label class="searchbutton" for="searchleft">
+                        <span class="mglass">
+                            <span class="search-icn">
+                                <img src="assets/img/search-icon.png" alt="search">
+                            </span>
+                        </span>
+                    </label>
+                </div>
+                <!-- start right side user profile and notification -->
+                <div class="tophead-right pe-sm-5 pe-4">
+<!--                    <button type="button" class="white-btn">Take a Tour</button>-->
+                    <!-- start message dropdown -->
+                    <div class="dropdown">
+                        <button class="header-actionbtn position-relative" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-chat-left-text"></i>
+                            <span class="badge-icns">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu custom-dropdown message-drop">
+                            <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>
+                            <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>
+                            <li><a class="dropdown-item" href="#">Lorem ipsum</a></li>
+                        </ul>
+                    </div>
+                    <!-- start notification dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="header-actionbtn position-relative" data-bs-toggle="dropdown">
+                            <i class="bi bi-bell"></i>
+                            <span class="badge-icns">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu custom-dropdown notification-drop">
+                        <div class="notification-heder-sec">
+                          <div class="notification-heading">
+                              <h2>Notification</h2>
+                          </div>
+                          <div class="notification-inner d-flex align-items-center" onclick='window.location.href="refunds.html"'>
+                            <div class="notification-icon">
+                            <div class="notifi-bg"><img src="assets/img/user-img.png" alt="user">
+                                <div class="notitxt-bg flex-center">
+                                    <i class="bi bi-chat-left-text-fill"></i>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="notification-text"><p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p> </div>
+                            <div class="notification-hours">
+                            <p>1h</p>
+                            <div class="notification-active"></div>
+                            </div>
+                          </div>
+                          <div class="notification-inner d-flex align-items-center" onclick='window.location.href="refunds.html"'>
+                            <div class="notification-icon">
+                            <div class="notifi-bg"><img src="assets/img/user-img.png" alt="user">
+                                <div class="notitxt-bg flex-center">
+                                    <i class="bi bi-chat-left-text-fill"></i>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="notification-text"><p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p> </div>
+                            <div class="notification-hours">
+                            <p>1h</p>
+                            <div class="notification-active"></div>
+                            </div>
+                          </div>
+                          <div class="notification-inner d-flex align-items-center" onclick='window.location.href="refunds.html"'>
+                            <div class="notification-icon">
+                            <div class="notifi-bg"><img src="assets/img/user-img.png" alt="user">
+                                <div class="notitxt-bg flex-center">
+                                    <i class="bi bi-chat-left-text-fill"></i>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="notification-text"><p><b>Domenica</b> @BusinessName Placed an <b>Refund</b></p> </div>
+                            <div class="notification-hours">
+                            <p>1h</p>
+                            <div class="notification-active"></div>
+                            </div>
+                          </div>
+                          <button type="button" class="red-btn w-100 mt-4">
+                              See all notifications
+                          </button>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- start user profile  dropdown -->
+                    <div class="dropdown">
+                      <button class="header-actionbtn useraction-btn" type="button" data-bs-toggle="dropdown">
+                          <span class="user-imgs"> <img src="assets/img/user-img.png" alt="user"> </span>
+                      </button>
+                      <ul class="dropdown-menu custom-dropdown userdrop-down">
+                        <li><a class="dropdown-item" href="edit-profile.html">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="edit-password.html">Edit Password</a></li>
+                        <li> <a class="dropdown-item" href="change-password.html">Change Password</a></li>
+                        <li> <a class="dropdown-item" href="sign-in.html">Sign Out</a> </li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End top header section -->
+        <div class="content-wrapper content-wrapper-bg">
+            <h1 class="page-title">Upgrade to Pro</h1>
+
+            <!-- start inner body section -->
+            <div class="page-content whitebg-remove p-0">
+              <!-- start Upgrade to Pro page -->
+               <div class="upgrades-inners">
+
+              <!-- start lite and pro section -->
+               <div class="card-section lite-pro-bg">
+                <div class="lite-pro-section">
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                      <div class="litecrd-sec position-relative">
+                        <div class="tab-heading mrginbtm-same">
+                         <h3>Lite</h3>
+                        </div>
+                        <div class="lite-basic-txt">
+                          <b>Basic marketplace tools for your business</b>
+                        </div>
+                        <div class="hr-line-small my-4"></div>
+                        <div class="lite-percent-crd flex-space">
+                          <div class="lite-num d-flex gap-4 align-items-center">
+                            <h2 class="mb-0">5%</h2>
+                            <p class="mb-0">Platform fee of the total <br> monthly income you earn</p>
+                          </div>
+                          <div class="lite-tooltip">
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                          </div>
+                        </div>
+                         <div class="hr-line-small my-4"></div>
+                        <div class="reson-lists">
+                          <div class="suggest-lists">
+                           <ul>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                           </ul>
+                         </div>
+                        </div>
+                        <div class="upgrad-btns">
+                          <button type="button" class="white-btn">Your plan</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                      <div class="procrd-sec position-relative">
+                        <div class="tab-heading mrginbtm-same d-flex align-items-center gap-4 prorecomend">
+                         <h3>Pro</h3>
+                         <p class="mb-0">Recommended</p>
+                        </div>
+                        <div class="lite-basic-txt">
+                          <b>Pro marketplace tools for your business🔥</b>
+                        </div>
+                        <div class="hr-line-small my-4"></div>
+                        <div class="lite-percent-crd flex-space">
+                          <div class="lite-num d-flex gap-4 align-items-center">
+                            <h2 class="mb-0">3%</h2>
+                            <p class="mb-0">Platform fee of the total <br>monthly income you earn</p>
+                          </div>
+                          <div class="lite-tooltip">
+                            <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tooltip on top"></i>
+                          </div>
+                        </div>
+                         <div class="hr-line-small my-4"></div>
+                        <div class="reson-lists">
+                          <div class="suggest-lists">
+                           <ul>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                            <li><img src="assets/img/check-tick.png" alt="check" class="me-3"> This is a key reason to believe</li>
+                           </ul>
+                         </div>
+                        </div>
+                        <div class="upgrad-btns">
+                          <button type="button" class="red-btn">Upgrade now</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+
+              <!-- start Frequently asked question section -->
+              <div class="asked-question-sec">
+                <h1 class="page-title my-5">Frequently asked question</h1>
+               <div class="card-section">
+                 <div class="asked-question-tabs">
+                   <div class="d-flex align-items-start gap-5 asked-question-flx">
+                    <div class="nav flex-column nav-pills asked-question-nav gap-3" role="tablist" aria-orientation="vertical">
+                      <button class="nav-link active" id="getstarted-tb-tab" data-bs-toggle="pill" data-bs-target="#getstarted-tb" type="button" role="tab">Get started</button>
+                      <button class="nav-link" id="topicfaq1-tb-tab" data-bs-toggle="pill" data-bs-target="#topicfaq1-tb" type="button" role="tab">Topic for FAQs</button>
+                      <button class="nav-link" id="topicfaq2-tb-tab" data-bs-toggle="pill" data-bs-target="#topicfaq2-tb" type="button" role="tab">Topic for FAQs</button>
+                      <button class="nav-link" id="topicfaq3-tb-tab" data-bs-toggle="pill" data-bs-target="#topicfaq3-tb" type="button" role="tab">Topic for FAQs</button>
+                    </div>
+                    <div class="tab-content w-100">
+                      <div class="tab-pane fade show active" id="getstarted-tb" role="tabpanel" aria-labelledby="getstarted-tb-tab">
+                        <div class="asked-qus-inner">
+                           <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="topicfaq1-tb" role="tabpanel" aria-labelledby="topicfaq1-tb-tab">
+                         <div class="asked-qus-inner">
+                           <div class="accordion" id="accordionExample1">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+                                How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseOne1" class="accordion-collapse collapse show" aria-labelledby="headingOne1" data-bs-parent="#accordionExample1">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo1" aria-expanded="false" aria-controls="collapseTwo">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseTwo1" class="accordion-collapse collapse" aria-labelledby="headingTwo1" data-bs-parent="#accordionExample1">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingThree1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree1" aria-expanded="false" aria-controls="collapseThree">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseThree1" class="accordion-collapse collapse" aria-labelledby="headingThree1" data-bs-parent="#accordionExample1">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="topicfaq2-tb" role="tabpanel" aria-labelledby="topicfaq2-tb-tab">
+                        <div class="asked-qus-inner">
+                           <div class="accordion" id="accordionExample2">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne2">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+                                How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne2" data-bs-parent="#accordionExample2">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2" data-bs-parent="#accordionExample2">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingThree2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree2" aria-expanded="false" aria-controls="collapseThree">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseThree2" class="accordion-collapse collapse" aria-labelledby="headingThree2" data-bs-parent="#accordionExample2">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="topicfaq3-tb" role="tabpanel" aria-labelledby="topicfaq3-tb-tab">
+                         <div class="asked-qus-inner">
+                           <div class="accordion" id="accordionExample3">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne3">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne3" aria-expanded="true" aria-controls="collapseOne">
+                                How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseOne3" class="accordion-collapse collapse show" aria-labelledby="headingOne3" data-bs-parent="#accordionExample3">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseTwo3" class="accordion-collapse collapse" aria-labelledby="headingTwo3" data-bs-parent="#accordionExample3">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingThree3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree">
+                                  How to upgrade to Pro account?
+                                </button>
+                              </h2>
+                              <div id="collapseThree3" class="accordion-collapse collapse" aria-labelledby="headingThree3" data-bs-parent="#accordionExample3">
+                                <div class="accordion-body">
+                                  <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+               </div>
+              </div>
+              
+
+               </div>
+             <!-- End Dashboard page -->
+            </div>
+            <!-- End inner body section -->
+        </div>
+
+
+
+    </main>
+
+    <!-- jquery js link -->
+    <script src="assets/js/jquery.min.js"></script>
+    <!-- bootstrap data table link -->
+    <script src="assets/js/jquery.data-tables.min.js"></script>
+    <script src="assets/js/data-tables.bootstrap5.min.js"></script>
+    <script src="assets/js/data-tables.responsive.min.js"></script>
+    <!-- bootstrap js link -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- bootstrap select link -->
+    <script src="assets/js/bootstrap-select.min.js"></script>
+    <!-- ckeditor js link -->
+    <script src="assets/js/ckeditor.js"></script>
+    <!-- custom js link -->
+    <script src="assets/js/custom.js"></script>
+    
+</body>
+</html>
