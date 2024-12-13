@@ -37,7 +37,10 @@ from Services.views import (
     inventory,
 )
 from .views import product
-from .views.inventory import inventory_list, get_inventory, get_inventory_history, update_inventory
+from .views.inventory import (
+    inventory_list, get_inventory, get_inventory_history, 
+    update_inventory, add_inventory
+)
 
 
 handler404 = custom_404
@@ -134,6 +137,7 @@ urlpatterns = [
     path('inventory/bulk-update/', inventory.bulk_update_inventory, name='inventory_bulk_update'),
     path('inventory/adjustment-report/', inventory.get_adjustment_report, name='inventory_adjustment_report'),
     path('inventory/<int:id>/history/', inventory.get_inventory_history, name='inventory_history'),
+    path('inventory/add/', add_inventory, name='add_inventory'),
     
     
 ]

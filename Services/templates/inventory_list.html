@@ -27,9 +27,9 @@
                             </div>
                         </div>
                         <div class="customer-right-column mt-3 mt-md-0 w-30">
-                            <button type="button" class="red-btn w-100 w-md-auto" data-bs-toggle="modal" data-bs-target="#inventoryModal" onclick="resetForm()">
-                                Add New Item
-                            </button>
+                            <a href="{% url 'add_inventory' %}" class="red-btn w-100 w-md-auto">
+                                <i class="bi bi-plus-circle me-2"></i>Update Inventory
+                            </a>
                         </div>
                     </div>
 
@@ -66,9 +66,6 @@
                                         </td>
                                         <td>
                                             <div class="action-btns">
-                                                <button type="button" class="btn btn-link text-primary" onclick="editInventory('{{ item.id }}')">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
                                                 <button type="button" class="btn btn-link text-info" onclick="viewHistory('{{ item.id }}')">
                                                     <i class="bi bi-clock-history"></i>
                                                 </button>
@@ -81,117 +78,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Inventory Modal -->
-<div class="modal fade" id="inventoryModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="tab-heading">
-                    <h3 class="modal-title">Inventory Adjustment</h3>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Search Box -->
-                <div class="mb-3 d-flex justify-content-center">
-                    <div class="search-box-wrapper">
-                        <input class="form-control search-input" type="search" id="modalInventorySearch" placeholder="Search products">
-                        <span class="search-icon">
-                            <i class="bi bi-search"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Dynamic Row Template -->
-                <template id="rowTemplate">
-                    <tr class="inventory-row">
-                        <td>
-                            <div class="product-select-wrapper">
-                                <input type="text" 
-                                       class="form-control form-control-lg product-search" 
-                                       placeholder="Search product..."
-                                       autocomplete="off">
-                                <input type="hidden" class="product-id">
-                                <div class="product-suggestions d-none">
-                                    <ul class="list-group">
-                                        {% for product in products %}
-                                        <li class="list-group-item product-suggestion" 
-                                            data-id="{{ product.id }}"
-                                            data-current-qty="{{ product.inventory_count|default:'0' }}"
-                                            data-code="{{ product.inventory_code|default:'' }}">
-                                            {{ product.product_title }}
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control form-control-lg product-code">
-                        </td>
-                        <td>
-                            <input type="number" class="form-control form-control-lg current-qty" readonly>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control form-control-lg new-qty">
-                        </td>
-                        <td>
-                            <select class="form-select form-select-lg type-of-change">
-                                <option value="">Select Type</option>
-                                {% for type in change_types %}
-                                    <option value="{{ type.id }}">{{ type.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-lg btn-link remove-row text-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </template>
-
-                <!-- Inventory Table -->
-                <div class="table-responsive">
-                    <table id="modal-inventory-table" class="table">
-                        <thead>
-                            <tr>
-                                <th>Product Title</th>
-                                <th>Product Code</th>
-                                <th>Current Qty</th>
-                                <th>New Qty</th>
-                                <th>Type of Change</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Rows will be added dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Add Row Button -->
-                <div class="text-end mt-3">
-                    <button type="button" class="btn btn-success btn-sm" id="addRow">
-                        <i class="bi bi-plus-circle me-1"></i> Add Row
-                    </button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="printInventory">
-                    Print Inventory
-                </button>
-                <button type="button" class="btn btn-info" id="adjustmentReport">
-                    Adjustment Report
-                </button>
-                <button type="button" class="btn btn-primary" id="generateInventory">
-                    Generate Inventory
-                </button>
             </div>
         </div>
     </div>
@@ -1517,58 +1403,6 @@ $(document).ready(function() {
         padding: 6px 12px;
         font-size: 13px;
         min-width: 100px;
-    }
-
-    /* Search Box in Modal */
-    #modalInventorySearch {
-        height: 36px;
-        font-size: 13px;
-        padding: 4px 12px;
-    }
-
-    /* Search Box Styles */
-    .search-box-wrapper {
-        position: relative;
-        width: 80%;
-        margin: 0 auto;  /* Center the search box */
-    }
-
-    .search-box-wrapper .search-input {
-        padding-right: 35px;  /* Space for the icon */
-        height: 38px;  /* Adjust height */
-        font-size: 14px;  /* Font size */
-        border: 1px solid #ced4da;  /* Border style */
-        border-radius: 4px;  /* Rounded corners */
-    }
-
-    .search-box-wrapper .search-icon {
-        position: absolute;
-        right: 10px;  /* Adjust position */
-        top: 50%;  /* Center vertically */
-        transform: translateY(-50%);  /* Adjust for perfect centering */
-        color: #6c757d;  /* Icon color */
-        pointer-events: none;  /* Prevent interaction */
-    }
-
-    .search-icon i {
-        font-size: 16px;  /* Icon size */
-    }
-
-    /* Remove any conflicting styles */
-    .serach-boxs {
-        display: none;  /* Hide the old search box if it exists */
-    }
-
-    .search-box-wrapper {
-        position: relative;
-    }
-
-    .search-icon {
-        position: absolute;
-        right: 10px; /* Adjust as necessary */
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none; /* Prevent interaction */
     }
 </style>
 {% endblock extra_css %}

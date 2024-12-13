@@ -1,0 +1,442 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} Update Inventory Items {% endblock %}
+
+{% block content %}
+<div class="content-wrapper content-wrapper-bg">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="page-title mb-0">Update Inventory Items</h1>
+        <a href="{% url 'inventory_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Inventory
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <!-- <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="search-section">
+                    <input type="text" class="form-control" placeholder="Search products..." id="searchProducts">
+                </div>
+            </div> -->
+
+            <div class="table-responsive">
+                <table id="inventory-add-table" class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Product Title</th>
+                            <th style="width: 20%">Code</th>
+                            <th style="width: 10%">Current Qty</th>
+                            <th style="width: 10%">New Qty</th>
+                            <th style="width: 15%">Type of Change</th>
+                            <th style="width: 15%">Notes</th>
+                            <th style="width: 5%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-end mt-3">
+                <button type="button" class="btn btn-success" id="addRow">
+                    <i class="bi bi-plus-circle me-2"></i>Add Row
+                </button>
+            </div>
+
+            <div class="action-buttons d-flex justify-content-end gap-3 mt-4">
+                <button type="button" class="btn btn-secondary" id="printInventory">
+                    <i class="bi bi-printer me-2"></i>Print
+                </button>
+                <!-- <button type="button" class="btn btn-info" id="adjustmentReport">
+                    <i class="bi bi-file-text me-2"></i>Report
+                </button> -->
+                <button type="button" class="btn btn-primary" id="generateInventory">
+                    <i class="bi bi-check-circle me-2"></i>Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Row Template -->
+<template id="rowTemplate">
+    <tr class="inventory-row">
+        <td>
+            <div class="product-select-wrapper">
+                <input type="text" 
+                       class="form-control product-search" 
+                       placeholder="Search product..."
+                       autocomplete="off">
+                <input type="hidden" class="product-id">
+                <div class="product-suggestions d-none">
+                    <ul class="list-group">
+                        {% for product in products %}
+                        <li class="list-group-item product-suggestion" 
+                            data-id="{{ product.id }}"
+                            data-current-qty="{{ product.inventory_count|default:0 }}"
+                            data-code="{{ product.inventory_code|default:'' }}">
+                            {{ product.product_title|slice:":-1" }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </td>
+        <td>
+            <input type="text" class="form-control product-code" placeholder="Enter code">
+        </td>
+        <td>
+            <input type="number" class="form-control current-qty" readonly>
+        </td>
+        <td>
+            <input type="number" class="form-control new-qty">
+        </td>
+        <td>
+            <select class="form-select type-of-change">
+                <option value="">Select Type</option>
+                {% for type in change_types %}
+                    <option value="{{ type.id }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <input type="text" class="form-control notes" placeholder="Enter notes">
+        </td>
+        <td class="text-center">
+            <button type="button" class="btn btn-link text-danger remove-row">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
+    </tr>
+</template>
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+$(document).ready(function() {
+    // Add initial row
+    if ($('#inventory-add-table tbody tr').length === 0) {
+        addNewRow();
+    }
+    
+    // Add Row button click handler
+    $('#addRow').on('click', function() {
+        addNewRow();
+    });
+
+    // Function to add new row
+    function addNewRow() {
+        const template = document.getElementById('rowTemplate');
+        const clone = document.importNode(template.content, true);
+        $('#inventory-add-table tbody').append(clone);
+    }
+
+    // Handle product selection
+    $(document).on('click', '.product-suggestion', function() {
+        const $wrapper = $(this).closest('.product-select-wrapper');
+        const $row = $wrapper.closest('tr');
+        const $input = $wrapper.find('.product-search');
+        const $hiddenInput = $wrapper.find('.product-id');
+        
+        $input.val($(this).text());
+        $hiddenInput.val($(this).data('id'));
+        $row.find('.current-qty').val($(this).data('current-qty'));
+        $row.find('.product-code').val($(this).data('code'));
+        $row.find('.new-qty').val($(this).data('current-qty'));
+        
+        $wrapper.find('.product-suggestions').addClass('d-none');
+        checkRowCompletion($row);
+    });
+
+    // Update Inventory button click handler
+    $('#generateInventory').on('click', function() {
+        const updates = [];
+        let hasIncomplete = false;
+
+        $('#inventory-add-table tbody tr').each(function() {
+            const $row = $(this);
+            const productId = $row.find('.product-id').val();
+            
+            if (!productId) {
+                hasIncomplete = true;
+                return false;
+            }
+
+            updates.push({
+                product_id: productId,
+                code: $row.find('.product-code').val(),
+                current_qty: parseInt($row.find('.current-qty').val()),
+                new_qty: parseInt($row.find('.new-qty').val()),
+                type_of_change: $row.find('.type-of-change').val(),
+                notes: $row.find('.notes').val() // Collect notes
+            });
+        });
+
+        if (hasIncomplete) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Incomplete Entries',
+                text: 'Please fill in all required fields for each row.'
+            });
+            return;
+        }
+
+        // Send updates to server
+        $.ajax({
+            url: '/inventory/bulk-update/', // Adjust the URL as needed
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ updates: updates }),
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Inventory updated successfully'
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update inventory: ' + xhr.responseText
+                });
+            }
+        });
+    });
+
+    // Print functionality
+    $('#printInventory').on('click', function() {
+        const printWindow = window.open('', '_blank');
+        let printContent = `
+            <html>
+            <head>
+                <title>Inventory Form</title>
+                <style>
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                    th { background-color: #f5f5f5; }
+                </style>
+            </head>
+            <body>
+                <h2>Inventory Adjustment Form</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Title</th>
+                            <th>Code</th>
+                            <th>Current Qty</th>
+                            <th>New Qty</th>
+                            <th>Type of Change</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        $('#inventory-add-table tbody tr').each(function() {
+            const $row = $(this);
+            printContent += `
+                <tr>
+                    <td>${$row.find('.product-search').val() || '-'}</td>
+                    <td>${$row.find('.product-code').val() || '-'}</td>
+                    <td>${$row.find('.current-qty').val() || '-'}</td>
+                    <td>${$row.find('.new-qty').val() || '-'}</td>
+                    <td>${$row.find('.type-of-change').val() || '-'}</td>
+                    <td>${$row.find('.notes').val() || '-'}</td>
+                </tr>
+            `;
+        });
+
+        printContent += `
+                    </tbody>
+                </table>
+            </body>
+            </html>
+        `;
+
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+        printWindow.print();
+    });
+
+    // Close suggestions when clicking outside
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.product-select-wrapper').length) {
+            $('.product-suggestions').addClass('d-none');
+        }
+    });
+});
+</script>
+
+<style>
+/* Updated styles to match template */
+.content-wrapper {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1A1D1F;
+    margin-bottom: 24px;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+/* Table Styles */
+#inventory-add-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+#inventory-add-table thead th {
+    background-color: #F8F9FA;
+    color: #1A1D1F;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid #E7E9EC;
+    font-size: 14px;
+}
+
+#inventory-add-table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #E7E9EC;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #E7E9EC;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #0D6EFD;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Buttons */
+.btn {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+    color: #FFFFFF;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+.btn-link {
+    padding: 4px 8px;
+    color: #DC3545;
+}
+
+/* Product Suggestions */
+.product-suggestions {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #FFFFFF;
+    border: 1px solid #E7E9EC;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-suggestion {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.product-suggestion:hover {
+    background-color: #F8F9FA;
+}
+
+/* Action Buttons Section */
+.action-buttons {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #E7E9EC;
+}
+
+/* Back Button */
+.btn-secondary {
+    background-color: #6C757D;
+    border-color: #6C757D;
+    color: #FFFFFF;
+}
+
+.btn-secondary:hover {
+    background-color: #5C636A;
+    border-color: #565E64;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .form-control, .form-select {
+        font-size: 13px;
+        height: 36px;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+}
+
+/* Add styles for quantity changes */
+.new-qty.changed {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+/* Style for current quantity */
+.current-qty {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+</style>
+{% endblock extra_js %}
+{% endblock content %} 
+
+{% block tab %}
+{% endblock tab %}

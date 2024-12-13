@@ -2,37 +2,40 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.db import transaction
 from django.views.decorators.http import require_http_methods
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Subquery, Sum, Case, When, Value, CharField, F
 from ..models.inventory import InventoryItem, InventoryHistory, InventoryChangeType
 from ..models.product import Product
 import json
 
 def inventory_list(request):
-    # Get the latest inventory item for each product using subquery
-    latest_inventory = InventoryItem.objects.filter(
-        product=OuterRef('pk')
-    ).order_by('-updated_at')
-    
-    # Get all products with their latest inventory counts
-    products = Product.objects.filter(
-        is_active=True
-    ).annotate(
-        inventory_count=Subquery(
-            latest_inventory.values('new_count')[:1]
+    # Get all products with their latest inventory counts and codes
+    products = Product.objects.filter(is_active=True).annotate(
+        inventory_count=Sum(
+            Case(
+                When(inventoryitem__new_count__isnull=False, then='inventoryitem__new_count'),
+                default=Value(0),
+                output_field=CharField(),
+            )
         ),
         inventory_code=Subquery(
-            latest_inventory.values('code')[:1]
+            InventoryItem.objects.filter(product=OuterRef('pk')).values('code')[:1]
+        ),
+        type_of_change=Subquery(
+            InventoryItem.objects.filter(product=OuterRef('pk')).values('type_of_change')[:1]
+        ),
+        status=Case(
+            When(inventoryitem__new_count__gt=F('inventoryitem__count'), then=Value('plus')),
+            When(inventoryitem__new_count__lt=F('inventoryitem__count'), then=Value('minus')),
+            default=Value('no change'),
+            output_field=CharField(),
         )
     ).order_by('product_title')
-    
+
     # Get existing inventory items for the main list
-    items = InventoryItem.objects.select_related(
-        'product', 
-        'type_of_change'
-    ).all().order_by('-updated_at')
-    
+    items = InventoryItem.objects.select_related('product', 'type_of_change').all().order_by('-updated_at')
+
     change_types = InventoryChangeType.objects.all()
-    
+
     return render(request, 'inventory_list.html', {
         'items': items,
         'products': products,
@@ -74,19 +77,28 @@ def get_inventory_history(request, id):
 @transaction.atomic
 def update_inventory(request, id):
     try:
-        inventory_item = get_object_or_404(InventoryItem, pk=id)
-        
-        # Create history record before updating
+        inventory_item, created = InventoryItem.objects.get_or_create(
+            product_id=request.POST.get('product_id'),
+            code=request.POST.get('code'),
+            defaults={
+                'count': request.POST.get('count'),
+                'new_count': request.POST.get('new_count'),
+                'type_of_change_id': request.POST.get('type_of_change'),
+                'notes': request.POST.get('notes'),
+            }
+        )
+
+        # Create history record
         InventoryHistory.objects.create(
             inventory_item=inventory_item,
             previous_count=inventory_item.count,
-            new_count=inventory_item.new_count,
-            type_of_change=inventory_item.type_of_change,
-            notes=inventory_item.notes
+            new_count=request.POST.get('new_count'),
+            type_of_change_id=request.POST.get('type_of_change'),
+            notes=request.POST.get('notes'),
+            picture=request.FILES.get('picture')  # Save image if provided
         )
-        
-        # Update inventory item
-        inventory_item.code = request.POST.get('code')
+
+        # Update existing inventory item
         inventory_item.count = request.POST.get('count')
         inventory_item.new_count = request.POST.get('new_count')
         inventory_item.type_of_change_id = request.POST.get('type_of_change')
@@ -94,11 +106,11 @@ def update_inventory(request, id):
         
         if 'picture' in request.FILES:
             inventory_item.picture = request.FILES['picture']
-            
+        
         inventory_item.save()
-        
+
         return JsonResponse({'status': 'success'})
-        
+
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
@@ -180,3 +192,16 @@ def get_adjustment_report(request):
             'status': 'error',
             'message': str(e)
         }, status=400)
+
+def add_inventory(request):
+    products = Product.objects.all()
+    
+    # Fetch inventory items to get current stock and code
+    inventory_items = InventoryItem.objects.all()
+
+    context = {
+        'products': products,
+        'change_types': InventoryChangeType.objects.all(),
+        'inventory_items': inventory_items,
+    }
+    return render(request, 'add_inventory.html', context)
