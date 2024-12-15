@@ -145,6 +145,24 @@ $(document).ready(function() {
         addNewRow();
     });
 
+    // Remove Row button click handler
+    $(document).on('click', '.remove-row', function() {
+        const $tbody = $('#inventory-add-table tbody');
+        const $row = $(this).closest('tr');
+        
+        // If this is the last row, don't remove it, just clear it
+        if ($tbody.find('tr').length === 1) {
+            $row.find('input, select').val('');
+            $row.find('.image-preview').addClass('d-none');
+            $row.find('.upload-trigger').removeClass('d-none');
+            $row.find('.product-suggestions').addClass('d-none');
+            return;
+        }
+        
+        // Otherwise, remove the row
+        $row.remove();
+    });
+
     function checkRowCompletion($row) {
         const productId = $row.find('.product-id').val();
         const code = $row.find('.product-code').val();
