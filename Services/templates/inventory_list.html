@@ -25,6 +25,21 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="customer-serch w-40 w-md-auto">
+                                <div class="serach-boxs position-relative">
+                                    <form method="GET" action="{% url 'inventory_list' %}" class="m-0">
+                                        <select name="change_type" class="form-control search-input" onchange="this.form.submit()">
+                                            <option value="">All Products</option>
+                                            {% for change_type in change_types %}
+                                                <option value="{{ change_type.id }}" {% if change_type.id|stringformat:"s" == selected_change_type %}selected{% endif %}>
+                                                    {{ change_type.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="dropdown-icon">&#9662;</span>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <div class="customer-right-column mt-3 mt-md-0 w-30">
                             <a href="{% url 'add_inventory' %}" class="red-btn w-100 w-md-auto">
@@ -44,29 +59,21 @@
                                         <th class="sorting min-tablet" style="min-width: 130px;">Type of change</th>
                                         <th class="sorting min-tablet" style="min-width: 150px;">Notes</th>
                                         <th class="sorting min-tablet" style="min-width: 150px;">Last Updated</th>
-                                        <th class="all" style="min-width: 80px;">Image</th>
                                         <th class="all" style="min-width: 100px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for item in items %}
                                     <tr>
-                                        <td>{{ item.product.product_title|default:"-" }}</td>
+                                        <td>{{ item.product__product_title }}</td>
                                         <td>{{ item.code|default:"-" }}</td>
-                                        <td>{{ item.new_count }}</td>
-                                        <td>{{ item.type_of_change.name }}</td>
-                                        <td class="notes-cell" title="{{ item.notes }}">{{ item.notes|truncatechars:30 }}</td>
-                                        <td>{{ item.updated_at|date:"M d, Y H:i" }}</td>
-                                        <td>
-                                            {% if item.picture %}
-                                                <img src="{{ item.picture.url }}" alt="Product Image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" class="thumbnail-img">
-                                            {% else %}
-                                                <span class="no-image">-</span>
-                                            {% endif %}
-                                        </td>
+                                        <td>{{ item.current_count }}</td>
+                                        <td>{{ item.type_of_change__name }}</td>
+                                        <td class="notes-cell" title="{{ item.notes }}">{{ item.notes|truncatechars:30|default:"-" }}</td>
+                                        <td>{{ item.last_updated|date:"M d, Y H:i"|default:"-" }}</td>
                                         <td>
                                             <div class="action-btns">
-                                                <button type="button" class="btn btn-link text-info" onclick="viewHistory('{{ item.id }}')">
+                                                <button type="button" class="btn btn-link text-info" onclick="viewHistory('{{ item.product_id }}')">
                                                     <i class="bi bi-clock-history"></i>
                                                 </button>
                                             </div>
@@ -115,515 +122,273 @@
     </div>
 </div>
 
+<!-- Add modal for image preview -->
+<div class="modal fade image-modal" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="image-preview-container">
+                    <img src="" alt="Full size preview" id="modalImage" class="preview-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% block extra_js %}
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // CSRF Token Setup
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
+        return cookieValue;
     }
-    return cookieValue;
-}
 
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-            // Only send the token to relative URLs i.e. locally
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        }
-    }
-});
-
-// Inventory Management Functions
-function editInventory(id) {
-    // Show loading overlay
-    Swal.fire({
-        title: 'Loading...',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
         }
     });
 
-    $.ajax({
-        url: `/inventory/${id}/get/`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            Swal.close(); // Hide loading
-            resetForm();
-            $('#inventory_id').val(id);
-            $('#product').val(data.product_id).prop('disabled', true);
-            $('#code').val(data.code);
-            $('#count').val(data.count);
-            $('#stock_change').val(0); // Reset stock change to 0
-            $('#type_of_change').val(data.type_of_change_id);
-            $('#notes').val(data.notes);
-            updateFinalStock(); // Update final stock display
-            $('#inventoryModal .modal-title').text('Edit Inventory Item');
-            $('#inventoryModal').modal('show');
-        },
-        error: function(xhr, status, error) {
-            Swal.close(); // Hide loading
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Error loading inventory data: ' + xhr.responseText
-            });
-        }
-    });
-}
-
-function viewHistory(id) {
-    // Show loading overlay
-    Swal.fire({
-        title: 'Loading History...',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-
-    $.ajax({
-        url: `/inventory/${id}/history/`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            Swal.close();
-            let historyHtml = `
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Previous Count</th>
-                                <th>New Count</th>
-                                <th>Type of Change</th>
-                                <th style="min-width: 200px;">Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-                
-            data.forEach(function(item) {
-                historyHtml += `
-                    <tr>
-                        <td>${new Date(item.created_at).toLocaleString()}</td>
-                        <td>${item.previous_count}</td>
-                        <td>${item.new_count}</td>
-                        <td>${item.type_of_change}</td>
-                        <td class="notes-cell" title="${item.notes || ''}">${item.notes || '-'}</td>
-                    </tr>
-                `;
-            });
-            
-            historyHtml += '</tbody></table></div>';
-            $('#historyContent').html(historyHtml);
-            $('#historyModal').modal('show');
-        },
-        error: function(xhr, status, error) {
-            Swal.close(); // Hide loading
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Error loading history data: ' + xhr.responseText
-            });
-        }
-    });
-}
-
-function resetForm() {
-    $('#inventoryForm')[0].reset();
-    $('#inventory_id').val('');
-    $('#product').prop('disabled', false);
-    $('#count').val('');
-    $('#stock_change').val('');
-    $('#type_of_change').val('');
-    $('#notes').val('');
-    $('#picture').val('');
-    $('#inventoryModal .modal-title').text('Add Inventory Item');
-}
-
-function updateFinalStock() {
-    const currentStock = parseInt($('#count').val()) || 0;
-    const stockChange = parseInt($('#stock_change').val()) || 0;
-    const finalStock = currentStock + stockChange;
-    $('#final_stock').text(finalStock);
-}
-
-// Document ready function
-$(document).ready(function() {
-    var table = $('#inventory-table').DataTable({
-        responsive: {
-            details: {
-                type: 'column',
-                target: 'tr'
+    // Inventory Management Functions
+    function editInventory(id) {
+        // Show loading overlay
+        Swal.fire({
+            title: 'Loading...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
             }
-        },
-        columnDefs: [
-            { responsivePriority: 1, targets: [0, 2, 7, 8] }, // Product, Current Stock, Image, Actions
-            { responsivePriority: 2, targets: [1, 3] }, // Code, Change
-            { responsivePriority: 3, targets: [4, 5, 6] }, // Type, Notes, Last Updated
-            {
-                targets: '_all',
-                className: 'text-wrap'
-            }
-        ],
-        dom: '<"top"B><"clear">rt<"bottom"<"d-flex justify-content-between align-items-center"<"d-flex align-items-center"l><"d-flex align-items-center"i>p>>',
-        buttons: [
-            {
-                extend: 'excel',
-                className: 'btn btn-primary',
-                text: '<i class="bi bi-file-earmark-excel fs-5"></i> Excel'
-            },
-            {
-                extend: 'pdf',
-                className: 'btn btn-primary',
-                text: '<i class="bi bi-file-earmark-pdf fs-5"></i> PDF'
-            },
-            {
-                extend: 'print',
-                className: 'btn btn-primary',
-                text: '<i class="bi bi-printer fs-5"></i> Print'
-            }
-        ],
-        searching: true,
-        language: {
-            lengthMenu: "Show _MENU_ entries",
-            info: "Showing _START_ to _END_ of _TOTAL_ entries",
-            paginate: {
-                first: '<i class="bi bi-chevron-double-left"></i>',
-                last: '<i class="bi bi-chevron-double-right"></i>',
-                next: '<i class="bi bi-chevron-right"></i>',
-                previous: '<i class="bi bi-chevron-left"></i>'
-            }
-        },
-        columnDefs: [
-            {
-                targets: '_all',
-                className: 'text-wrap',
-                width: '150px'
-            },
-            {
-                targets: [6, 7],
-                width: '100px'
-            }
-        ]
-    });
+        });
 
-    // Connect custom search input to DataTable
-    $('#inventorySearch').on('keyup', function() {
-        table.search($(this).val()).draw();
-    });
-
-    // Add stock change handler
-    $('#stock_change').on('input', updateFinalStock);
-
-    // Update form submit handler
-    $('#inventoryForm').on('submit', function(e) {
-        e.preventDefault();
-        const submitBtn = $(this).find('button[type="submit"]');
-        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Saving...');
-
-        const formData = new FormData(this);
-        const inventoryId = $('#inventory_id').val();
-        const currentStock = parseInt($('#count').val()) || 0;
-        const stockChange = parseInt($('#stock_change').val()) || 0;
-        
-        formData.append('new_count', currentStock + stockChange);
-        
-        const url = inventoryId ? `/inventory/${inventoryId}/update/` : '/inventory/create/';
-        
         $.ajax({
-            url: url,
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
+            url: `/inventory/${id}/get/`,
+            method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                $('#inventoryModal').modal('hide');
-                location.reload();
+            success: function(data) {
+                Swal.close(); // Hide loading
+                resetForm();
+                $('#inventory_id').val(id);
+                $('#product').val(data.product_id).prop('disabled', true);
+                $('#code').val(data.code);
+                $('#count').val(data.count);
+                $('#stock_change').val(0); // Reset stock change to 0
+                $('#type_of_change').val(data.type_of_change_id);
+                $('#notes').val(data.notes);
+                updateFinalStock(); // Update final stock display
+                $('#inventoryModal .modal-title').text('Edit Inventory Item');
+                $('#inventoryModal').modal('show');
             },
             error: function(xhr, status, error) {
+                Swal.close(); // Hide loading
                 console.error('Error:', error);
-                submitBtn.prop('disabled', false).html('Save Changes');
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Error saving inventory data: ' + xhr.responseText
+                    text: 'Error loading inventory data: ' + xhr.responseText
                 });
             }
         });
-    });
-
-    // Image Preview Handler
-    $(document).on('click', '.thumbnail-img', function() {
-        const imgSrc = $(this).attr('src');
-        $('#imageModal .modal-body').html(`<img src="${imgSrc}" class="img-fluid">`);
-        $('#imageModal').modal('show');
-    });
-
-    // Initialize DataTable for modal inventory
-    const modalTable = $('#modal-inventory-table').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        pageLength: 10,
-        dom: 'rt<"bottom"lip>'
-    });
-
-    // Connect modal search input to DataTable
-    $('#modalInventorySearch').on('keyup', function() {
-        modalTable.search($(this).val()).draw();
-    });
-
-    // Add new row
-    $('#addRow').on('click', function() {
-        const template = document.getElementById('rowTemplate');
-        const clone = template.content.cloneNode(true);
-        $('#modal-inventory-table tbody').append(clone);
-    });
-
-    // Remove row
-    $('#modal-inventory-table').on('click', '.remove-row', function() {
-        $(this).closest('tr').remove();
-    });
-
-    // Product selection handler
-    $('#modal-inventory-table').on('change', '.product-select', function() {
-        const $row = $(this).closest('tr');
-        const $option = $(this).find(':selected');
-        
-        $row.find('.current-qty').val($option.data('current-qty'));
-        $row.find('.product-code').val($option.data('code'));
-        $row.find('.new-qty').val($option.data('current-qty'));
-    });
-
-    // Row completion handler
-    $('#modal-inventory-table').on('change', 'input, select', function() {
-        const $row = $(this).closest('tr');
-        const isComplete = isRowComplete($row);
-        $row.toggleClass('completed', isComplete);
-    });
-
-    function isRowComplete($row) {
-        const product = $row.find('.product-select').val();
-        const code = $row.find('.product-code').val();
-        const newQty = $row.find('.new-qty').val();
-        const type = $row.find('.type-of-change').val();
-        return product && code && newQty && type;
     }
 
-    // Generate Inventory handler
-    $('#generateInventory').on('click', function() {
-        const updates = [];
-        let hasIncomplete = false;
-
-        $('#modal-inventory-table tbody tr').each(function() {
-            const $row = $(this);
-            const productId = $row.find('.product-id').val();
-            
-            if (!productId) {
-                hasIncomplete = true;
-                return false;
+    function viewHistory(id) {
+        // Show loading overlay
+        Swal.fire({
+            title: 'Loading History...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
             }
-
-            updates.push({
-                product_id: productId,
-                code: $row.find('.product-code').val(),
-                current_qty: parseInt($row.find('.current-qty').val()),
-                new_qty: parseInt($row.find('.new-qty').val()),
-                type_of_change: $row.find('.type-of-change').val()
-            });
         });
 
-        if (hasIncomplete) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Incomplete Entries',
-                text: 'Please fill in all required fields for each row.'
-            });
-            return;
+        // Get the selected type filter value
+        const typeFilter = $('select[name="change_type"]').val();
+        
+        // Build the URL with type filter if selected
+        let url = `/inventory/${id}/history/`;
+        if (typeFilter) {
+            url += `?type_id=${typeFilter}`;
         }
 
-        // Send updates to server
         $.ajax({
-            url: '/inventory/bulk-update/',
-            method: 'POST',
-            data: JSON.stringify({ updates: updates }),
-            contentType: 'application/json',
-            success: function(response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Inventory updated successfully'
-                }).then(() => {
-                    location.reload();
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                Swal.close();
+                let historyHtml = `
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Previous Count</th>
+                                    <th>New Count</th>
+                                    <th>Type of Change</th>
+                                    <th style="min-width: 200px;">Notes</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                    
+                data.forEach(function(item) {
+                    historyHtml += `
+                        <tr>
+                            <td>${new Date(item.created_at).toLocaleString()}</td>
+                            <td>${item.previous_count}</td>
+                            <td>${item.new_count}</td>
+                            <td>${item.type_of_change}</td>
+                            <td class="notes-cell" title="${item.notes || ''}">${item.notes || '-'}</td>
+                            <td>
+                                ${item.picture_url ? 
+                                    `<img src="${item.picture_url}" 
+                                         alt="History Image" 
+                                         class="inventory-thumbnail"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#imagePreviewModal"
+                                         data-full-image="${item.picture_url}"
+                                         style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px; cursor: pointer;">` 
+                                    : '<span class="no-image">-</span>'}
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                historyHtml += '</tbody></table></div>';
+                $('#historyContent').html(historyHtml);
+                $('#historyModal').modal('show');
+
+                // Reinitialize click handlers for thumbnails
+                $('.inventory-thumbnail').on('click', function() {
+                    const fullImageUrl = $(this).data('full-image');
+                    $('#modalImage').attr('src', fullImageUrl);
                 });
             },
-            error: function(xhr) {
+            error: function(xhr, status, error) {
+                Swal.close();
+                console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Failed to update inventory: ' + xhr.responseText
+                    text: 'Error loading history data: ' + xhr.responseText
                 });
             }
         });
-    });
-
-    // Print empty inventory form
-    $('#printInventory').on('click', function() {
-        const printWindow = window.open('', '_blank');
-        const template = document.getElementById('rowTemplate');
-        let printContent = `
-            <html>
-            <head>
-                <title>Inventory Form</title>
-                <style>
-                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                    th { background-color: #f5f5f5; }
-                    .signature-line { margin-top: 50px; border-top: 1px solid #000; width: 200px; }
-                </style>
-            </head>
-            <body>
-                <h2>Inventory Adjustment Form</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product Title</th>
-                            <th>Product Code</th>
-                            <th>Current Qty</th>
-                            <th>New Qty</th>
-                            <th>Type of Change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        // Add 20 empty rows
-        for (let i = 0; i < 20; i++) {
-            printContent += `
-                <tr>
-                    <td style="height: 40px;"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            `;
-        }
-
-        printContent += `
-                    </tbody>
-                </table>
-                <div>
-                    <p>Date: _________________</p>
-                    <p>Supervisor: _________________</p>
-                    <div class="signature-line"></div>
-                    <p>Signature</p>
-                </div>
-            </body>
-            </html>
-        `;
-
-        printWindow.document.write(printContent);
-        printWindow.document.close();
-        printWindow.print();
-    });
-
-    // Add initial row when modal opens
-    $('#inventoryModal').on('shown.bs.modal', function() {
-        if ($('#modal-inventory-table tbody tr').length === 0) {
-            $('#addRow').click();
-        }
-    });
-
-    // Product search functionality
-    $(document).on('input', '.product-search', function() {
-        const $wrapper = $(this).closest('.product-select-wrapper');
-        const $suggestions = $wrapper.find('.product-suggestions');
-        const query = $(this).val().toLowerCase();
-        
-        if (query.length < 2) {
-            $suggestions.addClass('d-none');
-            return;
-        }
-        
-        const $matchingItems = $suggestions.find('.product-suggestion').filter(function() {
-            return $(this).text().toLowerCase().includes(query);
-        });
-        
-        if ($matchingItems.length > 0) {
-            $suggestions.removeClass('d-none');
-        } else {
-            $suggestions.addClass('d-none');
-        }
-        
-        $matchingItems.show();
-        $suggestions.find('.product-suggestion').not($matchingItems).hide();
-    });
-    
-    // Handle product selection
-    $(document).on('click', '.product-suggestion', function() {
-        const $wrapper = $(this).closest('.product-select-wrapper');
-        const $row = $wrapper.closest('tr');
-        const $input = $wrapper.find('.product-search');
-        const $hiddenInput = $wrapper.find('.product-id');
-        
-        $input.val($(this).text());
-        $hiddenInput.val($(this).data('id'));
-        $row.find('.current-qty').val($(this).data('current-qty'));
-        $row.find('.product-code').val($(this).data('code'));
-        $row.find('.new-qty').val($(this).data('current-qty'));
-        
-        $wrapper.find('.product-suggestions').addClass('d-none');
-        checkRowCompletion($row);
-    });
-    
-    // Close suggestions when clicking outside
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.product-select-wrapper').length) {
-            $('.product-suggestions').addClass('d-none');
-        }
-    });
-
-    // Update row completion check
-    function checkRowCompletion($row) {
-        const productId = $row.find('.product-id').val();
-        const code = $row.find('.product-code').val();
-        const newQty = $row.find('.new-qty').val();
-        const type = $row.find('.type-of-change').val();
-        
-        const isComplete = productId && code && newQty && type;
-        $row.toggleClass('completed', isComplete);
     }
-});
+
+    function resetForm() {
+        $('#inventoryForm')[0].reset();
+        $('#inventory_id').val('');
+        $('#product').prop('disabled', false);
+        $('#count').val('');
+        $('#stock_change').val('');
+        $('#type_of_change').val('');
+        $('#notes').val('');
+        $('#picture').val('');
+        $('#inventoryModal .modal-title').text('Add Inventory Item');
+    }
+
+    function updateFinalStock() {
+        const currentStock = parseInt($('#count').val()) || 0;
+        const stockChange = parseInt($('#stock_change').val()) || 0;
+        const finalStock = currentStock + stockChange;
+        $('#final_stock').text(finalStock);
+    }
+
+    // Document ready function
+    $(document).ready(function() {
+        var table = $('#inventory-table').DataTable({
+            responsive: true,
+            processing: true,  // Show processing indicator
+            pageLength: 10,    // Number of rows per page
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Page length options
+            order: [[5, 'desc']],  // Sort by Last Updated column by default
+            dom: '<"top"<"d-flex justify-content-between"<"d-flex align-items-center"l><"d-flex align-items-center"B>>><"clear">rt<"bottom"<"d-flex justify-content-between"<"d-flex align-items-center"i><"d-flex align-items-center"p>>>',
+            buttons: [
+                {
+                    extend: 'excel',
+                    className: 'btn btn-primary me-2',
+                    text: '<i class="bi bi-file-earmark-excel me-1"></i>Excel'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-primary me-2',
+                    text: '<i class="bi bi-file-earmark-pdf me-1"></i>PDF'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-primary',
+                    text: '<i class="bi bi-printer me-1"></i>Print'
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: '_all',
+                    className: 'text-wrap'
+                }
+            ],
+            language: {
+                search: "",
+                searchPlaceholder: "Search inventory...",
+                lengthMenu: "Show _MENU_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                paginate: {
+                    first: '<i class="bi bi-chevron-double-left"></i>',
+                    last: '<i class="bi bi-chevron-double-right"></i>',
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>'
+                }
+            }
+        });
+
+        // Connect custom search input to DataTable
+        $('#inventorySearch').on('keyup', function() {
+            table.search($(this).val()).draw();
+        });
+
+        // Handle clicking on thumbnails
+        $('.inventory-thumbnail').on('click', function() {
+            const fullImageUrl = $(this).data('full-image');
+            $('#modalImage').attr('src', fullImageUrl);
+        });
+    });
 </script>
 {% endblock extra_js %}
 
 {% block extra_css %}
 {{ block.super }}
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
 <style>
     .data-table-sec {
         background: #fff;
@@ -698,7 +463,7 @@ $(document).ready(function() {
     
     /* Custom styles for the search box */
     .customer-serch {
-        min-width: 300px;
+        min-width: 200px;
     }
     
     .serach-boxs {
@@ -1403,6 +1168,156 @@ $(document).ready(function() {
         padding: 6px 12px;
         font-size: 13px;
         min-width: 100px;
+    }
+
+    .search-input {
+        padding: 8px 40px 8px 15px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        height: 40px;
+        width: 100%;
+        background-color: #f8f9fa;
+        font-size: 14px;
+        appearance: none;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-light {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #212529;
+    }
+
+    .btn-light:hover {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .gap-2 {
+        gap: 0.5rem !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .dropdown-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 16px;
+        color: #6c757d;
+    }
+
+    /* Custom styles for DataTables */
+    .dataTables_wrapper .dt-buttons {
+        margin-bottom: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+        min-width: 80px;
+        padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        margin-left: 0.5rem;
+    }
+
+    .dataTables_info {
+        padding-top: 0.85em;
+    }
+
+    .dataTables_paginate {
+        padding-top: 0.5rem;
+    }
+
+    .dataTables_paginate .paginate_button {
+        padding: 0.5rem 0.75rem;
+        margin-left: 2px;
+        border-radius: 4px;
+    }
+
+    .dataTables_paginate .paginate_button.current {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: white !important;
+    }
+
+    .dt-buttons .btn {
+        padding: 0.375rem 0.75rem;
+    }
+
+    /* Image Preview Modal Styles */
+    .image-modal .modal-dialog {
+        max-width: 90vw;
+        margin: 1.75rem auto;
+    }
+
+    .image-modal .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .image-modal .modal-header {
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .image-modal .modal-body {
+        position: relative;
+        padding: 0;
+        background-color: #f8f9fa;
+    }
+
+    .image-preview-container {
+        position: relative;
+        width: 100%;
+        height: calc(90vh - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+    }
+
+    .preview-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        margin: auto;
+    }
+
+    /* Thumbnail styles in the history table */
+    .inventory-thumbnail {
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .inventory-thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .image-modal .modal-dialog {
+            max-width: 95vw;
+            margin: 1rem auto;
+        }
+        
+        .image-preview-container {
+            height: calc(90vh - 80px);
+        }
     }
 </style>
 {% endblock extra_css %}

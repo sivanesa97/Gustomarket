@@ -34,12 +34,11 @@ from Services.views import (
     statements, stripe_connect_callback, stripe_webhook,
     team_registration, terms_conditions, update_cart_quantity,
     update_create_product, help_page, change_prices,  update_subtotal_price, new_poduct_view,
-    inventory,
+    product, inventory,
 )
-from .views import product
 from .views.inventory import (
     inventory_list, get_inventory, get_inventory_history, 
-    update_inventory, add_inventory
+    update_inventory, add_inventory, get_current_count
 )
 
 
@@ -138,6 +137,7 @@ urlpatterns = [
     path('inventory/adjustment-report/', inventory.get_adjustment_report, name='inventory_adjustment_report'),
     path('inventory/<int:id>/history/', inventory.get_inventory_history, name='inventory_history'),
     path('inventory/add/', add_inventory, name='add_inventory'),
+    path('inventory/get-current-count/<int:product_id>/<int:type_id>/', get_current_count, name='get_current_count'),
     
     
 ]

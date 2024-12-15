@@ -14,22 +14,17 @@
     
     <div class="card">
         <div class="card-body">
-            <!-- <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="search-section">
-                    <input type="text" class="form-control" placeholder="Search products..." id="searchProducts">
-                </div>
-            </div> -->
-
             <div class="table-responsive">
                 <table id="inventory-add-table" class="table">
                     <thead>
                         <tr>
                             <th style="width: 25%">Product Title</th>
                             <th style="width: 20%">Code</th>
+                            <th style="width: 15%">Type of Change</th>
                             <th style="width: 10%">Current Qty</th>
                             <th style="width: 10%">New Qty</th>
-                            <th style="width: 15%">Type of Change</th>
                             <th style="width: 15%">Notes</th>
+                            <th style="width: 5%">Image</th>
                             <th style="width: 5%">Actions</th>
                         </tr>
                     </thead>
@@ -48,9 +43,6 @@
                 <button type="button" class="btn btn-secondary" id="printInventory">
                     <i class="bi bi-printer me-2"></i>Print
                 </button>
-                <!-- <button type="button" class="btn btn-info" id="adjustmentReport">
-                    <i class="bi bi-file-text me-2"></i>Report
-                </button> -->
                 <button type="button" class="btn btn-primary" id="generateInventory">
                     <i class="bi bi-check-circle me-2"></i>Update
                 </button>
@@ -74,9 +66,10 @@
                         {% for product in products %}
                         <li class="list-group-item product-suggestion" 
                             data-id="{{ product.id }}"
-                            data-current-qty="{{ product.inventory_count|default:0 }}"
-                            data-code="{{ product.inventory_code|default:'' }}">
-                            {{ product.product_title|slice:":-1" }}
+                            data-current-qty="{{ product.inventory_count }}"
+                            data-code="{{ product.inventory_code }}"
+                            data-type-counts='{{ product.type_counts|safe }}'>
+                            {{ product.product_title }}
                         </li>
                         {% endfor %}
                     </ul>
@@ -84,13 +77,13 @@
             </div>
         </td>
         <td>
-            <input type="text" class="form-control product-code" placeholder="Enter code">
-        </td>
-        <td>
-            <input type="number" class="form-control current-qty" readonly>
-        </td>
-        <td>
-            <input type="number" class="form-control new-qty">
+            <input type="text" 
+                   class="form-control product-code" 
+                   {% if not product.inventory_code %}
+                   placeholder="Enter code"
+                   {% else %}
+                   readonly
+                   {% endif %}>
         </td>
         <td>
             <select class="form-select type-of-change">
@@ -101,7 +94,27 @@
             </select>
         </td>
         <td>
+            <input type="number" class="form-control current-qty" readonly>
+        </td>
+        <td>
+            <input type="number" class="form-control new-qty">
+        </td>
+        <td>
             <input type="text" class="form-control notes" placeholder="Enter notes">
+        </td>
+        <td>
+            <div class="image-upload-wrapper">
+                <input type="file" class="file-input d-none inventory-image" accept="image/*">
+                <button type="button" class="btn btn-outline-secondary btn-sm upload-trigger">
+                    <i class="bi bi-camera"></i>
+                </button>
+                <div class="image-preview d-none">
+                    <img src="" alt="Preview" class="thumbnail-preview">
+                    <button type="button" class="btn btn-link btn-sm text-danger remove-image">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>
         </td>
         <td class="text-center">
             <button type="button" class="btn btn-link text-danger remove-row">
@@ -112,6 +125,13 @@
 </template>
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 {{ block.super }}
 <script>
 $(document).ready(function() {
@@ -125,6 +145,15 @@ $(document).ready(function() {
         addNewRow();
     });
 
+    function checkRowCompletion($row) {
+        const productId = $row.find('.product-id').val();
+        const code = $row.find('.product-code').val();
+        const newQty = $row.find('.new-qty').val();
+        const type = $row.find('.type-of-change').val();
+        
+        const isComplete = productId && code && newQty && type;
+        $row.toggleClass('completed', isComplete);
+    }
     // Function to add new row
     function addNewRow() {
         const template = document.getElementById('rowTemplate');
@@ -132,81 +161,113 @@ $(document).ready(function() {
         $('#inventory-add-table tbody').append(clone);
     }
 
-    // Handle product selection
-    $(document).on('click', '.product-suggestion', function() {
+    $(document).on('input', '.product-search', function() {
         const $wrapper = $(this).closest('.product-select-wrapper');
-        const $row = $wrapper.closest('tr');
-        const $input = $wrapper.find('.product-search');
-        const $hiddenInput = $wrapper.find('.product-id');
+        const $suggestions = $wrapper.find('.product-suggestions');
+        const query = $(this).val().toLowerCase().trim();
         
-        $input.val($(this).text());
-        $hiddenInput.val($(this).data('id'));
-        $row.find('.current-qty').val($(this).data('current-qty'));
-        $row.find('.product-code').val($(this).data('code'));
-        $row.find('.new-qty').val($(this).data('current-qty'));
-        
-        $wrapper.find('.product-suggestions').addClass('d-none');
-        checkRowCompletion($row);
-    });
-
-    // Update Inventory button click handler
-    $('#generateInventory').on('click', function() {
-        const updates = [];
-        let hasIncomplete = false;
-
-        $('#inventory-add-table tbody tr').each(function() {
-            const $row = $(this);
-            const productId = $row.find('.product-id').val();
-            
-            if (!productId) {
-                hasIncomplete = true;
-                return false;
-            }
-
-            updates.push({
-                product_id: productId,
-                code: $row.find('.product-code').val(),
-                current_qty: parseInt($row.find('.current-qty').val()),
-                new_qty: parseInt($row.find('.new-qty').val()),
-                type_of_change: $row.find('.type-of-change').val(),
-                notes: $row.find('.notes').val() // Collect notes
-            });
-        });
-
-        if (hasIncomplete) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Incomplete Entries',
-                text: 'Please fill in all required fields for each row.'
-            });
+        if (query.length < 2) {
+            $suggestions.addClass('d-none');
             return;
         }
-
-        // Send updates to server
-        $.ajax({
-            url: '/inventory/bulk-update/', // Adjust the URL as needed
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ updates: updates }),
-            success: function(response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Inventory updated successfully'
-                }).then(() => {
-                    location.reload();
-                });
-            },
-            error: function(xhr) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to update inventory: ' + xhr.responseText
-                });
-            }
+        
+        const $matchingItems = $suggestions.find('.product-suggestion').filter(function() {
+            return $(this).text().toLowerCase().trim().includes(query);
         });
+        
+        if ($matchingItems.length > 0) {
+            $suggestions.removeClass('d-none');
+        } else {
+            $suggestions.addClass('d-none');
+        }
+        
+        $matchingItems.show();
+        $suggestions.find('.product-suggestion').not($matchingItems).hide();
     });
 
+    $(document).on('click', '.product-suggestion', function() {
+        const $suggestion = $(this);
+        const $wrapper = $suggestion.closest('.product-select-wrapper');
+        const $row = $wrapper.closest('tr');
+        
+        // Remove selected mark from other suggestions
+        $('.product-suggestion').removeAttr('data-selected');
+        // Mark this suggestion as selected
+        $suggestion.attr('data-selected', 'true');
+        
+        // Get data from the suggestion item
+        const productId = $suggestion.data('id');
+        const productTitle = $suggestion.text().trim();
+        const code = $suggestion.data('code') || '';
+        
+        // Parse type counts data
+        let typeCounts;
+        try {
+            typeCounts = JSON.parse($suggestion.attr('data-type-counts'));
+        } catch (e) {
+            console.error('Error parsing type counts:', e);
+            typeCounts = {};
+        }
+        
+        // Update the fields
+        $wrapper.find('.product-search').val(productTitle);
+        $wrapper.find('.product-id').val(productId);
+        
+        // Make code field editable if no previous code exists
+        const $codeField = $row.find('.product-code');
+        if (!code) {
+            $codeField.prop('readonly', false);
+        } else {
+            $codeField.prop('readonly', true);
+        }
+        $codeField.val(code);
+        
+        // Hide suggestions
+        $wrapper.find('.product-suggestions').addClass('d-none');
+    });
+
+    // Update current quantity when type of change is selected
+    $(document).on('change', '.type-of-change', function() {
+        const $row = $(this).closest('tr');
+        const $suggestion = $row.find('.product-suggestion[data-selected="true"]');
+        const selectedType = $(this).find('option:selected').text();
+        
+        // Parse type counts data
+        let typeCounts;
+        try {
+            typeCounts = JSON.parse($suggestion.attr('data-type-counts'));
+        } catch (e) {
+            console.error('Error parsing type counts:', e);
+            typeCounts = {};
+        }
+        
+        // Get the count for the selected type
+        let currentQty = 0;
+        if (typeCounts && typeCounts.type_info) {
+            const typeInfo = JSON.parse(typeCounts.type_info || '{}');
+            if (typeInfo.type_name === selectedType) {
+                currentQty = typeInfo.count || 0;
+            }
+        }
+        
+        // Update the current quantity field
+        $row.find('.current-qty').val(currentQty);
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
     // Print functionality
     $('#printInventory').on('click', function() {
         const printWindow = window.open('', '_blank');
@@ -227,9 +288,9 @@ $(document).ready(function() {
                         <tr>
                             <th>Product Title</th>
                             <th>Code</th>
+                            <th>Type of Change</th>
                             <th>Current Qty</th>
                             <th>New Qty</th>
-                            <th>Type of Change</th>
                             <th>Notes</th>
                         </tr>
                     </thead>
@@ -241,11 +302,11 @@ $(document).ready(function() {
             printContent += `
                 <tr>
                     <td>${$row.find('.product-search').val() || '-'}</td>
-                    <td>${$row.find('.product-code').val() || '-'}</td>
+                    <td>${$row.find('.product-code').val() || ''}</td>
+                    <td>${$row.find('.type-of-change').val() || ''}</td>
                     <td>${$row.find('.current-qty').val() || '-'}</td>
-                    <td>${$row.find('.new-qty').val() || '-'}</td>
-                    <td>${$row.find('.type-of-change').val() || '-'}</td>
-                    <td>${$row.find('.notes').val() || '-'}</td>
+                    <td>${$row.find('.new-qty').val() || ''}</td>
+                    <td>${$row.find('.notes').val() || ''}</td>
                 </tr>
             `;
         });
@@ -267,6 +328,136 @@ $(document).ready(function() {
         if (!$(e.target).closest('.product-select-wrapper').length) {
             $('.product-suggestions').addClass('d-none');
         }
+    });
+
+    $(document).on('click', '.upload-trigger', function() {
+        $(this).closest('td').find('.file-input').click();
+    });
+
+    $(document).on('change', '.inventory-image', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            const $wrapper = $(this).closest('.image-upload-wrapper');
+            
+            reader.onload = function(e) {
+                const imageData = e.target.result;  // This will be the base64 string
+                $wrapper.find('.thumbnail-preview').attr('src', imageData);
+                $wrapper.find('.image-preview').removeClass('d-none');
+                $wrapper.find('.upload-trigger').addClass('d-none');
+                $wrapper.data('imageData', imageData);  // Store the base64 data
+            };
+            
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $(document).on('click', '.remove-image', function() {
+        const $wrapper = $(this).closest('.image-upload-wrapper');
+        $wrapper.find('.file-input').val('');
+        $wrapper.find('.image-preview').addClass('d-none');
+        $wrapper.find('.upload-trigger').removeClass('d-none');
+    });
+
+    // Update the generateInventory function to include image data
+    $('#generateInventory').on('click', function() {
+        const updates = [];
+        let hasIncomplete = false;
+        
+        $('#inventory-add-table tbody tr').each(function() {
+            const $row = $(this);
+            const fileInput = $row.find('.inventory-image')[0];
+            const file = fileInput?.files[0];
+            
+            // Convert image to base64 if exists
+            let imageData = null;
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                imageData = reader.result;
+            }
+
+            const productId = $row.find('.product-id').val();
+            const code = $row.find('.product-code').val();
+            const currentQty = parseInt($row.find('.current-qty').val());
+            const newQty = parseInt($row.find('.new-qty').val());
+            const typeOfChange = $row.find('.type-of-change').val();
+            const notes = $row.find('.notes').val(); // Collect notes
+
+            if (!productId) {
+                hasIncomplete = true;
+                return false;
+            }
+
+            updates.push({
+                product_id: productId,
+                code: code,
+                current_qty: currentQty,
+                new_qty: newQty,
+                type_of_change: typeOfChange,
+                notes: notes,
+                picture: $row.find('.image-upload-wrapper').data('imageData')  // Include the stored image data
+            });
+        });
+        
+        if (hasIncomplete) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Incomplete Entries',
+                text: 'Please fill in all required fields for each row.'
+            });
+            return;
+        }
+
+        // Send updates to server
+        $.ajax({
+            url: '/inventory/bulk-update/', // Adjust the URL as needed
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+            },
+            data: JSON.stringify({ updates: updates }),
+            beforeSend: function() {
+                // Show loading overlay
+                Swal.fire({
+                    title: 'Loading...',
+                    text: 'Please wait while we update the inventory.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Inventory updated successfully'
+                }).then(() => {
+                    // Redirect to inventory list page
+                    window.location.href = '/inventory/'; // Adjust the URL as needed
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update inventory: ' + xhr.responseText
+                });
+            }
+        });
+    });
+
+    $(document).on('change', '.type-of-change', function() {
+        const $row = $(this).closest('tr');
+        const productId = $row.find('.product-id').val();
+        const typeId = $(this).val();
+        
+        // Get current quantity for this product and type
+        $.get(`/inventory/get-current-count/${productId}/${typeId}/`, function(data) {
+            $row.find('.current-qty').val(data.current_count);
+        });
     });
 });
 </script>
@@ -434,7 +625,72 @@ $(document).ready(function() {
     background-color: #f8f9fa;
     cursor: not-allowed;
 }
+
+.image-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-trigger {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbnail-preview {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.remove-image {
+    padding: 0;
+    font-size: 18px;
+}
+
+/* Modal styles */
+.image-modal .modal-body {
+    text-align: center;
+}
+
+.image-modal .modal-body img {
+    max-width: 100%;
+    max-height: 80vh;
+}
+
+.form-control:not([readonly]) {
+    background-color: #ffffff;
+}
+
+.form-control[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.product-code:not([readonly]) {
+    border-color: #80bdff;
+}
 </style>
+
+<!-- Add modal for image preview -->
+<div class="modal fade image-modal" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="Full size preview" id="modalImage">
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock extra_js %}
 {% endblock content %} 
 
