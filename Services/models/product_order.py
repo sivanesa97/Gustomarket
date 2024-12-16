@@ -82,6 +82,8 @@ class OrderItem(models.Model):
     estimated_delivery_date = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     requested_date = models.DateField(auto_now=True, null=True)
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
+
 
     def __str__(self):
         return f"Order {self.order}"

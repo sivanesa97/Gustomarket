@@ -3,7 +3,7 @@ The modules have imported for different purpose mentioned as below:
 render : to render an HTML template.
 login_required : checking a user is authorized or not.
 """
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import HttpResponseRedirect
@@ -20,6 +20,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from Services.models.product_dimension_weight import ProductWeight
 import logging
+import os
+from django.core.exceptions import ValidationError
+
 
 logger = logging.getLogger(__name__)
 
@@ -510,3 +513,23 @@ def move_to_ordered(request):
          order_status="pending"   
         )
     return ""
+def add_order_item_note(request, item_id):
+    order_item = get_object_or_404(OrderItem, id=item_id)
+    if request.method == 'POST':
+        notes = request.POST.get('content', '')
+        attachment = request.FILES.get('attachment')
+
+        if attachment:
+            allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf', 'docx']
+            ext = os.path.splitext(attachment.name)[1][1:].lower()
+            if ext not in allowed_extensions:
+                raise ValidationError(f"Unsupported file extension. Allowed types: {', '.join(allowed_extensions)}")
+
+        if notes or attachment:
+            order_item.notes = notes
+            if attachment:
+                order_item.attachment = attachment
+            order_item.save()
+
+        return redirect('dashboard') 
+    return render(request, 'dashboard-seller.html', {'order_item': order_item})

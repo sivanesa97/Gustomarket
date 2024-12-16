@@ -33,14 +33,14 @@ from Services.views import (
     setup_stripe_connect, sign_in, sign_out, sign_up,
     statements, stripe_connect_callback, stripe_webhook,
     team_registration, terms_conditions, update_cart_quantity,
-    update_create_product, help_page, change_prices,  update_subtotal_price, new_poduct_view,
-    product, inventory,
+    update_create_product, help_page, change_prices,  update_subtotal_price, new_poduct_view, generate_end_of_month_report,
+    inventory, product
 )
+
 from .views.inventory import (
     inventory_list, get_inventory, get_inventory_history, 
     update_inventory, add_inventory, get_current_count
 )
-
 
 handler404 = custom_404
 
@@ -128,6 +128,7 @@ urlpatterns = [
     path('change_prices', change_prices.change_prices, name="change_prices"),
     path('update_total_price', update_subtotal_price.update_subtotal_price, name='update_total_price'),
     path('new-product/', new_poduct_view.new_product_view, name='new_product'),
+    path('generate_report/',  generate_end_of_month_report.generate_end_of_month_report, name='generate_end_of_month_report'),
     path('inventory/', inventory_list, name='inventory_list'),
     path('inventory/<int:id>/get/', get_inventory, name='get_inventory'),
     path('inventory/<int:id>/history/', get_inventory_history, name='get_inventory_history'),
@@ -138,6 +139,5 @@ urlpatterns = [
     path('inventory/<int:id>/history/', inventory.get_inventory_history, name='inventory_history'),
     path('inventory/add/', add_inventory, name='add_inventory'),
     path('inventory/get-current-count/<int:product_id>/<int:type_id>/', get_current_count, name='get_current_count'),
-    
-    
+   
 ]

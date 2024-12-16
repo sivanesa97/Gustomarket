@@ -1,0 +1,43 @@
+{% extends "registration_base.html" %}
+{% load static %}
+
+{% block title %} GustoMarket {% endblock %}
+
+{% block content %}
+<style>
+    h3{
+        font-family: inter-bold;
+        --f-bold: 700;
+    }
+   .report-section {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    text-align: center; 
+    padding: 20px;
+   }
+   .report-section p { 
+    margin: 20px 0;
+   }
+   .report-section h3 { 
+    margin-bottom: 10px;  
+   } 
+    .report-section form {
+    margin-top: 20px; 
+   }
+   
+</style>
+<div class="report-section">
+    <h3>End-of-Month Reports</h3>
+    <p style="font-size: medium;">Generate analytics and download data for your records.</p>
+    <form method="POST" action="{% url 'generate_end_of_month_report' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn red-btn">Generate Report</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block tab %}
+{% endblock %}

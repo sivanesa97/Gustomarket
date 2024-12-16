@@ -33,7 +33,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ['platform.gustomarket.co',
-                 'www.platform.gustomarket.co', 'localhost', '127.0.0.1', '192.168.1.7']
+                 'www.platform.gustomarket.co', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [

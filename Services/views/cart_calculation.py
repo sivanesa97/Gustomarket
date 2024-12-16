@@ -20,8 +20,18 @@ def calculate_cart(cart_items):
             cart_item_id = cart_item.id
             product = cart_item.product
             quantity = cart_item.quantity
-            total_price = Decimal(
-                product.price_transport.amount) * Decimal(quantity)
+
+            # Ensure price_transport and its attributes are valid
+            price_transport = product.price_transport
+            if not price_transport:
+                raise ValueError(f"Missing price_transport for product ID {product.id}")
+
+            amount = getattr(price_transport, 'amount', None) or 0
+            discount = getattr(price_transport, 'discount', None) or 0
+            delivery_charge = getattr(price_transport, 'delivery_charge', None) or 0
+            tax_rate = getattr(price_transport, 'tax', None) or 0
+
+            total_price = Decimal(amount) * Decimal(quantity)
             supplier = product.supplier
 
             if supplier not in vendors:
@@ -39,33 +49,34 @@ def calculate_cart(cart_items):
 
         for supplier, data in vendors.items():
             data['subtotal'] = sum(
-                Decimal(product.price_transport.amount) * Decimal(quantity)
+                Decimal(getattr(product.price_transport, 'amount', 0)) * Decimal(quantity)
                 for _, product, quantity, _ in data['products']
             )
             data['discount'] = sum(
-                (Decimal(product.price_transport.amount) *
-                 Decimal(product.price_transport.discount)/100) *
+                (Decimal(getattr(product.price_transport, 'amount', 0)) *
+                 Decimal(getattr(product.price_transport, 'discount', 0)) / 100) *
                 Decimal(quantity)
                 for _, product, quantity, _ in data['products']
             )
             data['delivery_fee'] = sum(
-                Decimal(product.price_transport.delivery_charge) *
+                Decimal(getattr(product.price_transport, 'delivery_charge', 0)) *
                 Decimal(quantity)
                 for _, product, quantity, _ in data['products']
             )
             discounted_value = sum(
-                Decimal(product.price_transport.amount) *
-                (1 - Decimal(product.price_transport.discount) / 100) *
+                Decimal(getattr(product.price_transport, 'amount', 0)) *
+                (1 - Decimal(getattr(product.price_transport, 'discount', 0)) / 100) *
                 Decimal(quantity)
                 for _, product, quantity, _ in data['products']
             )
 
             total_tax = 0
             for _, product, quantity, _ in data['products']:
-                discount = Decimal(product.price_transport.amount) * \
-                    (1 - Decimal(product.price_transport.discount) / 100)
+                discount = Decimal(getattr(product.price_transport, 'amount', 0)) * \
+                    (1 - Decimal(getattr(product.price_transport, 'discount', 0)) / 100)
                 tax = (
-                    discount * Decimal(product.price_transport.tax) / 100) * quantity
+                    discount * Decimal(getattr(product.price_transport, 'tax', 0)) / 100
+                ) * quantity
                 total_tax += tax
 
             data['tax'] = round(total_tax, 2)

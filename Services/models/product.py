@@ -15,9 +15,16 @@ class Product(models.Model):
         ('public', 'Public'),
         ('private', 'Private'),
     ]
+    PERISHABILITY_CHOICES = [
+        ('hours', 'Hours'),
+        ('days', 'Days'),
+        ('weeks', 'Weeks'),
+        ('months', 'Months'),
+        ('years', 'Years'),
+    ]
 
     supplier = models.ForeignKey('Services.Supplier', on_delete=models.SET_NULL, blank=True, null=True)
-    product_title = models.CharField(max_length=255)
+    product_title = models.CharField(max_length=255, blank=True, null=True)
     product_category = models.ForeignKey(
         'Services.ProductCategory', on_delete=models.SET_NULL, blank=True, null=True)
     product_sub_category = models.ForeignKey(
@@ -39,6 +46,11 @@ class Product(models.Model):
     review_sum = models.PositiveIntegerField(blank=True, null=True)
     privacy_level = models.CharField(
         max_length=10, choices=PRIVACY_CHOICES, default='public')
+    perishability = models.CharField(
+        max_length=10, 
+        choices=PERISHABILITY_CHOICES,
+        default='days',
+    )
     def __str__(self):
         return str(self.product_title)
 # ********************** Product model end here *******************

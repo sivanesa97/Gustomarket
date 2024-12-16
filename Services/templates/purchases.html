@@ -178,6 +178,9 @@
                       <div class="prd-rating-sec">
                         <p><img src="{% static 'img/star-icon.png' %}" alt="star"> {{ product.review_count|default:'N/A' }} <span>({{ product.review_count|default:0 }})</span></p>
                       </div>
+                      <div class="prd-perishability-sec">
+                        <h4 style="font-weight: bold;">Perishability: {{ product.get_perishability_display }}</h4>
+                      </div>
                     </div>
                   </div>
                 </div>

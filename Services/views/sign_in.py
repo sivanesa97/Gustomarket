@@ -21,24 +21,22 @@ def sign_in(request):
         password = request.POST.get('password')
 
         try:
-            # First check if user exists
             user = User.objects.get(username=email)
-            
-            # Then attempt authentication
-            authenticated_user = authenticate(username=email, password=password)
-            
-            if authenticated_user is not None:
-                # Only create changelog entries after successful authentication
-                if authenticated_user.last_login is None:
-                    login(request, authenticated_user)
+            # checking authentication
+            user = authenticate(username=email, password=password)
+
+            if user is not None:
+                if user.last_login is None:
+                    login(request, user)  # login the request.
                     return redirect('account_registration', editable=None)
-                login(request, authenticated_user)
+                login(request, user)  # login the request.
                 return redirect('products')
-            else:
-                messages.error(request, "Incorrect username or password")
+
+            messages.error(request, "Incorrect username or password")
 
         except User.DoesNotExist:
-            messages.error(request, "Your account does not exist, please sign up!")
+            messages.error(
+                request, "Your account does not exist, please sign up!")
 
     if request.user.is_authenticated:
         return redirect('account_registration', editable=None)

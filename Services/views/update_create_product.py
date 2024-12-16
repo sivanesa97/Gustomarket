@@ -46,6 +46,7 @@ def update_or_create_product(request, pk=0):
         images = request.FILES.getlist('images[]')
         sku_sold_value = request.POST.get('sku_sold')
         sku_picked_value = request.POST.get('sku_picked')
+        perishability = request.POST.get('perishability') 
 
         if product_id:
             product_inst = Product.objects.filter(
@@ -60,6 +61,7 @@ def update_or_create_product(request, pk=0):
         # product_inst.discussion = request.POST.get('discussion_content')
         product_inst.notification_frequency = request.POST.get(
             'notification_preference')
+        product_inst.perishability = perishability
 
         # Create and update category and sub category.
         category_inst = create_or_get_category(request)
@@ -446,4 +448,4 @@ def save_product_dimension_weight(request, product_packaging_inst):
             weight_unit=weight_unit,
             weight_value=request.POST.get('weight')
         )'''
- 
+

@@ -306,27 +306,19 @@
               </div>
             </div>
           </div>
-
           <div class="purchase-head-sec align-items-center">
-            
             <div class="row">
               <div class="col-md-12">
                 <div class="tab-content">
                   <!-- start sold tab -->
                   <div class="tab-sold" id="sold-tb">
                     <div class="row" id="sold-tb">
-                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                      <!-- Ordered Section -->
+                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4" data-status="ordered" style="display: block;">
                         <div class="tickets-card">
                           <div class="tab-heading mb-5 mt-3">
-                            <h3>Ordered
-                              {% for data in tooltip_data %}
-                              {% if data.tooltip_title|lower == 'ordered' %}
-                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="{{ data.tooltip_content}}">
-                              </i>
-                              {% endif %}
-                              {% endfor %}
-                            </h3>
+                            <h3>Ordered</h3>
+                            <button id="ordered-sort-toggle" class="btn btn-secondary">Sort</button>
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
@@ -334,100 +326,87 @@
                             <p class="mb-0">Uniques</p>
                           </div>
                           <div class="hr-line-small my-5"></div>
-                          {% for sold_item in sold_combined %}
-                          {% if sold_item.0.order_status|lower == 'pending' %}
-                          <div class="orderid-row flex-space mb-5" data-bs-toggle="modal"
-                            data-bs-target="#orderedprod-pop-{{ sold_item.0.id }}">
-                            <div class="orderid-left d-flex gap-4">
-                              <div class="orderid-img">
-                                <!-- <img src="{% static 'img/order-bag.png' %}" alt="order"> -->
-                                {% if sold_item.0.product.productphoto_set.exists %}
-                                {% with photo=sold_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
-                                  style="height: 64px; width: 64px;">
-                                {% endwith %}
-                                {% endif %}
+                          <div id="ordered-section">
+                            {% for sold_item in sold_combined %}
+                            {% if sold_item.0.order_status|lower == 'pending' %}
+                            <div class="orderid-row flex-space mb-5" data-bs-toggle="modal" data-bs-target="#orderedprod-pop-{{ sold_item.0.id }}">
+                              <div class="orderid-left d-flex gap-4">
+                                <div class="orderid-img">
+                                  {% if sold_item.0.product.productphoto_set.exists %}
+                                  {% with photo=sold_item.0.product.productphoto_set.first %}
+                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  {% endwith %}
+                                  {% endif %}
+                                </div>
+                                <div class="orderid-txt black-txts">
+                                  <p>Order ID:</p>
+                                  <p>{{ sold_item.0.order.orderID }}</p>
+                                </div>
                               </div>
-                              <div class="orderid-txt black-txts">
-                                <p>Order ID:</p>
-                                <p>{{ sold_item.0.order.orderID }}</p>
+                              <div class="orderid-rgt">
+                                <div class="orderid-price black-txts">
+                                  <p>${{ sold_item.3 }}</p>
+                                  <label>Open</label>
+                                </div>
+                              </div>
+                              <div class="orderid-quantity black-txts">
+                                <p>{{ sold_units|get_item:sold_item.0 }}</p>
                               </div>
                             </div>
-                            <div class="orderid-rgt">
-                              <div class="orderid-price black-txts">
-                                <p>${{ sold_item.3 }}</p>
-                                <label>Open</label>
-                              </div>
-                            </div>
-                            <div class="orderid-quantity black-txts">
-                              <p>{{ sold_units|get_item:sold_item.0 }}</p>
-                            </div>
+                            {% endif %}
+                            {% endfor %}
                           </div>
-                          {% endif %}
-                          {% endfor %}
                         </div>
-
                       </div>
-                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+          
+                      <!-- In Transit Section -->
+                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4" data-status="in_transit" style="display: block;">
                         <div class="tickets-card">
                           <div class="tab-heading mb-5">
-                            <h3>In Transit
-                              {% for data in tooltip_data %}
-                              {% if data.tooltip_title|lower == 'in transit' %}
-                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="{{ data.tooltip_content}}">
-                              </i>
-                              {% endif %}
-                              {% endfor %}
-                            </h3>
+                            <h3>In Transit</h3>
+                            <button id="in-transit-sort-toggle" class="btn btn-secondary">Sort</button>
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
                             <p class="mb-0">Value</p>
                           </div>
                           <div class="hr-line-small my-5"></div>
-                          {% for sold_item in sold_combined %}
-                          {% if sold_item.0.order_status|lower == 'in_transit' %}
-                          <div class="orderid-row flex-space mb-5" data-bs-toggle="modal"
-                            data-bs-target="#transit-pop-{{ sold_item.0.id }}">
-                            <div class="orderid-left d-flex gap-4">
-                              <div class="orderid-img">
-                                <!-- <img src="{% static 'img/order-bag.png' %}" alt="order"> -->
-                                {% if sold_item.0.product.productphoto_set.exists %}
-                                {% with photo=sold_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
-                                  style="height: 64px; width: 64px;">
-                                {% endwith %}
-                                {% endif %}
+                          <div id="in-transit-section">
+                            {% for sold_item in sold_combined %}
+                            {% if sold_item.0.order_status|lower == 'in_transit' %}
+                            <div class="orderid-row flex-space mb-5" data-bs-toggle="modal" data-bs-target="#transit-pop-{{ sold_item.0.id }}">
+                              <div class="orderid-left d-flex gap-4">
+                                <div class="orderid-img">
+                                  {% if sold_item.0.product.productphoto_set.exists %}
+                                  {% with photo=sold_item.0.product.productphoto_set.first %}
+                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  {% endwith %}
+                                  {% endif %}
+                                </div>
+                                <div class="orderid-txt black-txts">
+                                  <p>Order ID:</p>
+                                  <p>{{ sold_item.0.order.orderID }}</p>
+                                </div>
                               </div>
-                              <div class="orderid-txt black-txts">
-                                <p>Order ID:</p>
-                                <p>{{ sold_item.0.order.orderID }}</p>
+                              <div class="orderid-rgt">
+                                <div class="orderid-price black-txts">
+                                  <p>${{ sold_item.3 }}</p>
+                                  <label>Open</label>
+                                </div>
                               </div>
                             </div>
-                            <div class="orderid-rgt">
-                              <div class="orderid-price black-txts">
-                                <p>${{ sold_item.3 }}</p>
-                                <label>Open</label>
-                              </div>
-                            </div>
+                            {% endif %}
+                            {% endfor %}
                           </div>
-                          {% endif %}
-                          {% endfor %}
                         </div>
                       </div>
-                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+          
+                      <!-- Delivered Section -->
+                      <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4" data-status="delivered" style="display: block;">
                         <div class="tickets-card">
                           <div class="tab-heading mb-5 mt-3">
-                            <h3>Delivered
-                              {% for data in tooltip_data %}
-                              {% if data.tooltip_title|lower == 'delivered' %}
-                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="{{ data.tooltip_content}}">
-                              </i>
-                              {% endif %}
-                              {% endfor %}
-                            </h3>
+                            <h3>Delivered</h3>
+                            <button id="delivered-sort-toggle" class="btn btn-secondary">Sort</button>
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
@@ -435,42 +414,45 @@
                             <p class="mb-0">Paid</p>
                           </div>
                           <div class="hr-line-small my-5"></div>
-                          {% for sold_item in sold_combined %}
-                          {% if sold_item.0.order_status|lower == 'delivered' %}
-                          <div class="orderid-row flex-space mb-5" data-bs-toggle="modal"
-                            data-bs-target="#delivered-pop-{{ sold_item.0.id }}">
-                            <div class="orderid-left d-flex gap-4">
-                              <div class="orderid-img">
-                                <!-- <img src="{% static 'img/order-bag.png' %}" alt="order"> -->
-                                {% if sold_item.0.product.productphoto_set.exists %}
-                                {% with photo=sold_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
-                                  style="height: 64px; width: 64px;">
-                                {% endwith %}
-                                {% endif %}
+                          <div id="delivered-section">
+                            {% for sold_item in sold_combined %}
+                            {% if sold_item.0.order_status|lower == 'delivered' %}
+                            <div class="orderid-row flex-space mb-5" data-bs-toggle="modal" data-bs-target="#delivered-pop-{{ sold_item.0.id }}">
+                              <div class="orderid-left d-flex gap-4">
+                                <div class="orderid-img">
+                                  {% if sold_item.0.product.productphoto_set.exists %}
+                                  {% with photo=sold_item.0.product.productphoto_set.first %}
+                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  {% endwith %}
+                                  {% endif %}
+                                </div>
+                                <div class="orderid-txt black-txts">
+                                  <p>Order ID:</p>
+                                  <p>{{ sold_item.0.order.orderID }}</p>
+                                </div>
                               </div>
-                              <div class="orderid-txt black-txts">
-                                <p>Order ID:</p>
-                                <p>{{ sold_item.0.order.orderID }}</p>
+                              <div class="orderid-rgt">
+                                <div class="orderid-price black-txts">
+                                  <p>${{ sold_item.3 }}</p>
+                                  <label>Open</label>
+                                </div>
                               </div>
+                              <div class="rquest-date black-txts"><b class="bg-odr mb-0">
+                                {% if sold_item.0.order.is_paid == False %} Unpaid {% else %} Paid {%endif%}
+                              </b></div>
                             </div>
-                            <div class="orderid-rgt">
-                              <div class="orderid-price black-txts">
-                                <p>${{ sold_item.3 }}</p>
-                                <label>Open</label>
-                              </div>
-                            </div>
-                            <div class="rquest-date black-txts"><b class="bg-odr mb-0">
-                              {% if sold_item.0.order.is_paid == False %} Unpaid {% else %} Paid {%endif%}
-                            </b></div>
+                            {% endif %}
+                            {% endfor %}
                           </div>
-                          {% endif %}
-                          {% endfor %}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- End sold tab -->
+                </div>
+              </div>
+            </div>
+          </div>         
+          <!-- End sold tab -->
 
                   <!-- start purchased tab -->
                   <div class="tab-sold" id="purchased-tb">
@@ -483,6 +465,7 @@
                                 data-bs-original-title="Maximum 100 Character.">
                               </i>
                             </h3>
+                            <button id="sort-ordered" class="btn btn-secondary">Sort</button>
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
@@ -525,13 +508,15 @@
                       </div>
 
                       <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                        <div class="tickets-card">
+                        <div class="tickets-card" id="purchased-tc">
                           <div class="tab-heading mb-5 mt-3">
                             <h3>In Transit
                               <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-original-title="Maximum 100 Character.">
                               </i>
+                              <button id="sort-in-transit" class="btn btn-secondary">Sort</button>
                             </h3>
+                            
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
@@ -569,13 +554,14 @@
                       </div>
 
                       <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                        <div class="tickets-card">
+                        <div class="tickets-card" id="purchased-td">
                           <div class="tab-heading mb-5 mt-3">
                             <h3>Delivered
                               <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-original-title="Maximum 100 Character.">
                               </i>
                             </h3>
+                            <button id="sort-delivered" class="btn btn-secondary">Sort</button>
                           </div>
                           <div class="gary-txts orderd-hed flex-space">
                             <p class="mb-0">Products</p>
@@ -668,7 +654,7 @@
                           <p class="mb-0">Purchase date</p>
                         </div>
                         <div class="rquest-date black-txts">
-                          <p class="mb-0">{{ sold_item.0.order.order_date }}</p>
+                          <p class="mb-0" id="purchase-date">{{ sold_item.0.order.order_date }}</p>
                         </div>
                       </div>
                       <div class="rquestsend-row flex-space py-3">
@@ -676,7 +662,7 @@
                           <p class="mb-0">Requested Date</p>
                         </div>
                         <div class="rquest-date black-txts">
-                          <input type="date" id="requested-date" name="requested-date" class="form-control" value="{{sold_item.0.order.order_date}}">
+                          <input type="date" id="requested-date" name="requested-date" class="form-control" >
                         </div>
                       </div>
                       {% comment %} <div class="rquestsend-row flex-space py-3">
@@ -774,6 +760,8 @@
                         {% endfor %}
                       </label>
                       <textarea name="content" class="editor1-{{ sold_item.0.id }}"></textarea>
+                      <input type="file" name="attachment" class="form-control mt-2">
+                      
                     </div>
                     <!--
                     <div class="tab-heading mb-5 mt-3">
@@ -1206,6 +1194,7 @@
                           data-bs-original-title="Lorem ipsum"></i>
                       </label>
                       <textarea name="content" class="editor12-{{ sold_item.0.id }}"></textarea>
+                      <input type="file" name="attachment" class="form-control mt-2">
                     </div>
                     <div class="modal-footer gap-4">
                       <a href="{% url 'help' %}" class="white-btn">Add a comment</a>
@@ -1756,6 +1745,7 @@ id="purchased-ordered-form-{{purchased_item.0.order.orderID}}.{{purchased_item.0
                           data-bs-original-title="Lorem ipsum"></i>
                       </label>
                       <textarea name="content" class="editor4-{{ purchased_item.0.id }}"></textarea>
+                      <input type="file" name="attachment" class="form-control mt-2">
                     </div>
                     <!--
                     <div class="img-vedio-sec-upload d-flex align-items-center gap-4">
@@ -2139,6 +2129,7 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
                           data-bs-original-title="Lorem ipsum"></i>
                       </label>
                       <textarea name="content" class="editor3-{{ purchased_item.0.id }}"></textarea>
+                      <input type="file" name="attachment" class="form-control mt-2">
                     </div>
                     <div class="modal-footer gap-4">
                       <a href="{% url 'help' %}" class="white-btn">See an issue?</a>
@@ -2471,6 +2462,96 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
 {% endblock %}
 
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const orderedSortToggle = document.getElementById('ordered-sort-toggle');
+    const inTransitSortToggle = document.getElementById('in-transit-sort-toggle');
+    const deliveredSortToggle = document.getElementById('delivered-sort-toggle');
+    
+    let orderedAsc = true;
+    let inTransitAsc = true;
+    let deliveredAsc = true;
+
+    // Sorting function
+    function sortSection(sectionId, asc) {
+      const section = document.getElementById(sectionId);
+      const items = Array.from(section.querySelectorAll('.orderid-row'));
+      const sortedItems = items.sort((a, b) => {
+        const priceA = parseFloat(a.querySelector('.orderid-price p').textContent.replace('$', ''));
+        const priceB = parseFloat(b.querySelector('.orderid-price p').textContent.replace('$', ''));
+        
+        return asc ? priceA - priceB : priceB - priceA;
+      });
+
+      sortedItems.forEach(item => section.appendChild(item));  // Reorder items in the section
+    }
+
+    // Event Listeners for Sort Toggling
+    orderedSortToggle.addEventListener('click', () => {
+      orderedAsc = !orderedAsc;
+      sortSection('ordered-section', orderedAsc);
+    });
+    inTransitSortToggle.addEventListener('click', () => {
+      inTransitAsc = !inTransitAsc;
+      sortSection('in-transit-section', inTransitAsc);
+    });
+    deliveredSortToggle.addEventListener('click', () => {
+      deliveredAsc = !deliveredAsc;
+      sortSection('delivered-section', deliveredAsc);
+    });
+  });
+   // Utility function to sort elements
+  document.addEventListener('DOMContentLoaded', function () {
+    const orderedSortToggle = document.getElementById('sort-ordered');
+    const inTransitSortToggle = document.getElementById('sort-in-transit');
+    const deliveredSortToggle = document.getElementById('sort-delivered');
+
+    let orderedAsc = true;
+    let inTransitAsc = true;
+    let deliveredAsc = true;
+
+  function sortSection(sectionSelector, asc) {
+    const section = document.querySelector(sectionSelector);
+    if (!section) {
+      console.error(`Section not found: ${sectionSelector}`);
+      return;
+    }
+
+    const items = Array.from(section.querySelectorAll('.orderid-row')).filter(item =>
+      item.querySelector('.orderid-price p')
+    );
+
+    const sortedItems = items.sort((a, b) => {
+      const priceA = parseFloat(
+        a.querySelector('.orderid-price p')?.textContent.replace('$', '') || 0
+      );
+      const priceB = parseFloat(
+        b.querySelector('.orderid-price p')?.textContent.replace('$', '') || 0
+      );
+
+      return asc ? priceA - priceB : priceB - priceA;
+    });
+
+    sortedItems.forEach(item => section.appendChild(item));
+  }
+
+  orderedSortToggle.addEventListener('click', () => {
+    orderedAsc = !orderedAsc;
+    sortSection('#purchased-tb .tickets-card:nth-child(1)', orderedAsc);
+  });
+
+  inTransitSortToggle.addEventListener('click', () => {
+    inTransitAsc = !inTransitAsc;
+    sortSection('#purchased-tc', inTransitAsc);
+  });
+
+  deliveredSortToggle.addEventListener('click', () => {
+    deliveredAsc = !deliveredAsc;
+    sortSection('#purchased-td', deliveredAsc);
+  });
+});
+ 
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
   calculateInitialSubtotals();
   document.querySelectorAll('input').forEach(input => {
@@ -2915,5 +2996,6 @@ function changePrice(el) {
     console.log('Opening modal with ID:', button.getAttribute('data-bs-target'));
   });
 });
+
 </script>
 {% endblock %}

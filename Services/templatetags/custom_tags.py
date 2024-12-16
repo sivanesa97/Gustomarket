@@ -43,8 +43,3 @@ def get_location_by_user(user_id):
 #         instance_id=order_id,
 #     )
 #     return get_change_logs
-
-@register.simple_tag
-def get_inventory_item():
-    from Services.models import InventoryItem
-    return InventoryItem.objects.all()

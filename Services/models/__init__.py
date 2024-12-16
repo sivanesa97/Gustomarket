@@ -42,8 +42,3 @@ from Services.models.notification import Notification
 from Services.models.product_pricing_history import ProductPricingHistory
 from Services.models.payment_term import PaymentTerm
 from Services.models.changelog_models import ChangeLog
-from .inventory import (
-    InventoryItem,
-    InventoryHistory,
-    InventoryChangeType,
-)

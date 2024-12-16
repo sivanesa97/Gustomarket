@@ -18,9 +18,9 @@ def earnings(request):
     try:
         supplier = Supplier.objects.get(user=request.user)
         customer = Customer.objects.filter(user=request.user).first()
-        sold_items = OrderItem.objects.filter(product__supplier=supplier)
+        sold_items = OrderItem.objects.filter(product__supplier=supplier).select_related('order').order_by('-order__order_date')
         purchased_items = OrderItem.objects.filter(
-            order__customer=customer)
+            order__customer=customer).select_related('order').order_by('-order__order_date')
 
         '''Creates a list of sublists length 4 [sample item of an orderID, 
         number of items in an order ID, list of products in that orderID, order price]. All items 

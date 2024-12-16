@@ -8,20 +8,17 @@ IGNORED_MODELS = ['Session', 'Migrations']
 
 @receiver(pre_save)
 def log_pre_save_changes(sender, instance, **kwargs):
-    # Get current user from middleware
-    current_user = get_current_user()
-    
-    # Skip logging if user is anonymous or if model is in ignored list
-    if not current_user or current_user.is_anonymous or \
-       sender.__name__ in IGNORED_MODELS or \
-       sender == ChangeLog or not instance.pk:
+    # Avoid logging changes for the ChangeLog model itself to prevent recursion
+    if sender.__name__ in IGNORED_MODELS or sender == ChangeLog or not instance.pk:
         return
 
+    # Fetch the current (old) instance from the database
     try:
         old_instance = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:
         return
 
+    # Iterate through fields to detect changes
     for field in instance._meta.fields:
         field_name = field.name
         old_value = getattr(old_instance, field_name)
@@ -34,7 +31,7 @@ def log_pre_save_changes(sender, instance, **kwargs):
                 old_value=old_value,
                 new_value=new_value,
                 change_type="update",
-                user=current_user
+                user=get_current_user()
             )
 
 

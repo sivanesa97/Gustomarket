@@ -45,7 +45,7 @@
         <div class="col-12 d-flex gap-4">
             <a href="{% url 'payment_registration' %}"><button type="button"
                     class="previous white-btn">Skip</button></a>
-            <a href="{% url 'payment_registration' %}"><button type="button" class="red-btn next">Continue</button></a>
+            <a href="{% url 'payment_registration' %}"><button type="button"  id="button_continue" class="red-btn next">Continue</button></a>
         </div>
     </div>
 </div>
@@ -105,13 +105,38 @@
                 </div>
                 <div class="modal-footer gap-4">
                     <button type="button" class="white-btn" data-bs-dismiss="modal"> Cancel</button>
-                    <button type="submit" class="red-btn">Save</button>
+                    <button type="submit" class="red-btn" id="error-message">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <script>
+   $(document).ready(function () {
+    // Initially check if the table has data and disable the Continue button if empty
+    checkTableData();
+
+    // Function to check if the table has data
+    function checkTableData() {
+        var tableRows = $('#addteam-table tbody tr'); // Get all table rows
+        if (tableRows.length === 0) {
+            $('#button_continue').prop('disabled', true); // Disable the "Continue" button if no data
+            $('#error-message').text('The table has no data. Please add the required data.').show(); // Show error message
+        } else {
+            $('#button_continue').prop('disabled', false); // Enable the "Continue" button if there is data
+            $('#error-message').hide(); // Hide error message when data is present
+        }
+    }
+
+    // Re-check table data when "Add another" is clicked (this is for when a new team is added)
+    $('#addTeamButton').on('click', function () {
+        setTimeout(function () {
+            checkTableData(); // Recheck table data after adding a new team
+        }, 500); // Give some time for the table to update
+    });
+});
+
+
     function validateForm() {
         // Get form field values
         var firstName = document.getElementById("firstName").value;
@@ -119,6 +144,7 @@
         var email = document.getElementById("email").value;
         var phone = document.getElementById("phone").value;
         var seniority = document.getElementById("selectSeniority").value;
+        var continueButton = document.getElementById("error-message").value;
 
         // Define regular expressions for validation
         // var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
@@ -169,6 +195,10 @@
 
         if (seniority === 'notvalid') {
             createError("selectSeniority", "Please select a seniority.");
+            isValid = false;
+        }
+        if (continueButton === 'notvalid') {
+            createError("error-message", "The table has no data. Please add the required data.");
             isValid = false;
         }
 

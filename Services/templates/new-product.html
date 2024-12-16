@@ -776,6 +776,33 @@
                         </div>
                       </div>
                     </div>
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        
+                        <div class="mb-5">
+                          <div class="tab-heading">
+                            <h3>Perishability <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="It
+                              seems that this products needs these legal requirements, you can add the now or
+                              later, but they should be uploaded before sales can begin"></i></h3>
+                          </div>
+                          <div class="file-upload cus-inputs my-5">
+                            <!-- <form enctype="multipart/form-data" id="form-upload3" class="mb-5"> -->
+                            <label class="form-label">
+                              perishable <i class="bi bi-exclamation-circle-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Tooltip on top"></i></label>
+                            <select name="perishability">
+                                <option selected="selected">---Select a Perishability Duration---</option>
+                                <option value="hours" {% if product.perishability == 'hours' %} selected {% endif %}>Hours</option>
+                                <option value="days" {% if product.perishability == 'days' %} selected {% endif %}>Days</option>
+                                <option value="weeks" {% if product.perishability == 'weeks' %} selected {% endif %}>Weeks</option>
+                                <option value="months" {% if product.perishability == 'months' %} selected {% endif %}>Months</option>
+                                <option value="years" {% if product.perishability == 'years' %} selected {% endif %}>Years</option>
+                            </select>
+                            
+                          </div>
+                        </div>
                     <!-- Images & CTA card -->
                     <div class="card-section mb-3">
                       <div class="auto-complete">
