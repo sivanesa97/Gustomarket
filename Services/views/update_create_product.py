@@ -12,6 +12,8 @@ from Services.models import (ProductAttribute, ProductCategory, ProductTag, SkuS
                              ProductSubCategory, Supplier, NotificationPreference,
                              SaleWindow, PriceTransport, ProductManufacturer, ProductPackaging,
                              Transportation, HandlingTransport, ProductCertification, Address)
+from django.core.exceptions import ValidationError
+from datetime import datetime, date
 
 
 @login_required(login_url='sign_in')
@@ -46,7 +48,13 @@ def update_or_create_product(request, pk=0):
         images = request.FILES.getlist('images[]')
         sku_sold_value = request.POST.get('sku_sold')
         sku_picked_value = request.POST.get('sku_picked')
-        perishability = request.POST.get('perishability') 
+        perishability = request.POST.get('perishability')
+
+        # Get availability data
+        from_time = request.POST.get('from_time')
+        to_time = request.POST.get('to_time')
+        from_date = request.POST.get('from_date')
+        to_date = request.POST.get('to_date')
 
         if product_id:
             product_inst = Product.objects.filter(
@@ -61,7 +69,62 @@ def update_or_create_product(request, pk=0):
         # product_inst.discussion = request.POST.get('discussion_content')
         product_inst.notification_frequency = request.POST.get(
             'notification_preference')
-        product_inst.perishability = perishability
+        if perishability and perishability in dict(Product.PERISHABILITY_CHOICES):
+            product_inst.perishability = perishability
+        else:
+            product_inst.perishability = 'days'  # default value
+
+        # Get and validate availability data
+        from_time = request.POST.get('from_time')
+        to_time = request.POST.get('to_time')
+        from_date = request.POST.get('from_date')
+        to_date = request.POST.get('to_date')
+
+        try:
+            # Validate time range if both are provided
+            if from_time and to_time:
+                from_time_obj = datetime.strptime(from_time, '%H:%M').time()
+                to_time_obj = datetime.strptime(to_time, '%H:%M').time()
+                if from_time_obj >= to_time_obj:
+                    raise ValidationError("End time must be after start time")
+                product_inst.from_time = from_time_obj
+                product_inst.to_time = to_time_obj
+
+            # Validate date range if both are provided
+            if from_date and to_date:
+                from_date_obj = datetime.strptime(from_date, '%Y-%m-%d').date()
+                to_date_obj = datetime.strptime(to_date, '%Y-%m-%d').date()
+                if from_date_obj >= to_date_obj:
+                    raise ValidationError("End date must be after start date")
+                if from_date_obj < date.today():
+                    raise ValidationError("Start date cannot be in the past")
+                product_inst.from_date = from_date_obj
+                product_inst.to_date = to_date_obj
+
+            # Save the product instance
+            product_inst.save()
+
+        except ValidationError as e:
+            context = {
+                'error_message': str(e),
+                'product': product_inst,
+                'product_categories': product_categories,
+                'supplier': supplier,
+                'product_manufacturers': product_manufacturers,
+                'selling_choices': selling_choices,
+                'bulk_choices': bulk_choices,
+                'unit_choices': unit_choices,
+                'frequency_choices': frequency_choices,
+                'window_choices': window_choices,
+                'presentation_choices': presentation_choices,
+                'dimension_choices': dimension_choices,
+                'weight_choices': weight_choices,
+                'handling_choices': handling_choices,
+                'certifications': certifications,
+                'conditions': conditions,
+                'addresses': addresses,
+            }
+            return render(request, 'new-product.html', context)
 
         # Create and update category and sub category.
         category_inst = create_or_get_category(request)

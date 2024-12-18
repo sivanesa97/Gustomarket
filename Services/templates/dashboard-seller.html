@@ -334,7 +334,7 @@
                                 <div class="orderid-img">
                                   {% if sold_item.0.product.productphoto_set.exists %}
                                   {% with photo=sold_item.0.product.productphoto_set.first %}
-                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 64px; width: 64px;">
                                   {% endwith %}
                                   {% endif %}
                                 </div>
@@ -379,7 +379,7 @@
                                 <div class="orderid-img">
                                   {% if sold_item.0.product.productphoto_set.exists %}
                                   {% with photo=sold_item.0.product.productphoto_set.first %}
-                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 64px; width: 64px;">
                                   {% endwith %}
                                   {% endif %}
                                 </div>
@@ -422,7 +422,7 @@
                                 <div class="orderid-img">
                                   {% if sold_item.0.product.productphoto_set.exists %}
                                   {% with photo=sold_item.0.product.productphoto_set.first %}
-                                  <img src="{{ photo.product_photo.url }}" alt="product" style="height: 64px; width: 64px;">
+                                  <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 64px; width: 64px;">
                                   {% endwith %}
                                   {% endif %}
                                 </div>
@@ -482,7 +482,7 @@
                               <div class="orderid-img">
                                 {% if purchased_item.0.product.productphoto_set.exists %}
                                 {% with photo=purchased_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
+                                <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                                   style="height: 64px; width: 64px;">
                                 {% endwith %}
                                 {% endif %}
@@ -531,7 +531,7 @@
                               <div class="orderid-img">
                                 {% if purchased_item.0.product.productphoto_set.exists %}
                                 {% with photo=purchased_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
+                                <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                                   style="height: 64px; width: 64px;">
                                 {% endwith %}
                                 {% endif %}
@@ -578,7 +578,7 @@
                                 <!-- <img src="{% static 'img/order-bag.png' %}" alt="order"> -->
                                 {% if purchased_item.0.product.productphoto_set.exists %}
                                 {% with photo=purchased_item.0.product.productphoto_set.first %}
-                                <img src="{{ photo.product_photo.url }}" alt="product"
+                                <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                                   style="height: 64px; width: 64px;">
                                 {% endwith %}
                                 {% endif %}
@@ -640,7 +640,7 @@
                         <div class="orderprod-imgs">
                           {% if sold_item.0.product.productphoto_set.exists %}
                           {% with photo=sold_item.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; size: 81px;">
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; size: 81px;">
                           {% endwith %}
                           {% endif %}
                         </div>
@@ -807,7 +807,7 @@
                       <p>Add product items</p>
                     </div>-->
                     <!--<div class="order-prod-bx d-flex align-items-center gap-4 mb-5">
-                      <div class="orderprod-imgs"><img src="{% static 'img/small-prod.png' %}" alt="product"></div>
+                      <div class="orderprod-imgs"><img src="{% static 'img/small-prod.png' %}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"></div>
                       <div class="qty-container d-flex align-items-center">
                         <button class="qty-btn-minus btn-primary btn-rounded mr-1" type="button"><i
                             class="bi bi-dash-lg"></i></button>
@@ -871,7 +871,7 @@
                         <td> 
                           {% if product_list.0.product.productphoto_set.exists %}
                           {% with photo=product_list.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product"
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                             style="height: 64px; width: 64px;">
                           {% endwith %}
                           {% endif %} 
@@ -966,7 +966,7 @@
                         <div class="orderprod-imgs">
                           {% if sold_item.0.product.productphoto_set.exists %}
                           {% with photo=sold_item.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; size: 81px;">
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; size: 81px;">
                           {% endwith %}
                           {% endif %}
 
@@ -1228,7 +1228,7 @@
                         <td> 
                           {% if product_list.0.product.productphoto_set.exists %}
                           {% with photo=product_list.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product"
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                             style="height: 64px; width: 64px;">
                           {% endwith %}
                           {% endif %} 
@@ -1319,7 +1319,7 @@
                       <div class="orderprod-imgs">
                         {% if sold_item.0.product.productphoto_set.exists %}
                         {% with photo=sold_item.0.product.productphoto_set.first %}
-                        <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; size: 81px;">
+                        <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; size: 81px;">
                         {% endwith %}
                         {% endif %}
                       </div>
@@ -1559,7 +1559,7 @@
                           <td> 
                             {% if product_list.0.product.productphoto_set.exists %}
                             {% with photo=product_list.0.product.productphoto_set.first %}
-                            <img src="{{ photo.product_photo.url }}" alt="product"
+                            <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                               style="height: 64px; width: 64px;">
                             {% endwith %}
                             {% endif %} 
@@ -1637,7 +1637,7 @@ id="purchased-ordered-form-{{purchased_item.0.order.orderID}}.{{purchased_item.0
                         <div class="orderprod-imgs">
                           {% if purchased_item.0.product.productphoto_set.exists %}
                           {% with photo=purchased_item.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; width: 81px;">
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; width: 81px;">
                           {% endwith %}
                           {% endif %}
                         </div>
@@ -1822,7 +1822,7 @@ id="purchased-ordered-form-{{purchased_item.0.order.orderID}}.{{purchased_item.0
                         <td> 
                           {% if product_list.0.product.productphoto_set.exists %}
                           {% with photo=product_list.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product"
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                             style="height: 64px; width: 64px;">
                           {% endwith %}
                           {% endif %} 
@@ -1921,7 +1921,7 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
                         <div class="orderprod-imgs">
                           {% if purchased_item.0.product.productphoto_set.exists %}
                           {% with photo=purchased_item.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; width: 81px;">
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; width: 81px;">
                           {% endwith %}
                           {% endif %}
                         </div>
@@ -2159,7 +2159,7 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
                         <td> 
                           {% if product_list.0.product.productphoto_set.exists %}
                           {% with photo=product_list.0.product.productphoto_set.first %}
-                          <img src="{{ photo.product_photo.url }}" alt="product"
+                          <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                             style="height: 64px; width: 64px;">
                           {% endwith %}
                           {% endif %} 
@@ -2243,7 +2243,7 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
                     <div class="orderprod-imgs">
                       {% if purchased_item.0.product.productphoto_set.exists %}
                       {% with photo=purchased_item.0.product.productphoto_set.first %}
-                      <img src="{{ photo.product_photo.url }}" alt="product" style="height: 81px; width: 81px;">
+                      <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';" style="height: 81px; width: 81px;">
                       {% endwith %}
                       {% endif %}
                     </div>
@@ -2404,7 +2404,7 @@ id="purchased-in-transit-form-{{purchased_item.0.order.orderID}}.{{purchased_ite
                     <td> 
                       {% if product_list.0.product.productphoto_set.exists %}
                       {% with photo=product_list.0.product.productphoto_set.first %}
-                      <img src="{{ photo.product_photo.url }}" alt="product"
+                      <img src="{{ photo.product_photo.url }}" alt="product" onerror="this.onerror=null;this.src='/static/img/Image_not_available.png';"
                         style="height: 64px; width: 64px;">
                       {% endwith %}
                       {% endif %} 

@@ -50,7 +50,17 @@ class Product(models.Model):
         max_length=10, 
         choices=PERISHABILITY_CHOICES,
         default='days',
+        null=True,
+        blank=True
     )
+    from_time = models.TimeField(null=True, blank=True, 
+                               help_text="Daily availability start time")
+    to_time = models.TimeField(null=True, blank=True,
+                             help_text="Daily availability end time")
+    from_date = models.DateField(null=True, blank=True,
+                               help_text="Product availability start date")
+    to_date = models.DateField(null=True, blank=True,
+                             help_text="Product availability end date")
     def __str__(self):
         return str(self.product_title)
 # ********************** Product model end here *******************

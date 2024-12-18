@@ -696,6 +696,72 @@
                         </div>
                       </div>
                     </div>
+                    <br/>
+                    <div class="card-section mb-3">
+                      <div class="auto-complete">
+                        <div class="mb-5">
+                          <div class="tab-heading">
+                            <h3>Product Availability</h3>
+                          </div>
+                        </div>
+                    
+                        <div class="cus-inputs">
+                          <!-- Time Frame -->
+                          <div class="col-12 mb-4">
+                            <label class="form-label">Time Frame
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" 
+                                 data-bs-placement="top" 
+                                 data-bs-original-title="Set the daily time window when this product is available">
+                              </i>
+                            </label>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="datetime-filed position-relative">
+                                  <label class="form-label">From Time</label>
+                                  <input type="time" class="form-control" name="from_time"
+                                    {% if product.from_time %}value="{{ product.from_time|time:'H:i' }}"{% endif %}>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="datetime-filed position-relative">
+                                  <label class="form-label">To Time</label>
+                                  <input type="time" class="form-control" name="to_time"
+                                    {% if product.to_time %}value="{{ product.to_time|time:'H:i' }}"{% endif %}>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    
+                          <!-- Specific Dates -->
+                          <div class="col-12">
+                            <label class="form-label">Specific Dates
+                              <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" 
+                                 data-bs-placement="top" 
+                                 data-bs-original-title="Set the date range when this product will be available">
+                              </i>
+                            </label>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="datetime-filed position-relative">
+                                  <label class="form-label">From Date</label>
+                                  <input type="date" class="form-control" name="from_date"
+                                    {% if product.from_date %}value="{{ product.from_date|date:'Y-m-d' }}"{% endif %}>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="datetime-filed position-relative">
+                                  <label class="form-label">To Date</label>
+                                  <input type="date" class="form-control" name="to_date"
+                                    {% if product.to_date %}value="{{ product.to_date|date:'Y-m-d' }}"{% endif %}>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <br/>
                     <!-- Product files card -->
                     <div class="card-section mb-3">
                       <div class="auto-complete">
@@ -792,13 +858,13 @@
                               perishable <i class="bi bi-exclamation-circle-fill"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-original-title="Tooltip on top"></i></label>
-                            <select name="perishability">
-                                <option selected="selected">---Select a Perishability Duration---</option>
-                                <option value="hours" {% if product.perishability == 'hours' %} selected {% endif %}>Hours</option>
-                                <option value="days" {% if product.perishability == 'days' %} selected {% endif %}>Days</option>
-                                <option value="weeks" {% if product.perishability == 'weeks' %} selected {% endif %}>Weeks</option>
-                                <option value="months" {% if product.perishability == 'months' %} selected {% endif %}>Months</option>
-                                <option value="years" {% if product.perishability == 'years' %} selected {% endif %}>Years</option>
+                            <select name="perishability" class="form-control">
+                                <option value="" selected="selected">---Select a Perishability Duration---</option>
+                                {% for value, label in product.PERISHABILITY_CHOICES %}
+                                    <option value="{{ value }}" {% if product.perishability == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
                             </select>
                             
                           </div>
@@ -1250,7 +1316,6 @@
     redButton.click();
   });
 </script>
-
 
 {% endblock %}
 
